@@ -1,0 +1,22 @@
+{
+  "export_metadata": {
+    "format": "json",
+    "generated_on_device": true
+  },
+  "fhir_mapping": null,
+  "generated_at": "2026-05-02T10:30:00Z",
+  "id": "report-demo-1",
+  "included_event_ids": [
+    "obs-demo-cramps-1"
+  ],
+  "included_prediction_ids": [
+    "prediction-demo-1"
+  ],
+  "included_projection_ids": [
+    "cycle-demo-1"
+  ],
+  "report_type": "clinician_summary",
+  "subject_id": "subject-demo-1",
+  "summary": "User-controlled summary of selected observations and derived projections.",
+  "title": "Clinician summary export"
+}

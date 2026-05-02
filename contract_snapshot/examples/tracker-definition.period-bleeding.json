@@ -1,0 +1,42 @@
+{
+  "allowed_values": [
+    "none",
+    "spotting",
+    "light",
+    "medium",
+    "heavy"
+  ],
+  "calendar_layer": "bleeding",
+  "calendar_priority": 95,
+  "code": "period_bleeding",
+  "display_name": "Period bleeding",
+  "evidence": [
+    {
+      "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+      "confidence": 0.45,
+      "review_status": "draft",
+      "source": "Period Atlas v1 tracker taxonomy",
+      "version": "2026.05.02"
+    }
+  ],
+  "fhir_mapping": {
+    "code": "menstrual-bleeding",
+    "resource": "Observation"
+  },
+  "health_connect_mapping": null,
+  "healthkit_mapping": null,
+  "temporal_grain": "day",
+  "unit": null,
+  "validation_schema": {
+    "enum": [
+      "none",
+      "spotting",
+      "light",
+      "medium",
+      "heavy"
+    ],
+    "type": "string"
+  },
+  "value_type": "enum",
+  "version": "2026.05.02"
+}

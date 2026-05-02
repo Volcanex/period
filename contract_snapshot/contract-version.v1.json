@@ -1,0 +1,17 @@
+{
+  "changelog": [
+    {
+      "change_type": "initial",
+      "migration_note": "No migration required; first supported contract version.",
+      "released_on": "2026-05-02",
+      "summary": "Initial Period v1 backend contract skeleton: domain models, Atlas trackers, settings, calendar feed, privacy manifest, local bundle validation, and contract snapshots.",
+      "version": "2026.05.02"
+    }
+  ],
+  "compatibility_policy": "Additive changes may extend schemas, endpoints, examples, or enum-adjacent metadata without removing fields. Breaking changes remove or rename fields, change value semantics, or make previously valid payloads invalid. Flutter should accept additive versions with regeneration/tests and require an explicit migration for breaking versions.",
+  "current_version": "2026.05.02",
+  "minimum_supported_version": "2026.05.02",
+  "supported_versions": [
+    "2026.05.02"
+  ]
+}

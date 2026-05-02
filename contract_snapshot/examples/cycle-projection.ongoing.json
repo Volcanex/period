@@ -1,0 +1,14 @@
+{
+  "algorithm_version": "period-core-local-v1",
+  "confidence": 0.72,
+  "cycle_index": 12,
+  "derived_from_event_ids": [
+    "obs-demo-cramps-1"
+  ],
+  "ended_on": null,
+  "generated_at": "2026-05-02T10:30:00Z",
+  "id": "cycle-demo-1",
+  "started_on": "2026-04-29",
+  "state": "ongoing",
+  "subject_id": "subject-demo-1"
+}

@@ -1,0 +1,11 @@
+{
+  "id": "obs-demo-001",
+  "subject_id": "subject-demo-001",
+  "tracker_code": "period_bleeding",
+  "observed_at": "2026-05-02T07:30:00+07:00",
+  "source": "user_entered",
+  "value": "medium",
+  "unit": null,
+  "raw_payload": null,
+  "note": "User-entered example fixture."
+}

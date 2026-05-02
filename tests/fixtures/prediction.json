@@ -1,0 +1,21 @@
+{
+  "id": "prediction-demo-001",
+  "subject_id": "subject-demo-001",
+  "generated_at": "2026-05-02T08:05:00+07:00",
+  "algorithm_version": "device-demo-0.1",
+  "next_period": {
+    "earliest_on": "2026-05-28",
+    "latest_on": "2026-06-02"
+  },
+  "ovulation": {
+    "estimated_on": "2026-05-16"
+  },
+  "fertile_window": {
+    "starts_on": "2026-05-11",
+    "ends_on": "2026-05-17"
+  },
+  "luteal_length": {
+    "days": 13
+  },
+  "confidence": 0.55
+}

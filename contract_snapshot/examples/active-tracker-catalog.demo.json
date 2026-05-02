@@ -1,0 +1,648 @@
+{
+  "enabled_pack_codes": [
+    "base_symptoms",
+    "pcos_support"
+  ],
+  "settings_schema_version": "2026.05.02",
+  "subject_id": "subject-demo-1",
+  "tracker_definitions": [
+    {
+      "allowed_values": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "acne_severity",
+      "display_name": "Acne severity",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": [
+        "none",
+        "spotting",
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "calendar_layer": "bleeding",
+      "calendar_priority": 95,
+      "code": "period_bleeding",
+      "display_name": "Period bleeding",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": {
+        "code": "menstrual-bleeding",
+        "resource": "Observation"
+      },
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "none",
+          "spotting",
+          "light",
+          "medium",
+          "heavy"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "bleeding",
+      "calendar_priority": 85,
+      "code": "spotting",
+      "display_name": "Spotting",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "type": "boolean"
+      },
+      "value_type": "boolean",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "temperature",
+      "calendar_priority": 65,
+      "code": "basal_body_temperature",
+      "display_name": "Basal body temperature",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": {
+        "code": "body-temperature",
+        "resource": "Observation"
+      },
+      "health_connect_mapping": {
+        "record_type": "BodyTemperatureRecord"
+      },
+      "healthkit_mapping": {
+        "quantity_type": "bodyTemperature"
+      },
+      "temporal_grain": "day",
+      "unit": "celsius",
+      "validation_schema": {
+        "maximum": 45,
+        "minimum": 30,
+        "type": "number"
+      },
+      "value_type": "decimal",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": [
+        "dry",
+        "sticky",
+        "creamy",
+        "watery",
+        "egg_white"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "cervical_mucus",
+      "display_name": "Cervical mucus",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "dry",
+          "sticky",
+          "creamy",
+          "watery",
+          "egg_white"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "cramps",
+      "display_name": "Cramps",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "cycle_irregularity_note",
+      "display_name": "Cycle irregularity note",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "maxLength": 500,
+        "type": "string"
+      },
+      "value_type": "string",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": [
+        "low",
+        "normal",
+        "high"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "energy",
+      "display_name": "Energy",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "low",
+          "normal",
+          "high"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "fatigue",
+      "display_name": "Fatigue",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "hair_thinning",
+      "display_name": "Hair thinning",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "insulin_metabolic_note",
+      "display_name": "Insulin or metabolic note",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "maxLength": 500,
+        "type": "string"
+      },
+      "value_type": "string",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "medication",
+      "display_name": "Medication or supplement",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "maxLength": 160,
+        "type": "string"
+      },
+      "value_type": "string",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": [
+        "low",
+        "neutral",
+        "good",
+        "anxious",
+        "irritable"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "mood",
+      "display_name": "Mood",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "low",
+          "neutral",
+          "good",
+          "anxious",
+          "irritable"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "pelvic_pain",
+      "display_name": "Pelvic pain",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "sex",
+      "display_name": "Sex",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "type": "boolean"
+      },
+      "value_type": "boolean",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "hair_growth",
+      "display_name": "Unwanted hair growth",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "context",
+      "calendar_priority": 30,
+      "code": "sleep_hours",
+      "display_name": "Sleep hours",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": "hours",
+      "validation_schema": {
+        "maximum": 24,
+        "minimum": 0,
+        "type": "number"
+      },
+      "value_type": "decimal",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "context",
+      "calendar_priority": 25,
+      "code": "weight",
+      "display_name": "Weight",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": "kg",
+      "validation_schema": {
+        "maximum": 400,
+        "minimum": 20,
+        "type": "number"
+      },
+      "value_type": "decimal",
+      "version": "2026.05.02"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "context",
+      "calendar_priority": 10,
+      "code": "note",
+      "display_name": "Note",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.02"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "maxLength": 1000,
+        "type": "string"
+      },
+      "value_type": "string",
+      "version": "2026.05.02"
+    }
+  ],
+  "tracker_preferences": [
+    {
+      "custom_display_name": null,
+      "display_order": 0,
+      "enabled": true,
+      "pinned": true,
+      "tracker_code": "acne_severity"
+    }
+  ],
+  "warnings": []
+}

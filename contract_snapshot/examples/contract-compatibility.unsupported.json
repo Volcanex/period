@@ -1,0 +1,10 @@
+{
+  "current_version": "2026.05.02",
+  "errors": [
+    "unsupported_contract_version"
+  ],
+  "migration_required": true,
+  "schema_version": "2026.01.01",
+  "status": "unsupported_version",
+  "warnings": []
+}

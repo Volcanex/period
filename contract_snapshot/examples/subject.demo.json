@@ -1,0 +1,13 @@
+{
+  "birth_year": 1994,
+  "consent_flags": {
+    "clinician_export": true,
+    "research_export": false
+  },
+  "gender_identity": null,
+  "id": "subject-demo-1",
+  "locale": "en-US",
+  "menarche_age": 12.5,
+  "sex_at_birth": "female",
+  "timezone": "Asia/Ho_Chi_Minh"
+}

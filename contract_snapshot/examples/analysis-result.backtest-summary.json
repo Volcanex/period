@@ -1,0 +1,14 @@
+{
+  "analyzer_code": "cycle_length_backtest_summary",
+  "analyzer_version": "2026.05.02",
+  "evidence": [],
+  "generated_at": "2026-05-02T10:30:00Z",
+  "id": "analysis-demo-1",
+  "payload": {
+    "folds": 6321,
+    "mae_days": 2.32,
+    "p80_coverage": 0.79
+  },
+  "result_type": "model_backtest_summary",
+  "subject_id": "subject-demo-1"
+}

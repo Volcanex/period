@@ -1,0 +1,14 @@
+{
+  "id": "projection-demo-001",
+  "subject_id": "subject-demo-001",
+  "cycle_index": 12,
+  "state": "ongoing",
+  "started_on": "2026-05-02",
+  "ended_on": null,
+  "derived_from_event_ids": [
+    "obs-demo-001"
+  ],
+  "generated_at": "2026-05-02T08:00:00+07:00",
+  "algorithm_version": "device-demo-0.1",
+  "confidence": 0.7
+}

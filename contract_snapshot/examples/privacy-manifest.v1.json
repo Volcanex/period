@@ -1,0 +1,86 @@
+{
+  "entries": [
+    {
+      "code": "subject_profile",
+      "data_category": "profile",
+      "display_name": "Subject profile",
+      "leaves_device_by_default": false,
+      "notes": "The backend defines the shape only; v1 does not store profiles.",
+      "owner": "device",
+      "purpose": "Locale, timezone, consent, and coarse demographic contract fields for local app behavior.",
+      "server_persists": false
+    },
+    {
+      "code": "observation_events",
+      "data_category": "health",
+      "display_name": "Observation events",
+      "leaves_device_by_default": false,
+      "notes": "Validation endpoints are contract checks, not sync or storage.",
+      "owner": "device",
+      "purpose": "Raw user-entered or imported health observations used by the on-device model and calendar.",
+      "server_persists": false
+    },
+    {
+      "code": "cycle_projections",
+      "data_category": "derived",
+      "display_name": "Cycle projections",
+      "leaves_device_by_default": false,
+      "notes": null,
+      "owner": "device",
+      "purpose": "On-device derived cycle state snapshots, preserving uncertainty and suspected states.",
+      "server_persists": false
+    },
+    {
+      "code": "predictions",
+      "data_category": "derived",
+      "display_name": "Predictions",
+      "leaves_device_by_default": false,
+      "notes": null,
+      "owner": "device",
+      "purpose": "Client-calculated next-period, ovulation, fertile-window, and luteal-length shapes.",
+      "server_persists": false
+    },
+    {
+      "code": "reports",
+      "data_category": "export",
+      "display_name": "Reports and exports",
+      "leaves_device_by_default": false,
+      "notes": null,
+      "owner": "device",
+      "purpose": "Clinician summary, CSV export, and future FHIR export metadata controlled by the user.",
+      "server_persists": false
+    },
+    {
+      "code": "tracker_catalog",
+      "data_category": "configuration",
+      "display_name": "Tracker catalog",
+      "leaves_device_by_default": true,
+      "notes": null,
+      "owner": "server",
+      "purpose": "Static tracker definitions and optional packs fetched by Flutter for parity.",
+      "server_persists": false
+    },
+    {
+      "code": "tracker_settings",
+      "data_category": "configuration",
+      "display_name": "Tracker settings",
+      "leaves_device_by_default": false,
+      "notes": "Resolve endpoints validate shape and return active catalogs without storing settings.",
+      "owner": "device",
+      "purpose": "User-selected packs, hidden trackers, and display preferences for local personalization.",
+      "server_persists": false
+    },
+    {
+      "code": "benchmark_fixtures",
+      "data_category": "research_fixture",
+      "display_name": "Benchmark fixtures",
+      "leaves_device_by_default": true,
+      "notes": "Not user app telemetry.",
+      "owner": "developer",
+      "purpose": "Public or approved research data used in tests and model benchmark scripts.",
+      "server_persists": false
+    }
+  ],
+  "posture": "local_first_private",
+  "schema_version": "2026.05.02"
+}

@@ -1,0 +1,12 @@
+{
+  "code": "cycle_length_backtest_summary",
+  "description": "Metadata-only analyzer declaration for reproducible model evaluation outputs.",
+  "display_name": "Cycle length backtest summary",
+  "evidence": [],
+  "input_contracts": [
+    "ObservationEvent",
+    "CycleProjection"
+  ],
+  "output_contract": "AnalysisResult",
+  "version": "2026.05.02"
+}

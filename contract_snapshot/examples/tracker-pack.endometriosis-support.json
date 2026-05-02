@@ -1,0 +1,28 @@
+{
+  "clinical_note": "This pack supports symptom logging and does not infer or diagnose endometriosis.",
+  "code": "endometriosis_support",
+  "description": "Pain, bleeding, bowel, bladder, fatigue, and sex-pain logging for endometriosis-oriented conversations.",
+  "display_name": "Endometriosis support",
+  "enabled_by_default": false,
+  "evidence": [
+    {
+      "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+      "confidence": 0.45,
+      "review_status": "draft",
+      "source": "Period Atlas v1 tracker taxonomy",
+      "version": "2026.05.02"
+    }
+  ],
+  "tracker_codes": [
+    "period_bleeding",
+    "spotting",
+    "cramps",
+    "pelvic_pain",
+    "pain_with_sex",
+    "bowel_symptoms",
+    "bladder_symptoms",
+    "fatigue",
+    "medication",
+    "note"
+  ]
+}

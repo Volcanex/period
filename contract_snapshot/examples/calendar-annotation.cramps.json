@@ -1,0 +1,13 @@
+{
+  "date": "2026-05-02",
+  "end_date": null,
+  "id": "cal-demo-cramps-1",
+  "label": "Cramps",
+  "layer": "symptom",
+  "priority": 50,
+  "source_id": "obs-demo-cramps-1",
+  "source_type": "observation",
+  "subject_id": "subject-demo-1",
+  "tracker_code": "cramps",
+  "value": "moderate"
+}

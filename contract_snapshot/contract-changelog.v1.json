@@ -1,0 +1,9 @@
+[
+  {
+    "change_type": "initial",
+    "migration_note": "No migration required; first supported contract version.",
+    "released_on": "2026-05-02",
+    "summary": "Initial Period v1 backend contract skeleton: domain models, Atlas trackers, settings, calendar feed, privacy manifest, local bundle validation, and contract snapshots.",
+    "version": "2026.05.02"
+  }
+]

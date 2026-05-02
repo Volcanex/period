@@ -1,0 +1,30 @@
+{
+  "clinical_note": "This pack supports symptom logging for clinician conversations and does not infer or diagnose PCOS.",
+  "code": "pcos_support",
+  "description": "Optional PCOS-oriented symptom set layered on universal observation events.",
+  "display_name": "PCOS support",
+  "enabled_by_default": false,
+  "evidence": [
+    {
+      "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+      "confidence": 0.45,
+      "review_status": "draft",
+      "source": "Period Atlas v1 tracker taxonomy",
+      "version": "2026.05.02"
+    }
+  ],
+  "tracker_codes": [
+    "cycle_irregularity_note",
+    "acne_severity",
+    "hair_growth",
+    "hair_thinning",
+    "weight",
+    "insulin_metabolic_note",
+    "mood",
+    "sleep_hours",
+    "period_bleeding",
+    "cramps",
+    "medication",
+    "note"
+  ]
+}

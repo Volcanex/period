@@ -1,0 +1,21 @@
+{
+  "id": "analysis-demo-001",
+  "analyzer_code": "cycle_regularity_summary",
+  "analyzer_version": "2026.05.02",
+  "subject_id": "subject-demo-001",
+  "generated_at": "2026-05-02T08:10:00+07:00",
+  "result_type": "summary",
+  "payload": {
+    "status": "insufficient_data",
+    "observed_cycle_count": 1
+  },
+  "evidence": [
+    {
+      "source": "Fixture data",
+      "assumption": "Single-cycle examples cannot support clinical interpretation.",
+      "confidence": 0.2,
+      "version": "2026.05.02",
+      "review_status": "draft"
+    }
+  ]
+}

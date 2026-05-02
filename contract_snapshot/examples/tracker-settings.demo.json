@@ -1,0 +1,19 @@
+{
+  "disabled_tracker_codes": [],
+  "enabled_pack_codes": [
+    "base_symptoms",
+    "pcos_support"
+  ],
+  "schema_version": "2026.05.02",
+  "subject_id": "subject-demo-1",
+  "tracker_preferences": [
+    {
+      "custom_display_name": null,
+      "display_order": 0,
+      "enabled": true,
+      "pinned": true,
+      "tracker_code": "acne_severity"
+    }
+  ],
+  "updated_at": "2026-05-02T14:35:15.839809Z"
+}

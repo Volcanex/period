@@ -1,0 +1,13 @@
+{
+  "id": "subject-demo-001",
+  "birth_year": 1994,
+  "timezone": "Asia/Ho_Chi_Minh",
+  "locale": "en-US",
+  "sex_at_birth": "female",
+  "gender_identity": null,
+  "menarche_age": 12.5,
+  "consent_flags": {
+    "local_storage": true,
+    "optional_feedback": false
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "id": "report-demo-001",
+  "subject_id": "subject-demo-001",
+  "generated_at": "2026-05-02T08:15:00+07:00",
+  "report_type": "clinician_summary",
+  "title": "Period tracking summary",
+  "summary": "Example report contract; not medical advice or diagnosis.",
+  "included_event_ids": [
+    "obs-demo-001"
+  ],
+  "included_projection_ids": [
+    "projection-demo-001"
+  ],
+  "included_prediction_ids": [
+    "prediction-demo-001"
+  ],
+  "export_metadata": {
+    "format": "summary-json",
+    "schema_version": "2026.05.02"
+  },
+  "fhir_mapping": {
+    "future_resource_hint": "Bundle"
+  }
+}
