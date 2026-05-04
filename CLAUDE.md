@@ -1,10 +1,16 @@
-# Period - Backend Contract and Modeling Platform
+# Period - Backend Modeling Platform + Flutter Client
 
-Period is a backend-first FastAPI platform for a future Flutter app. Do not build product frontend here. The mobile client still owns UX and local storage, but the backend may now own stable schemas, OpenAPI, fixtures, validation boundaries, tracker catalogs, derived signals, analyzers, and server-side reproductive-health models.
+Period is a backend-first FastAPI platform plus a Flutter client (`app/`) sharing one repository. The backend owns stable schemas, OpenAPI, fixtures, validation boundaries, tracker catalogs, derived signals, analyzers, and server-side reproductive-health models. The Flutter client owns UX, local storage, and on-device rendering. Keep the two separated by directory: nothing in `app/` is imported from Python, and nothing in `core/`/`server.py` is coupled to Flutter.
+
+## Repository Layout
+
+- `core/`, `server.py`, `tests/` — Python backend (FastAPI, contracts, analyzers, model). Owns API shape, contracts, and server-side models.
+- `app/` — Flutter client. Owns UX, on-device data, and product-facing rendering. Self-contained: its own `pubspec.yaml`, lints, tests.
+- `contract_snapshot/` — JSON examples that both sides mirror against.
 
 ## Non-Goals
 
-- No HTML product frontend, page compiler, templates, or static site layer.
+- No HTML product frontend, page compiler, templates, or static site layer in the Python tree. Product UI lives in `app/` (Flutter), not in Python templates.
 - No database, account system, sync engine, analytics pipeline, billing, or auth in this pass.
 - No clinician-facing diagnosis or treatment claims.
 - No open-ended plugin system until analyzer/versioning boundaries are explicit.
@@ -74,6 +80,25 @@ _Auto-compiled 2026-06-08 12:13 UTC - 9 doc(s) found._
 5. For deploy confidence, run Docker-based tests when Docker is available.
 
 
-## Flutter Frontend Readiness
+## Flutter Client (`app/`)
 
-The frontend should start from generated OpenAPI models plus `contract_snapshot/examples/`. The primary on-device graph is `LocalStoreSnapshot`; `LocalDataBundle` is an export/import boundary. Backend endpoints may now provide canonical tracker catalogs, validation, derived summaries, and model outputs. Device persistence remains local unless product scope changes.
+The Flutter client lives in `app/`. It implements the **Today** screen from the Sequence design handoff plus calendar, insights, settings, and tracker-management sections, with a live API layer and app-level state. Real cycle/store wiring against `LocalStoreSnapshot` continues to firm up. Targets: web (primary, served at `period.gabrielpenman.com`), iOS, Android.
+
+Layout under `app/lib/`:
+
+- `theme/tokens.dart` — direct port of the design's `colors_and_type.css` variables (palette, sky scale, phase tints, type scale, spacing, radii, motion).
+- `theme/typography.dart` — three font families (Space Grotesk display, Inter body, JetBrains Mono) loaded via `google_fonts` for now; bake to assets when perf demands.
+- `data/models.dart` — local fixtures: tracker defs, symptoms list, moods, bleed levels, cycle states, phase classification. They will be replaced by `LocalStoreSnapshot`-derived shapes from `contract_snapshot/`.
+- `api/` — backend API client against the FastAPI endpoints.
+- `state/` — app-level state and cross-tab wiring.
+- `model/` — client-side model types.
+- `screens/today/` — the Today screen, its widgets, and bottom sheets (including generic tracker sheets).
+- `screens/calendar/`, `screens/insights/`, `screens/settings/`, `screens/trackers/` — the other tab destinations.
+- `screens/shared/` — top bar, bottom tab bar, shared scaffolds.
+- `app_shell.dart` — tab navigation and cross-tab state.
+
+Toolchain notes: Flutter 3.41.x stable. `flutter pub get`, `flutter analyze`, `flutter test`, `flutter build web` all run from `app/`. Do not couple Flutter source to anything in `core/` or `tests/`.
+
+## Flutter Frontend Readiness (Contracts)
+
+The Flutter client should grow toward generated OpenAPI models plus `contract_snapshot/examples/`. The primary on-device graph is `LocalStoreSnapshot`; `LocalDataBundle` is an export/import boundary. Keep calculations and persistence on device. Backend validation is for contract confidence, not runtime ownership. The current `app/lib/data/models.dart` fixtures are placeholders, not the contract surface.
