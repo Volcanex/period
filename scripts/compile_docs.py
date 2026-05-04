@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
-"""Build an auto-generated index of every AGENTS.md in the repo."""
+"""Build an auto-generated index of every AGENTS.md in the repo and mirror CLAUDE.md."""
 
 from __future__ import annotations
 
 from datetime import datetime, timezone
 from pathlib import Path
+import sys
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from scripts.sync_agent_docs import sync as sync_agent_docs
 SKIP_DIRS = {
     "output", "venv", ".venv", "__pycache__", ".git", "node_modules",
     ".mypy_cache", ".pytest_cache", ".claude", "dist", "build",
@@ -65,6 +70,7 @@ def main() -> None:
     start = content.index(START_MARKER)
     end = content.index(END_MARKER) + len(END_MARKER)
     root.write_text(content[:start] + block + content[end:], encoding="utf-8")
+    sync_agent_docs(check=False)
     print(f"Indexed {len(docs)} {DOC_NAME} file(s):")
     for doc in docs:
         print("  " + doc["path"] + " - " + doc["heading"])
