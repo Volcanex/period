@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter
 
+from core.analyzers import evaluate_pmdd
 from core.bundles import validate_local_data_bundle, validate_local_store_snapshot
 from core.contracts import (
     AppConfig,
@@ -13,6 +14,8 @@ from core.contracts import (
     LocalStoreSnapshotValidationRequest,
     ObservationValidationRequest,
     ObservationValidationResult,
+    PmddEvaluationRequest,
+    PmddEvaluationResult,
     PrivacyManifest,
     TrackerDefinition,
     TrackerPack,
@@ -92,3 +95,9 @@ async def validate_store_snapshot(request: LocalStoreSnapshotValidationRequest) 
 async def validate_bundle(request: LocalDataBundleValidationRequest) -> LocalDataBundleValidationResult:
     """Validate a local-first import/export bundle without storing it."""
     return validate_local_data_bundle(request.bundle)
+
+
+@router.post("/analyzers/pmdd/evaluate", response_model=PmddEvaluationResult)
+async def evaluate_pmdd_pattern(request: PmddEvaluationRequest) -> PmddEvaluationResult:
+    """Evaluate recent observations for repeated PMDD-style late-luteal patterns."""
+    return evaluate_pmdd(request.subject_id, request.observations)

@@ -23,7 +23,14 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
+        },
+        {
+          "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+          "confidence": 0.71,
+          "review_status": "draft",
+          "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -41,7 +48,7 @@
         "type": "string"
       },
       "value_type": "enum",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": [
@@ -61,7 +68,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": {
@@ -83,7 +90,7 @@
         "type": "string"
       },
       "value_type": "enum",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": null,
@@ -97,7 +104,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -109,7 +116,7 @@
         "type": "boolean"
       },
       "value_type": "boolean",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": null,
@@ -123,7 +130,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": {
@@ -144,7 +151,53 @@
         "type": "number"
       },
       "value_type": "decimal",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
+    },
+    {
+      "allowed_values": [
+        "regular",
+        "variable",
+        "infrequent",
+        "absent",
+        "unknown"
+      ],
+      "calendar_layer": "context",
+      "calendar_priority": 55,
+      "code": "cycle_regularity",
+      "display_name": "Cycle regularity",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.08"
+        },
+        {
+          "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+          "confidence": 0.71,
+          "review_status": "draft",
+          "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+          "version": "2026.05.08"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "regular",
+          "variable",
+          "infrequent",
+          "absent",
+          "unknown"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.08"
     },
     {
       "allowed_values": [
@@ -164,7 +217,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -183,7 +236,7 @@
         "type": "string"
       },
       "value_type": "enum",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": [
@@ -202,7 +255,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -220,34 +273,7 @@
         "type": "string"
       },
       "value_type": "enum",
-      "version": "2026.05.02"
-    },
-    {
-      "allowed_values": null,
-      "calendar_layer": "symptom",
-      "calendar_priority": 50,
-      "code": "cycle_irregularity_note",
-      "display_name": "Cycle irregularity note",
-      "evidence": [
-        {
-          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
-          "confidence": 0.45,
-          "review_status": "draft",
-          "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
-        }
-      ],
-      "fhir_mapping": null,
-      "health_connect_mapping": null,
-      "healthkit_mapping": null,
-      "temporal_grain": "day",
-      "unit": null,
-      "validation_schema": {
-        "maxLength": 500,
-        "type": "string"
-      },
-      "value_type": "string",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": [
@@ -265,7 +291,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -282,7 +308,7 @@
         "type": "string"
       },
       "value_type": "enum",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": [
@@ -301,7 +327,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -319,71 +345,7 @@
         "type": "string"
       },
       "value_type": "enum",
-      "version": "2026.05.02"
-    },
-    {
-      "allowed_values": [
-        "none",
-        "mild",
-        "moderate",
-        "severe"
-      ],
-      "calendar_layer": "symptom",
-      "calendar_priority": 50,
-      "code": "hair_thinning",
-      "display_name": "Hair thinning",
-      "evidence": [
-        {
-          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
-          "confidence": 0.45,
-          "review_status": "draft",
-          "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
-        }
-      ],
-      "fhir_mapping": null,
-      "health_connect_mapping": null,
-      "healthkit_mapping": null,
-      "temporal_grain": "day",
-      "unit": null,
-      "validation_schema": {
-        "enum": [
-          "none",
-          "mild",
-          "moderate",
-          "severe"
-        ],
-        "type": "string"
-      },
-      "value_type": "enum",
-      "version": "2026.05.02"
-    },
-    {
-      "allowed_values": null,
-      "calendar_layer": "symptom",
-      "calendar_priority": 50,
-      "code": "insulin_metabolic_note",
-      "display_name": "Insulin or metabolic note",
-      "evidence": [
-        {
-          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
-          "confidence": 0.45,
-          "review_status": "draft",
-          "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
-        }
-      ],
-      "fhir_mapping": null,
-      "health_connect_mapping": null,
-      "healthkit_mapping": null,
-      "temporal_grain": "day",
-      "unit": null,
-      "validation_schema": {
-        "maxLength": 500,
-        "type": "string"
-      },
-      "value_type": "string",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": null,
@@ -397,7 +359,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -410,7 +372,7 @@
         "type": "string"
       },
       "value_type": "string",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": [
@@ -430,7 +392,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -449,7 +411,7 @@
         "type": "string"
       },
       "value_type": "enum",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": [
@@ -468,7 +430,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -486,7 +448,51 @@
         "type": "string"
       },
       "value_type": "enum",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
+    },
+    {
+      "allowed_values": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "calendar_layer": "symptom",
+      "calendar_priority": 50,
+      "code": "hair_thinning",
+      "display_name": "Scalp hair thinning or loss",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.08"
+        },
+        {
+          "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+          "confidence": 0.71,
+          "review_status": "draft",
+          "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+          "version": "2026.05.08"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "enum": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ],
+        "type": "string"
+      },
+      "value_type": "enum",
+      "version": "2026.05.08"
     },
     {
       "allowed_values": null,
@@ -500,7 +506,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -512,7 +518,7 @@
         "type": "boolean"
       },
       "value_type": "boolean",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": [
@@ -531,7 +537,14 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
+        },
+        {
+          "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+          "confidence": 0.71,
+          "review_status": "draft",
+          "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -549,7 +562,176 @@
         "type": "string"
       },
       "value_type": "enum",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "context",
+      "calendar_priority": 40,
+      "code": "acanthosis_nigricans",
+      "display_name": "Acanthosis nigricans observed",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.08"
+        },
+        {
+          "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+          "confidence": 0.71,
+          "review_status": "draft",
+          "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+          "version": "2026.05.08"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "type": "boolean"
+      },
+      "value_type": "boolean",
+      "version": "2026.05.08"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "context",
+      "calendar_priority": 35,
+      "code": "cycle_irregularity_note",
+      "display_name": "Cycle irregularity note",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.08"
+        },
+        {
+          "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+          "confidence": 0.71,
+          "review_status": "draft",
+          "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+          "version": "2026.05.08"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "maxLength": 500,
+        "type": "string"
+      },
+      "value_type": "string",
+      "version": "2026.05.08"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "context",
+      "calendar_priority": 35,
+      "code": "glucose_lab_note",
+      "display_name": "Glucose or HbA1c note",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.08"
+        },
+        {
+          "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+          "confidence": 0.71,
+          "review_status": "draft",
+          "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+          "version": "2026.05.08"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "maxLength": 500,
+        "type": "string"
+      },
+      "value_type": "string",
+      "version": "2026.05.08"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "context",
+      "calendar_priority": 35,
+      "code": "insulin_metabolic_note",
+      "display_name": "Insulin or metabolic note",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.08"
+        },
+        {
+          "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+          "confidence": 0.71,
+          "review_status": "draft",
+          "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+          "version": "2026.05.08"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "maxLength": 500,
+        "type": "string"
+      },
+      "value_type": "string",
+      "version": "2026.05.08"
+    },
+    {
+      "allowed_values": null,
+      "calendar_layer": "context",
+      "calendar_priority": 35,
+      "code": "lipid_note",
+      "display_name": "Lipid panel note",
+      "evidence": [
+        {
+          "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+          "confidence": 0.45,
+          "review_status": "draft",
+          "source": "Period Atlas v1 tracker taxonomy",
+          "version": "2026.05.08"
+        },
+        {
+          "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+          "confidence": 0.71,
+          "review_status": "draft",
+          "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+          "version": "2026.05.08"
+        }
+      ],
+      "fhir_mapping": null,
+      "health_connect_mapping": null,
+      "healthkit_mapping": null,
+      "temporal_grain": "day",
+      "unit": null,
+      "validation_schema": {
+        "maxLength": 500,
+        "type": "string"
+      },
+      "value_type": "string",
+      "version": "2026.05.08"
     },
     {
       "allowed_values": null,
@@ -563,7 +745,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -577,7 +759,7 @@
         "type": "number"
       },
       "value_type": "decimal",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": null,
@@ -591,7 +773,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -605,7 +787,7 @@
         "type": "number"
       },
       "value_type": "decimal",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     },
     {
       "allowed_values": null,
@@ -619,7 +801,7 @@
           "confidence": 0.45,
           "review_status": "draft",
           "source": "Period Atlas v1 tracker taxonomy",
-          "version": "2026.05.02"
+          "version": "2026.05.08"
         }
       ],
       "fhir_mapping": null,
@@ -632,7 +814,7 @@
         "type": "string"
       },
       "value_type": "string",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
     }
   ],
   "tracker_preferences": [

@@ -1,5 +1,12 @@
 [
   {
+    "change_type": "additive",
+    "migration_note": "Clients may regenerate OpenAPI and optionally adopt the PMDD analyzer endpoint.",
+    "released_on": "2026-05-08",
+    "summary": "Additive PMDD analyzer contracts and backend evaluation endpoint; calculation ownership clarified as hybrid.",
+    "version": "2026.05.08"
+  },
+  {
     "change_type": "initial",
     "migration_note": "No migration required; first supported contract version.",
     "released_on": "2026-05-02",

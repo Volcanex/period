@@ -1,6 +1,13 @@
 {
   "changelog": [
     {
+      "change_type": "additive",
+      "migration_note": "Clients may regenerate OpenAPI and optionally adopt the PMDD analyzer endpoint.",
+      "released_on": "2026-05-08",
+      "summary": "Additive PMDD analyzer contracts and backend evaluation endpoint; calculation ownership clarified as hybrid.",
+      "version": "2026.05.08"
+    },
+    {
       "change_type": "initial",
       "migration_note": "No migration required; first supported contract version.",
       "released_on": "2026-05-02",
@@ -9,9 +16,9 @@
     }
   ],
   "compatibility_policy": "Additive changes may extend schemas, endpoints, examples, or enum-adjacent metadata without removing fields. Breaking changes remove or rename fields, change value semantics, or make previously valid payloads invalid. Flutter should accept additive versions with regeneration/tests and require an explicit migration for breaking versions.",
-  "current_version": "2026.05.02",
-  "minimum_supported_version": "2026.05.02",
+  "current_version": "2026.05.08",
+  "minimum_supported_version": "2026.05.08",
   "supported_versions": [
-    "2026.05.02"
+    "2026.05.08"
   ]
 }

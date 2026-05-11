@@ -304,8 +304,12 @@
             "type": "string"
           },
           "calculation_owner": {
-            "const": "device",
-            "default": "device",
+            "default": "hybrid",
+            "enum": [
+              "device",
+              "server",
+              "hybrid"
+            ],
             "title": "Calculation Owner",
             "type": "string"
           },
@@ -1540,6 +1544,376 @@
         "title": "ObservationValidationResult",
         "type": "object"
       },
+      "PmddCycleEvaluation": {
+        "additionalProperties": false,
+        "properties": {
+          "core_symptom_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Core Symptom Count",
+            "type": "integer"
+          },
+          "core_symptom_rule_met": {
+            "default": false,
+            "title": "Core Symptom Rule Met",
+            "type": "boolean"
+          },
+          "cycle_positive": {
+            "default": false,
+            "title": "Cycle Positive",
+            "type": "boolean"
+          },
+          "evaluable": {
+            "default": false,
+            "title": "Evaluable",
+            "type": "boolean"
+          },
+          "impairment_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Impairment Count",
+            "type": "integer"
+          },
+          "impairment_rule_met": {
+            "default": false,
+            "title": "Impairment Rule Met",
+            "type": "boolean"
+          },
+          "onset_date": {
+            "format": "date",
+            "title": "Onset Date",
+            "type": "string"
+          },
+          "postmenstrual_coverage": {
+            "default": 0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Postmenstrual Coverage",
+            "type": "number"
+          },
+          "premenstrual_coverage": {
+            "default": 0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Premenstrual Coverage",
+            "type": "number"
+          },
+          "qualifying_core_symptoms": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifying Core Symptoms",
+            "type": "array"
+          },
+          "qualifying_impairment_symptoms": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifying Impairment Symptoms",
+            "type": "array"
+          },
+          "qualifying_secondary_symptoms": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifying Secondary Symptoms",
+            "type": "array"
+          },
+          "symptom_scores": {
+            "items": {
+              "$ref": "#/components/schemas/PmddSymptomCycleScore"
+            },
+            "title": "Symptom Scores",
+            "type": "array"
+          },
+          "total_symptom_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Symptom Count",
+            "type": "integer"
+          },
+          "total_symptom_rule_met": {
+            "default": false,
+            "title": "Total Symptom Rule Met",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "onset_date"
+        ],
+        "title": "PmddCycleEvaluation",
+        "type": "object"
+      },
+      "PmddEvaluationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/ObservationEvent"
+            },
+            "title": "Observations",
+            "type": "array"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject_id"
+        ],
+        "title": "PmddEvaluationRequest",
+        "type": "object"
+      },
+      "PmddEvaluationResult": {
+        "additionalProperties": false,
+        "properties": {
+          "activation_score": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Activation Score",
+            "type": "number"
+          },
+          "analyzer_code": {
+            "const": "pmdd_pattern_v1",
+            "title": "Analyzer Code",
+            "type": "string"
+          },
+          "analyzer_version": {
+            "title": "Analyzer Version",
+            "type": "string"
+          },
+          "confidence": {
+            "enum": [
+              "none",
+              "low",
+              "moderate",
+              "high"
+            ],
+            "title": "Confidence",
+            "type": "string"
+          },
+          "coverage": {
+            "default": 0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Coverage",
+            "type": "number"
+          },
+          "cycle_evaluations": {
+            "items": {
+              "$ref": "#/components/schemas/PmddCycleEvaluation"
+            },
+            "title": "Cycle Evaluations",
+            "type": "array"
+          },
+          "diagnostic_framework": {
+            "const": "drsp_cpass_like",
+            "default": "drsp_cpass_like",
+            "title": "Diagnostic Framework",
+            "type": "string"
+          },
+          "evaluable_cycle_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Evaluable Cycle Count",
+            "type": "integer"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "evidence_summary": {
+            "title": "Evidence Summary",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "meets_chronicity_rule": {
+            "default": false,
+            "title": "Meets Chronicity Rule",
+            "type": "boolean"
+          },
+          "meets_drsp_content_rule": {
+            "default": false,
+            "title": "Meets Drsp Content Rule",
+            "type": "boolean"
+          },
+          "meets_drsp_impairment_rule": {
+            "default": false,
+            "title": "Meets Drsp Impairment Rule",
+            "type": "boolean"
+          },
+          "pack_recommended": {
+            "default": false,
+            "title": "Pack Recommended",
+            "type": "boolean"
+          },
+          "positive_cycle_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Positive Cycle Count",
+            "type": "integer"
+          },
+          "recommended_actions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Recommended Actions",
+            "type": "array"
+          },
+          "rich_pattern_logged": {
+            "default": false,
+            "title": "Rich Pattern Logged",
+            "type": "boolean"
+          },
+          "scoring_method": {
+            "const": "range_of_scale_used_30pct",
+            "default": "range_of_scale_used_30pct",
+            "title": "Scoring Method",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "insufficient_data",
+              "suppressed",
+              "quiet",
+              "activation",
+              "pattern"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "supporting_cycle_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Supporting Cycle Count",
+            "type": "integer"
+          },
+          "suppressors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Suppressors",
+            "type": "array"
+          }
+        },
+        "required": [
+          "analyzer_code",
+          "analyzer_version",
+          "subject_id",
+          "generated_at",
+          "status",
+          "confidence",
+          "summary",
+          "evidence_summary"
+        ],
+        "title": "PmddEvaluationResult",
+        "type": "object"
+      },
+      "PmddSymptomCycleScore": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "postmenstrual_max": {
+            "anyOf": [
+              {
+                "maximum": 6.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postmenstrual Max"
+          },
+          "postmenstrual_mean": {
+            "anyOf": [
+              {
+                "maximum": 6.0,
+                "minimum": 1.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postmenstrual Mean"
+          },
+          "premenstrual_max": {
+            "anyOf": [
+              {
+                "maximum": 6.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Premenstrual Max"
+          },
+          "premenstrual_mean": {
+            "anyOf": [
+              {
+                "maximum": 6.0,
+                "minimum": 1.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Premenstrual Mean"
+          },
+          "qualifies": {
+            "default": false,
+            "title": "Qualifies",
+            "type": "boolean"
+          },
+          "relative_elevation": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Relative Elevation"
+          },
+          "severe_premenstrual_day_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Severe Premenstrual Day Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "title": "PmddSymptomCycleScore",
+        "type": "object"
+      },
       "Prediction": {
         "additionalProperties": false,
         "properties": {
@@ -2366,6 +2740,48 @@
         "summary": "Health",
         "tags": [
           "system"
+        ]
+      }
+    },
+    "/api/v1/analyzers/pmdd/evaluate": {
+      "post": {
+        "description": "Evaluate recent observations for repeated PMDD-style late-luteal patterns.",
+        "operationId": "evaluate_pmdd_pattern_api_v1_analyzers_pmdd_evaluate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PmddEvaluationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PmddEvaluationResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Evaluate Pmdd Pattern",
+        "tags": [
+          "v1"
         ]
       }
     },

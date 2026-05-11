@@ -1,7 +1,7 @@
 {
-  "clinical_note": "This pack supports symptom logging for clinician conversations and does not infer or diagnose PCOS.",
+  "clinical_note": "This pack supports symptom, cycle, and metabolic-context logging for clinician conversations and does not infer or diagnose PCOS.",
   "code": "pcos_support",
-  "description": "Optional PCOS-oriented symptom set layered on universal observation events.",
+  "description": "Optional PCOS-oriented symptom and metabolic-context set layered on universal observation events.",
   "display_name": "PCOS support",
   "enabled_by_default": false,
   "evidence": [
@@ -10,16 +10,27 @@
       "confidence": 0.45,
       "review_status": "draft",
       "source": "Period Atlas v1 tracker taxonomy",
-      "version": "2026.05.02"
+      "version": "2026.05.08"
+    },
+    {
+      "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+      "confidence": 0.71,
+      "review_status": "draft",
+      "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+      "version": "2026.05.08"
     }
   ],
   "tracker_codes": [
+    "cycle_regularity",
     "cycle_irregularity_note",
     "acne_severity",
     "hair_growth",
     "hair_thinning",
+    "acanthosis_nigricans",
     "weight",
     "insulin_metabolic_note",
+    "glucose_lab_note",
+    "lipid_note",
     "mood",
     "sleep_hours",
     "period_bleeding",

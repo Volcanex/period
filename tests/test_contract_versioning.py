@@ -1,11 +1,10 @@
 from datetime import UTC, datetime
 
-from fastapi.testclient import TestClient
-
 from core.bundles import validate_local_data_bundle
 from core.contracts import ContractCompatibilityRequest, ContractVersion, LocalDataBundle, Subject
 from core.contracts.versioning import CURRENT_CONTRACT_VERSION, check_contract_compatibility, contract_version
 from server import app
+from tests.http_client import SyncASGIClient
 
 
 def test_contract_version_declares_current_support_window_and_policy():
@@ -14,7 +13,8 @@ def test_contract_version_declares_current_support_window_and_policy():
     assert version.current_version == CURRENT_CONTRACT_VERSION
     assert version.minimum_supported_version == CURRENT_CONTRACT_VERSION
     assert version.supported_versions == [CURRENT_CONTRACT_VERSION]
-    assert version.changelog[0].change_type == "initial"
+    assert version.changelog[0].change_type == "additive"
+    assert any(entry.change_type == "initial" for entry in version.changelog)
     assert "Breaking changes" in version.compatibility_policy
 
 
@@ -30,7 +30,7 @@ def test_contract_compatibility_accepts_current_and_rejects_unknown():
 
 
 def test_contract_version_endpoints_round_trip():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     version_response = client.get("/api/v1/contract-version")
     assert version_response.status_code == 200
     assert version_response.json()["current_version"] == CURRENT_CONTRACT_VERSION

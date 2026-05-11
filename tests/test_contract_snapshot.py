@@ -3,7 +3,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from core.contracts import ContractCompatibilityResult, ContractVersion, LocalDataBundle, LocalStoreSnapshot, PrivacyManifest, TrackerDefinition, TrackerPack
+from core.contracts import ContractCompatibilityResult, ContractVersion, LocalDataBundle, LocalStoreSnapshot, ObservationEvent, PmddEvaluationResult, PrivacyManifest, TrackerDefinition, TrackerPack
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SNAPSHOT_DIR = PROJECT_ROOT / "contract_snapshot"
@@ -29,11 +29,45 @@ def test_export_contracts_generates_openapi_and_examples():
 
     _validate(ContractVersion, json.loads((SNAPSHOT_DIR / "contract-version.v1.json").read_text(encoding="utf-8")))
     changelog = json.loads((SNAPSHOT_DIR / "contract-changelog.v1.json").read_text(encoding="utf-8"))
-    assert changelog[0]["version"] == "2026.05.02"
+    assert changelog[0]["version"] == "2026.05.08"
 
     examples = SNAPSHOT_DIR / "examples"
     _validate(TrackerDefinition, json.loads((examples / "tracker-definition.period-bleeding.json").read_text(encoding="utf-8")))
+    acne_definition = _validate(
+        TrackerDefinition,
+        json.loads((examples / "tracker-definition.acne-severity.json").read_text(encoding="utf-8")),
+    )
+    assert acne_definition.code == "acne_severity"
+    assert "mild" in acne_definition.allowed_values
+    cycle_regularity_definition = _validate(
+        TrackerDefinition,
+        json.loads((examples / "tracker-definition.cycle-regularity.json").read_text(encoding="utf-8")),
+    )
+    assert cycle_regularity_definition.code == "cycle_regularity"
+    assert "variable" in cycle_regularity_definition.allowed_values
+
+    pcos_pack = _validate(TrackerPack, json.loads((examples / "tracker-pack.pcos-support.json").read_text(encoding="utf-8")))
+    assert pcos_pack.code == "pcos_support"
+    assert "acne_severity" in pcos_pack.tracker_codes
+    assert "cycle_regularity" in pcos_pack.tracker_codes
+    assert "acanthosis_nigricans" in pcos_pack.tracker_codes
+
     _validate(TrackerPack, json.loads((examples / "tracker-pack.endometriosis-support.json").read_text(encoding="utf-8")))
+    _validate(
+        PmddEvaluationResult,
+        json.loads((examples / "analysis-result.pmdd-pattern.json").read_text(encoding="utf-8")),
+    )
+    acne_observation = _validate(
+        ObservationEvent,
+        json.loads((examples / "observation.acne-severity.valid.json").read_text(encoding="utf-8")),
+    )
+    assert acne_observation.tracker_code == "acne_severity"
+    cycle_regularity_observation = _validate(
+        ObservationEvent,
+        json.loads((examples / "observation.cycle-regularity.valid.json").read_text(encoding="utf-8")),
+    )
+    assert cycle_regularity_observation.tracker_code == "cycle_regularity"
+    assert cycle_regularity_observation.value == "variable"
     _validate(LocalStoreSnapshot, json.loads((examples / "local-store-snapshot.demo.json").read_text(encoding="utf-8")))
     _validate(LocalDataBundle, json.loads((examples / "local-data-bundle.demo.json").read_text(encoding="utf-8")))
     _validate(PrivacyManifest, json.loads((examples / "privacy-manifest.v1.json").read_text(encoding="utf-8")))

@@ -249,6 +249,67 @@ class AnalysisResult(ContractModel):
     evidence: list[EvidenceReference] = Field(default_factory=list)
 
 
+class PmddEvaluationRequest(ContractModel):
+    subject_id: str
+    observations: list[ObservationEvent] = Field(default_factory=list)
+
+
+class PmddSymptomCycleScore(ContractModel):
+    code: str
+    premenstrual_mean: float | None = Field(None, ge=1, le=6)
+    postmenstrual_mean: float | None = Field(None, ge=1, le=6)
+    premenstrual_max: int | None = Field(None, ge=1, le=6)
+    postmenstrual_max: int | None = Field(None, ge=1, le=6)
+    severe_premenstrual_day_count: int = Field(default=0, ge=0)
+    relative_elevation: float | None = Field(None, ge=0)
+    qualifies: bool = False
+
+
+class PmddCycleEvaluation(ContractModel):
+    onset_date: date
+    premenstrual_coverage: float = Field(default=0, ge=0, le=1)
+    postmenstrual_coverage: float = Field(default=0, ge=0, le=1)
+    evaluable: bool = False
+    core_symptom_count: int = Field(default=0, ge=0)
+    total_symptom_count: int = Field(default=0, ge=0)
+    impairment_count: int = Field(default=0, ge=0)
+    core_symptom_rule_met: bool = False
+    total_symptom_rule_met: bool = False
+    impairment_rule_met: bool = False
+    cycle_positive: bool = False
+    qualifying_core_symptoms: list[str] = Field(default_factory=list)
+    qualifying_secondary_symptoms: list[str] = Field(default_factory=list)
+    qualifying_impairment_symptoms: list[str] = Field(default_factory=list)
+    symptom_scores: list[PmddSymptomCycleScore] = Field(default_factory=list)
+
+
+class PmddEvaluationResult(ContractModel):
+    analyzer_code: Literal["pmdd_pattern_v1"]
+    analyzer_version: str
+    subject_id: str
+    generated_at: datetime
+    status: Literal["insufficient_data", "suppressed", "quiet", "activation", "pattern"]
+    confidence: Literal["none", "low", "moderate", "high"]
+    supporting_cycle_count: int = Field(default=0, ge=0)
+    evaluable_cycle_count: int = Field(default=0, ge=0)
+    rich_pattern_logged: bool = False
+    pack_recommended: bool = False
+    coverage: float = Field(default=0, ge=0, le=1)
+    activation_score: float = Field(default=0, ge=0)
+    diagnostic_framework: Literal["drsp_cpass_like"] = "drsp_cpass_like"
+    scoring_method: Literal["range_of_scale_used_30pct"] = "range_of_scale_used_30pct"
+    positive_cycle_count: int = Field(default=0, ge=0)
+    meets_chronicity_rule: bool = False
+    meets_drsp_content_rule: bool = False
+    meets_drsp_impairment_rule: bool = False
+    suppressors: list[str] = Field(default_factory=list)
+    summary: str
+    evidence_summary: str
+    cycle_evaluations: list[PmddCycleEvaluation] = Field(default_factory=list)
+    recommended_actions: list[str] = Field(default_factory=list)
+    evidence: list[EvidenceReference] = Field(default_factory=list)
+
+
 class Report(ContractModel):
     id: str
     subject_id: str
@@ -342,6 +403,6 @@ class AppConfig(ContractModel):
     api_version: str = "v1"
     contract_version: str
     privacy_posture: Literal["local_first_private"] = "local_first_private"
-    calculation_owner: Literal["device"] = "device"
+    calculation_owner: Literal["device", "server", "hybrid"] = "hybrid"
     supported_locales: list[str] = Field(default_factory=list)
     notes: list[str] = Field(default_factory=list)

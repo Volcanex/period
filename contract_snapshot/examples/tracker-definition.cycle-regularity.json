@@ -1,0 +1,46 @@
+{
+  "allowed_values": [
+    "regular",
+    "variable",
+    "infrequent",
+    "absent",
+    "unknown"
+  ],
+  "calendar_layer": "context",
+  "calendar_priority": 55,
+  "code": "cycle_regularity",
+  "display_name": "Cycle regularity",
+  "evidence": [
+    {
+      "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+      "confidence": 0.45,
+      "review_status": "draft",
+      "source": "Period Atlas v1 tracker taxonomy",
+      "version": "2026.05.08"
+    },
+    {
+      "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+      "confidence": 0.71,
+      "review_status": "draft",
+      "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+      "version": "2026.05.08"
+    }
+  ],
+  "fhir_mapping": null,
+  "health_connect_mapping": null,
+  "healthkit_mapping": null,
+  "temporal_grain": "day",
+  "unit": null,
+  "validation_schema": {
+    "enum": [
+      "regular",
+      "variable",
+      "infrequent",
+      "absent",
+      "unknown"
+    ],
+    "type": "string"
+  },
+  "value_type": "enum",
+  "version": "2026.05.08"
+}

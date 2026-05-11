@@ -10,7 +10,7 @@ from core.contracts.domain import (
     ContractVersion,
 )
 
-CURRENT_CONTRACT_VERSION = "2026.05.02"
+CURRENT_CONTRACT_VERSION = "2026.05.08"
 SUPPORTED_CONTRACT_VERSIONS = [CURRENT_CONTRACT_VERSION]
 MINIMUM_SUPPORTED_VERSION = CURRENT_CONTRACT_VERSION
 COMPATIBILITY_POLICY = (
@@ -19,6 +19,13 @@ COMPATIBILITY_POLICY = (
     "Flutter should accept additive versions with regeneration/tests and require an explicit migration for breaking versions."
 )
 CHANGELOG = [
+    ContractChangelogEntry(
+        version="2026.05.08",
+        released_on=date(2026, 5, 8),
+        change_type="additive",
+        summary="Additive PMDD analyzer contracts and backend evaluation endpoint; calculation ownership clarified as hybrid.",
+        migration_note="Clients may regenerate OpenAPI and optionally adopt the PMDD analyzer endpoint.",
+    ),
     ContractChangelogEntry(
         version="2026.05.02",
         released_on=date(2026, 5, 2),

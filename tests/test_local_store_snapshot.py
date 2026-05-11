@@ -1,7 +1,5 @@
 from datetime import UTC, datetime
 
-from fastapi.testclient import TestClient
-
 from core.bundles import local_store_snapshot_to_bundle, validate_local_store_snapshot
 from core.contracts import (
     LocalStoreMetadata,
@@ -11,8 +9,10 @@ from core.contracts import (
     RecordLifecycle,
     Subject,
 )
+from core.contracts.versioning import CURRENT_CONTRACT_VERSION
 from core.tracking import default_tracker_settings
 from server import app
+from tests.http_client import SyncASGIClient
 
 
 def _snapshot() -> LocalStoreSnapshot:
@@ -29,7 +29,7 @@ def _snapshot() -> LocalStoreSnapshot:
     )
     return LocalStoreSnapshot(
         metadata=LocalStoreMetadata(
-            schema_version="2026.05.02",
+            schema_version=CURRENT_CONTRACT_VERSION,
             app_version="period-flutter-dev",
             device_timezone="UTC",
             created_at=now,
@@ -78,7 +78,7 @@ def test_local_store_snapshot_rejects_unknown_lifecycle_key_and_subject_mismatch
 
 
 def test_local_store_snapshot_endpoint_is_stateless():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     request = LocalStoreSnapshotValidationRequest(snapshot=_snapshot())
     response = client.post("/api/v1/validate-local-store-snapshot", json=request.model_dump(mode="json"))
     assert response.status_code == 200

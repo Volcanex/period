@@ -1,7 +1,5 @@
 from datetime import UTC, datetime
 
-from fastapi.testclient import TestClient
-
 from core.bundles import validate_local_data_bundle
 from core.contracts import (
     LocalDataBundle,
@@ -12,6 +10,7 @@ from core.contracts import (
 )
 from core.tracking import default_tracker_settings, resolve_tracker_settings
 from server import app
+from tests.http_client import SyncASGIClient
 
 
 def test_default_tracker_settings_enable_base_pack_only():
@@ -45,6 +44,7 @@ def test_tracker_settings_can_enable_pack_and_pin_tracker_order():
     assert result.active_catalog is not None
     codes = [definition.code for definition in result.active_catalog.tracker_definitions]
     assert codes[0] == "acne_severity"
+    assert "cycle_regularity" in codes
     assert "hair_growth" in codes
     assert "sex" not in codes
 
@@ -71,7 +71,7 @@ def test_tracker_settings_reject_unknown_codes_and_duplicates():
 
 
 def test_tracker_settings_endpoints_are_stateless_contract_helpers():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     response = client.get("/api/v1/tracker-settings/default", params={"subject_id": "subject-1"})
     assert response.status_code == 200
     settings = TrackerSettings.model_validate(response.json())

@@ -1,0 +1,372 @@
+{
+  "activation_score": 5.0,
+  "analyzer_code": "pmdd_pattern_v1",
+  "analyzer_version": "2026.05.08",
+  "confidence": "moderate",
+  "coverage": 0.7857142857142857,
+  "cycle_evaluations": [
+    {
+      "core_symptom_count": 2,
+      "core_symptom_rule_met": true,
+      "cycle_positive": true,
+      "evaluable": true,
+      "impairment_count": 1,
+      "impairment_rule_met": true,
+      "onset_date": "2026-03-01",
+      "postmenstrual_coverage": 0.5714285714285714,
+      "premenstrual_coverage": 1.0,
+      "qualifying_core_symptoms": [
+        "affective_lability",
+        "depressed_mood"
+      ],
+      "qualifying_impairment_symptoms": [
+        "productivity_impairment"
+      ],
+      "qualifying_secondary_symptoms": [
+        "less_interest",
+        "difficulty_concentrating",
+        "overwhelmed"
+      ],
+      "symptom_scores": [
+        {
+          "code": "affective_lability",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 5,
+          "premenstrual_mean": 5.0,
+          "qualifies": true,
+          "relative_elevation": 1.0,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "irritability_anger",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "depressed_mood",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 5,
+          "premenstrual_mean": 5.0,
+          "qualifies": true,
+          "relative_elevation": 1.0,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "anxiety_tension",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "less_interest",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 4,
+          "premenstrual_mean": 4.0,
+          "qualifies": true,
+          "relative_elevation": 0.75,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "difficulty_concentrating",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 4,
+          "premenstrual_mean": 4.0,
+          "qualifies": true,
+          "relative_elevation": 0.75,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "lethargy",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "appetite_change",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "sleep_change",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "overwhelmed",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 4,
+          "premenstrual_mean": 4.0,
+          "qualifies": true,
+          "relative_elevation": 0.75,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "physical_symptoms",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "productivity_impairment",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 5,
+          "premenstrual_mean": 5.0,
+          "qualifies": true,
+          "relative_elevation": 1.0,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "social_impairment",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "relationship_impairment",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        }
+      ],
+      "total_symptom_count": 5,
+      "total_symptom_rule_met": true
+    },
+    {
+      "core_symptom_count": 2,
+      "core_symptom_rule_met": true,
+      "cycle_positive": true,
+      "evaluable": true,
+      "impairment_count": 1,
+      "impairment_rule_met": true,
+      "onset_date": "2026-03-29",
+      "postmenstrual_coverage": 0.5714285714285714,
+      "premenstrual_coverage": 1.0,
+      "qualifying_core_symptoms": [
+        "affective_lability",
+        "depressed_mood"
+      ],
+      "qualifying_impairment_symptoms": [
+        "productivity_impairment"
+      ],
+      "qualifying_secondary_symptoms": [
+        "less_interest",
+        "difficulty_concentrating",
+        "overwhelmed"
+      ],
+      "symptom_scores": [
+        {
+          "code": "affective_lability",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 5,
+          "premenstrual_mean": 5.0,
+          "qualifies": true,
+          "relative_elevation": 1.0,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "irritability_anger",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "depressed_mood",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 5,
+          "premenstrual_mean": 5.0,
+          "qualifies": true,
+          "relative_elevation": 1.0,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "anxiety_tension",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "less_interest",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 4,
+          "premenstrual_mean": 4.0,
+          "qualifies": true,
+          "relative_elevation": 0.75,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "difficulty_concentrating",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 4,
+          "premenstrual_mean": 4.0,
+          "qualifies": true,
+          "relative_elevation": 0.75,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "lethargy",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "appetite_change",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "sleep_change",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "overwhelmed",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 4,
+          "premenstrual_mean": 4.0,
+          "qualifies": true,
+          "relative_elevation": 0.75,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "physical_symptoms",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "productivity_impairment",
+          "postmenstrual_max": 1,
+          "postmenstrual_mean": 1.0,
+          "premenstrual_max": 5,
+          "premenstrual_mean": 5.0,
+          "qualifies": true,
+          "relative_elevation": 1.0,
+          "severe_premenstrual_day_count": 2
+        },
+        {
+          "code": "social_impairment",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        },
+        {
+          "code": "relationship_impairment",
+          "postmenstrual_max": null,
+          "postmenstrual_mean": null,
+          "premenstrual_max": null,
+          "premenstrual_mean": null,
+          "qualifies": false,
+          "relative_elevation": null,
+          "severe_premenstrual_day_count": 0
+        }
+      ],
+      "total_symptom_count": 5,
+      "total_symptom_rule_met": true
+    }
+  ],
+  "diagnostic_framework": "drsp_cpass_like",
+  "evaluable_cycle_count": 2,
+  "evidence": [
+    {
+      "assumption": "Uses prospective daily DRSP-style ratings and conservative cycle criteria to identify repeated PMDD-style patterns without collapsing uncertainty.",
+      "confidence": 0.62,
+      "review_status": "draft",
+      "source": "DRSP/C-PASS-style PMDD backend scoring",
+      "version": "2026.05.08"
+    }
+  ],
+  "evidence_summary": "2 recent windows \u00b7 no major suppressors",
+  "generated_at": "2026-05-08T07:31:58.038498Z",
+  "meets_chronicity_rule": true,
+  "meets_drsp_content_rule": true,
+  "meets_drsp_impairment_rule": true,
+  "pack_recommended": false,
+  "positive_cycle_count": 2,
+  "recommended_actions": [
+    "Continue prospective daily ratings for ongoing confirmation and trend stability.",
+    "Review the cycle-level symptom and impairment pattern with a clinician if diagnosis or treatment decisions are needed."
+  ],
+  "rich_pattern_logged": true,
+  "scoring_method": "range_of_scale_used_30pct",
+  "status": "pattern",
+  "subject_id": "pmdd-case-1",
+  "summary": "At least two recent cycles meet DRSP/C-PASS-like PMDD pattern criteria: one or more core symptoms, five or more total symptoms, postmenstrual clearance, and impairment.",
+  "supporting_cycle_count": 2,
+  "suppressors": []
+}
