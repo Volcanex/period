@@ -427,6 +427,117 @@ class PcosEvaluationResult(ContractModel):
     evidence: list[EvidenceReference] = Field(default_factory=list)
 
 
+Straw10Stage = Literal[
+    "minus_3b",
+    "minus_3a",
+    "minus_2",
+    "minus_1",
+    "plus_1a",
+    "plus_1b",
+    "plus_1c",
+    "plus_2",
+    "indeterminate",
+]
+
+PerimenopauseStatus = Literal[
+    "indeterminate",
+    "suppressed",
+    "inapplicable",
+    "reproductive",
+    "early_transition",
+    "late_transition",
+    "postmenopause",
+]
+
+PerimenopauseSeverity = Literal["none", "mild", "moderate", "severe"]
+
+
+class PerimenopauseEvaluationRequest(ContractModel):
+    subject_id: str
+    observations: list[ObservationEvent] = Field(default_factory=list)
+    chronological_age: float | None = Field(
+        None,
+        ge=10,
+        le=120,
+        description="Optional chronological age; STRAW+10 applies regardless of age but extreme values trigger differential reminders.",
+    )
+    post_hysterectomy: bool = Field(
+        default=False,
+        description="If true, menstrual STRAW+10 criteria are inapplicable and the analyzer returns 'inapplicable'.",
+    )
+    known_fmp_date: date | None = Field(
+        None,
+        description="Optional user-confirmed Final Menstrual Period date. When provided, post-FMP staging uses this anchor.",
+    )
+    evaluated_at: datetime | None = Field(
+        None,
+        description="Optional anchor time. Defaults to now.",
+    )
+    evaluation_window_days: int = Field(
+        default=540,
+        ge=120,
+        le=3650,
+        description=(
+            "Trailing window (days). STRAW+10 needs a wider window than PCOS because the late transition and "
+            "early postmenopause stages span multiple years."
+        ),
+    )
+
+
+class PerimenopauseCycleSignal(ContractModel):
+    observed_cycle_count: int = Field(default=0, ge=0)
+    cycle_lengths: list[int] = Field(default_factory=list)
+    consecutive_pair_differences: list[int] = Field(default_factory=list)
+    max_consecutive_pair_difference: int | None = Field(None, ge=0)
+    pairs_with_seven_day_variability: int = Field(default=0, ge=0)
+    persistent_seven_day_variability: bool = False
+    longest_inter_bleed_gap_days: int | None = Field(None, ge=0)
+    amenorrhea_60_plus_days_observed: bool = False
+    amenorrhea_365_plus_days_observed: bool = False
+    last_bleed_date: date | None = None
+    self_reported_pattern_change: bool | None = None
+    rationale: str
+
+
+class PerimenopauseSymptomSignal(ContractModel):
+    hot_flashes_max: PerimenopauseSeverity | None = None
+    night_sweats_max: PerimenopauseSeverity | None = None
+    vaginal_dryness_max: PerimenopauseSeverity | None = None
+    hot_flashes_persistent: bool = False
+    night_sweats_persistent: bool = False
+    vaginal_dryness_persistent: bool = False
+    vasomotor_present: bool = False
+    urogenital_atrophy_present: bool = False
+    sleep_disturbance_present: bool = False
+    mood_change_present: bool = False
+    qualifying_features: list[str] = Field(default_factory=list)
+    rationale: str
+
+
+class PerimenopauseEvaluationResult(ContractModel):
+    analyzer_code: Literal["perimenopause_straw10_v1"]
+    analyzer_version: str
+    subject_id: str
+    generated_at: datetime
+    evaluation_window_start: date | None = None
+    evaluation_window_end: date | None = None
+    status: PerimenopauseStatus
+    confidence: Literal["none", "low", "moderate", "high"]
+    diagnostic_framework: Literal["straw_plus_10"] = "straw_plus_10"
+    straw_stage: Straw10Stage
+    fmp_candidate_date: date | None = None
+    months_since_last_bleed: float | None = Field(None, ge=0)
+    cycle_signal: PerimenopauseCycleSignal
+    symptom_signal: PerimenopauseSymptomSignal
+    suppressors: list[str] = Field(default_factory=list)
+    inapplicability_flags: list[str] = Field(default_factory=list)
+    differential_reminders: list[str] = Field(default_factory=list)
+    summary: str
+    evidence_summary: str
+    recommended_actions: list[str] = Field(default_factory=list)
+    evidence: list[EvidenceReference] = Field(default_factory=list)
+
+
 class Report(ContractModel):
     id: str
     subject_id: str

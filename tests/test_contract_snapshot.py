@@ -10,6 +10,7 @@ from core.contracts import (
     LocalStoreSnapshot,
     ObservationEvent,
     PcosEvaluationResult,
+    PerimenopauseEvaluationResult,
     PmddEvaluationResult,
     PrivacyManifest,
     TrackerDefinition,
@@ -40,7 +41,8 @@ def test_export_contracts_generates_openapi_and_examples():
 
     _validate(ContractVersion, json.loads((SNAPSHOT_DIR / "contract-version.v1.json").read_text(encoding="utf-8")))
     changelog = json.loads((SNAPSHOT_DIR / "contract-changelog.v1.json").read_text(encoding="utf-8"))
-    assert changelog[0]["version"] == "2026.05.11"
+    assert changelog[0]["version"] == "2026.05.12"
+    assert any(entry["version"] == "2026.05.11" for entry in changelog)
     assert any(entry["version"] == "2026.05.08" for entry in changelog)
 
     examples = SNAPSHOT_DIR / "examples"
@@ -75,6 +77,15 @@ def test_export_contracts_generates_openapi_and_examples():
     )
     assert pcos_result.analyzer_code == "pcos_feature_pattern_v1"
     assert pcos_result.differential_reminders
+    perimenopause_result = _validate(
+        PerimenopauseEvaluationResult,
+        json.loads((examples / "analysis-result.perimenopause-straw10.json").read_text(encoding="utf-8")),
+    )
+    assert perimenopause_result.analyzer_code == "perimenopause_straw10_v1"
+    assert perimenopause_result.straw_stage in {
+        "minus_3b", "minus_3a", "minus_2", "minus_1",
+        "plus_1a", "plus_1b", "plus_1c", "plus_2", "indeterminate",
+    }
     acne_observation = _validate(
         ObservationEvent,
         json.loads((examples / "observation.acne-severity.valid.json").read_text(encoding="utf-8")),

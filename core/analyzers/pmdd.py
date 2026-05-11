@@ -189,7 +189,12 @@ def pmdd_backtest_summary_to_dict(summary: PmddBacktestSummary) -> dict:
     }
 
 
-def evaluate_pmdd(subject_id: str, observations: list[ObservationEvent]) -> PmddEvaluationResult:
+def evaluate_pmdd(
+    subject_id: str,
+    observations: list[ObservationEvent],
+    *,
+    evaluated_at: datetime | None = None,
+) -> PmddEvaluationResult:
     ordered = sorted(observations, key=lambda event: (_observed_day(event), event.observed_at))
     cycles = _cycle_signals(ordered)
     suppressors = sorted({flag for cycle in cycles for flag in cycle.suppressors})
@@ -208,7 +213,7 @@ def evaluate_pmdd(subject_id: str, observations: list[ObservationEvent]) -> Pmdd
         coverage=coverage,
     )
     evidence_summary = f"{len(cycles)} recent windows · {' · '.join(suppressors) if suppressors else 'no major suppressors'}"
-    generated_at = datetime.now(UTC)
+    generated_at = (evaluated_at or datetime.now(UTC)).astimezone(UTC)
     cycle_evaluations = [
         PmddCycleEvaluation(
             onset_date=cycle.onset,

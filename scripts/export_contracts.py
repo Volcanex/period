@@ -32,8 +32,10 @@ from core.contracts import (  # noqa: E402
 )
 from core.analyzers import (  # noqa: E402
     evaluate_pcos,
+    evaluate_perimenopause,
     evaluate_pmdd,
     load_pcos_backtest_fixture,
+    load_perimenopause_backtest_fixture,
     load_pmdd_backtest_fixture,
 )
 from core.contracts.versioning import check_contract_compatibility, contract_version
@@ -167,6 +169,7 @@ def examples() -> dict[str, object]:
         priority=50,
     )
     tracker_settings = default_tracker_settings(subject.id)
+    tracker_settings.updated_at = now  # pin so the snapshot is deterministic.
     tracker_settings.enabled_pack_codes.append("pcos_support")
     tracker_settings.tracker_preferences.append(
         TrackerPreference(tracker_code="acne_severity", enabled=True, pinned=True, display_order=0)
@@ -199,7 +202,11 @@ def examples() -> dict[str, object]:
     )
     bundle = local_store_snapshot_to_bundle(local_store_snapshot)
     pmdd_fixture = load_pmdd_backtest_fixture()[0]
-    pmdd_result = evaluate_pmdd(pmdd_fixture.subject_id, list(pmdd_fixture.observations))
+    pmdd_result = evaluate_pmdd(
+        pmdd_fixture.subject_id,
+        list(pmdd_fixture.observations),
+        evaluated_at=datetime(2026, 5, 8, 10, 30, tzinfo=UTC),
+    )
     pcos_fixture = next(
         case for case in load_pcos_backtest_fixture() if case.case_id == "adult-features-present"
     )
@@ -208,6 +215,17 @@ def examples() -> dict[str, object]:
         list(pcos_fixture.observations),
         years_since_menarche=pcos_fixture.years_since_menarche,
         evaluated_at=datetime(2026, 5, 11, tzinfo=UTC),
+    )
+    perimenopause_fixture = next(
+        case for case in load_perimenopause_backtest_fixture() if case.case_id == "early-transition-minus-2"
+    )
+    perimenopause_result = evaluate_perimenopause(
+        perimenopause_fixture.subject_id,
+        list(perimenopause_fixture.observations),
+        chronological_age=perimenopause_fixture.chronological_age,
+        post_hysterectomy=perimenopause_fixture.post_hysterectomy,
+        known_fmp_date=perimenopause_fixture.known_fmp_date,
+        evaluated_at=datetime(2027, 1, 1, tzinfo=UTC),
     )
     packs = {pack.code: pack for pack in tracker_packs()}
     registry = tracker_registry()
@@ -229,6 +247,7 @@ def examples() -> dict[str, object]:
         "analysis-result.backtest-summary.json": analysis_result,
         "analysis-result.pmdd-pattern.json": pmdd_result,
         "analysis-result.pcos-feature-pattern.json": pcos_result,
+        "analysis-result.perimenopause-straw10.json": perimenopause_result,
         "report.clinician-summary.json": report,
         "calendar-annotation.cramps.json": annotation,
         "local-store-snapshot.demo.json": local_store_snapshot,

@@ -28,6 +28,7 @@ the right owner for stable tracker semantics or reproducible models:
 - `POST /api/v1/validate-local-store-snapshot` for stateless Flutter local-store shape validation.
 - `POST /api/v1/analyzers/pmdd/evaluate` for prospective DRSP/C-PASS-style PMDD pattern evaluation.
 - `POST /api/v1/analyzers/pcos/evaluate` for self-report PCOS feature evaluation aligned to the 2023 International Evidence-based Guideline (non-diagnostic).
+- `POST /api/v1/analyzers/perimenopause/evaluate` for STRAW+10 reproductive-aging stage estimation from self-tracked bleeding and symptoms (non-diagnostic).
 - Future endpoints may include tracker-derived summaries, analyzer outputs, and reproducible model results when the backend is the canonical owner.
 
 ## Contract Ownership
@@ -61,7 +62,7 @@ FHIR means Fast Healthcare Interoperability Resources in this project: a future 
 | `core/tracking/AGENTS.md` | Atlas Tracking Bridge |
 | `tests/AGENTS.md` | Tests |
 
-_Auto-compiled 2026-05-11 03:28 UTC - 9 doc(s) found._
+_Auto-compiled 2026-05-11 04:06 UTC - 9 doc(s) found._
 <!-- DOCS:END -->
 
 ## Before Every Commit

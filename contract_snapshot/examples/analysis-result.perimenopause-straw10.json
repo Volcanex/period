@@ -1,0 +1,94 @@
+{
+  "analyzer_code": "perimenopause_straw10_v1",
+  "analyzer_version": "2026.05.12",
+  "confidence": "high",
+  "cycle_signal": {
+    "amenorrhea_365_plus_days_observed": false,
+    "amenorrhea_60_plus_days_observed": false,
+    "consecutive_pair_differences": [
+      1,
+      9,
+      8,
+      11,
+      8,
+      11,
+      12,
+      10
+    ],
+    "cycle_lengths": [
+      28,
+      29,
+      38,
+      30,
+      41,
+      33,
+      44,
+      32,
+      42
+    ],
+    "last_bleed_date": "2026-11-27",
+    "longest_inter_bleed_gap_days": 44,
+    "max_consecutive_pair_difference": 12,
+    "observed_cycle_count": 9,
+    "pairs_with_seven_day_variability": 7,
+    "persistent_seven_day_variability": true,
+    "rationale": "9 cycle length(s) derived (range 28-44d). Persistent >=7-day consecutive-cycle variability detected (STRAW+10 stage -2 marker).",
+    "self_reported_pattern_change": null
+  },
+  "diagnostic_framework": "straw_plus_10",
+  "differential_reminders": [
+    "thyroid_dysfunction",
+    "hyperprolactinemia",
+    "primary_ovarian_insufficiency_if_under_40",
+    "hypothalamic_amenorrhea",
+    "asherman_syndrome",
+    "endometrial_pathology_for_abnormal_bleeding",
+    "iatrogenic_hormonal_exposure"
+  ],
+  "evaluation_window_end": "2027-01-01",
+  "evaluation_window_start": "2025-07-10",
+  "evidence": [
+    {
+      "assumption": "Self-tracked bleeding history and symptom severity can be mapped onto STRAW+10 menstrual criteria for stages -3a through +2 within the system's stated applicability limits.",
+      "confidence": 0.82,
+      "review_status": "draft",
+      "source": "Harlow SD, Gass M, Hall JE, et al. Executive summary of the Stages of Reproductive Aging Workshop +10 (J Clin Endocrinol Metab 97:1159; Menopause 19:387; Climacteric 15:105; 2012)",
+      "version": "2026.05.12"
+    },
+    {
+      "assumption": "Cycle-pair variability, amenorrhea-window measurement, and symptom-persistence thresholds conservatively reproduce STRAW+10 without claiming endocrine biomarker access.",
+      "confidence": 0.6,
+      "review_status": "draft",
+      "source": "Period backend perimenopause STRAW+10 staging analyzer v1",
+      "version": "2026.05.12"
+    }
+  ],
+  "evidence_summary": "9 cycle(s) derived \u00b7 7 pair(s) >=7d variable \u00b7 longest gap 44d \u00b7 no major suppressors",
+  "fmp_candidate_date": null,
+  "generated_at": "2027-01-01T00:00:00Z",
+  "inapplicability_flags": [],
+  "months_since_last_bleed": 1.15,
+  "recommended_actions": [
+    "Early menopausal transition is suggested by >=7-day cycle variability; discuss symptom management options and bone/cardiovascular risk with a clinician.",
+    "Differential reminders: thyroid dysfunction, hyperprolactinemia, hypothalamic amenorrhea, Asherman syndrome, and endometrial pathology should be ruled out for unexplained changes in bleeding."
+  ],
+  "status": "early_transition",
+  "straw_stage": "minus_2",
+  "subject_id": "perimeno-case-3",
+  "summary": "Early menopausal transition: persistent >=7-day cycle-length variability detected.",
+  "suppressors": [],
+  "symptom_signal": {
+    "hot_flashes_max": "moderate",
+    "hot_flashes_persistent": false,
+    "mood_change_present": false,
+    "night_sweats_max": null,
+    "night_sweats_persistent": false,
+    "qualifying_features": [],
+    "rationale": "Symptom signals: none persistent in window",
+    "sleep_disturbance_present": false,
+    "urogenital_atrophy_present": false,
+    "vaginal_dryness_max": null,
+    "vaginal_dryness_persistent": false,
+    "vasomotor_present": false
+  }
+}

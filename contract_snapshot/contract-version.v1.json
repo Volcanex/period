@@ -2,6 +2,13 @@
   "changelog": [
     {
       "change_type": "additive",
+      "migration_note": "Clients may regenerate OpenAPI and optionally adopt the perimenopause analyzer endpoint.",
+      "released_on": "2026-05-12",
+      "summary": "Additive perimenopause STRAW+10 analyzer contracts and evaluation endpoint (Harlow et al. 2012). Stages bleeding-pattern variability and amenorrhea windows to -3b through +2; flags hormonal contraception, pregnancy, postpartum, lactation as suppressors and post-hysterectomy as inapplicable per STRAW+10 applicability limits.",
+      "version": "2026.05.12"
+    },
+    {
+      "change_type": "additive",
       "migration_note": "Clients may regenerate OpenAPI and optionally adopt the PCOS analyzer endpoint.",
       "released_on": "2026-05-11",
       "summary": "Additive PCOS feature-pattern analyzer contracts and evaluation endpoint, aligned to the 2023 International Evidence-based Guideline (Teede et al.). Self-report features map to Rotterdam ovulatory-dysfunction and clinical-hyperandrogenism criteria; polycystic ovary morphology and biochemical androgens remain clinician-owned and out of scope for this analyzer.",
@@ -23,9 +30,10 @@
     }
   ],
   "compatibility_policy": "Additive changes may extend schemas, endpoints, examples, or enum-adjacent metadata without removing fields. Breaking changes remove or rename fields, change value semantics, or make previously valid payloads invalid. Flutter should accept additive versions with regeneration/tests and require an explicit migration for breaking versions.",
-  "current_version": "2026.05.11",
+  "current_version": "2026.05.12",
   "minimum_supported_version": "2026.05.08",
   "supported_versions": [
+    "2026.05.12",
     "2026.05.11",
     "2026.05.08"
   ]

@@ -2062,6 +2062,469 @@
         "title": "PcosMetabolicSignal",
         "type": "object"
       },
+      "PerimenopauseCycleSignal": {
+        "additionalProperties": false,
+        "properties": {
+          "amenorrhea_365_plus_days_observed": {
+            "default": false,
+            "title": "Amenorrhea 365 Plus Days Observed",
+            "type": "boolean"
+          },
+          "amenorrhea_60_plus_days_observed": {
+            "default": false,
+            "title": "Amenorrhea 60 Plus Days Observed",
+            "type": "boolean"
+          },
+          "consecutive_pair_differences": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Consecutive Pair Differences",
+            "type": "array"
+          },
+          "cycle_lengths": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Cycle Lengths",
+            "type": "array"
+          },
+          "last_bleed_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Bleed Date"
+          },
+          "longest_inter_bleed_gap_days": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longest Inter Bleed Gap Days"
+          },
+          "max_consecutive_pair_difference": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Consecutive Pair Difference"
+          },
+          "observed_cycle_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Observed Cycle Count",
+            "type": "integer"
+          },
+          "pairs_with_seven_day_variability": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Pairs With Seven Day Variability",
+            "type": "integer"
+          },
+          "persistent_seven_day_variability": {
+            "default": false,
+            "title": "Persistent Seven Day Variability",
+            "type": "boolean"
+          },
+          "rationale": {
+            "title": "Rationale",
+            "type": "string"
+          },
+          "self_reported_pattern_change": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Self Reported Pattern Change"
+          }
+        },
+        "required": [
+          "rationale"
+        ],
+        "title": "PerimenopauseCycleSignal",
+        "type": "object"
+      },
+      "PerimenopauseEvaluationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "chronological_age": {
+            "anyOf": [
+              {
+                "maximum": 120.0,
+                "minimum": 10.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional chronological age; STRAW+10 applies regardless of age but extreme values trigger differential reminders.",
+            "title": "Chronological Age"
+          },
+          "evaluated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional anchor time. Defaults to now.",
+            "title": "Evaluated At"
+          },
+          "evaluation_window_days": {
+            "default": 540,
+            "description": "Trailing window (days). STRAW+10 needs a wider window than PCOS because the late transition and early postmenopause stages span multiple years.",
+            "maximum": 3650.0,
+            "minimum": 120.0,
+            "title": "Evaluation Window Days",
+            "type": "integer"
+          },
+          "known_fmp_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional user-confirmed Final Menstrual Period date. When provided, post-FMP staging uses this anchor.",
+            "title": "Known Fmp Date"
+          },
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/ObservationEvent"
+            },
+            "title": "Observations",
+            "type": "array"
+          },
+          "post_hysterectomy": {
+            "default": false,
+            "description": "If true, menstrual STRAW+10 criteria are inapplicable and the analyzer returns 'inapplicable'.",
+            "title": "Post Hysterectomy",
+            "type": "boolean"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject_id"
+        ],
+        "title": "PerimenopauseEvaluationRequest",
+        "type": "object"
+      },
+      "PerimenopauseEvaluationResult": {
+        "additionalProperties": false,
+        "properties": {
+          "analyzer_code": {
+            "const": "perimenopause_straw10_v1",
+            "title": "Analyzer Code",
+            "type": "string"
+          },
+          "analyzer_version": {
+            "title": "Analyzer Version",
+            "type": "string"
+          },
+          "confidence": {
+            "enum": [
+              "none",
+              "low",
+              "moderate",
+              "high"
+            ],
+            "title": "Confidence",
+            "type": "string"
+          },
+          "cycle_signal": {
+            "$ref": "#/components/schemas/PerimenopauseCycleSignal"
+          },
+          "diagnostic_framework": {
+            "const": "straw_plus_10",
+            "default": "straw_plus_10",
+            "title": "Diagnostic Framework",
+            "type": "string"
+          },
+          "differential_reminders": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Differential Reminders",
+            "type": "array"
+          },
+          "evaluation_window_end": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluation Window End"
+          },
+          "evaluation_window_start": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluation Window Start"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "evidence_summary": {
+            "title": "Evidence Summary",
+            "type": "string"
+          },
+          "fmp_candidate_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fmp Candidate Date"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "inapplicability_flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Inapplicability Flags",
+            "type": "array"
+          },
+          "months_since_last_bleed": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Months Since Last Bleed"
+          },
+          "recommended_actions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Recommended Actions",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "indeterminate",
+              "suppressed",
+              "inapplicable",
+              "reproductive",
+              "early_transition",
+              "late_transition",
+              "postmenopause"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "straw_stage": {
+            "enum": [
+              "minus_3b",
+              "minus_3a",
+              "minus_2",
+              "minus_1",
+              "plus_1a",
+              "plus_1b",
+              "plus_1c",
+              "plus_2",
+              "indeterminate"
+            ],
+            "title": "Straw Stage",
+            "type": "string"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "suppressors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Suppressors",
+            "type": "array"
+          },
+          "symptom_signal": {
+            "$ref": "#/components/schemas/PerimenopauseSymptomSignal"
+          }
+        },
+        "required": [
+          "analyzer_code",
+          "analyzer_version",
+          "subject_id",
+          "generated_at",
+          "status",
+          "confidence",
+          "straw_stage",
+          "cycle_signal",
+          "symptom_signal",
+          "summary",
+          "evidence_summary"
+        ],
+        "title": "PerimenopauseEvaluationResult",
+        "type": "object"
+      },
+      "PerimenopauseSymptomSignal": {
+        "additionalProperties": false,
+        "properties": {
+          "hot_flashes_max": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hot Flashes Max"
+          },
+          "hot_flashes_persistent": {
+            "default": false,
+            "title": "Hot Flashes Persistent",
+            "type": "boolean"
+          },
+          "mood_change_present": {
+            "default": false,
+            "title": "Mood Change Present",
+            "type": "boolean"
+          },
+          "night_sweats_max": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Night Sweats Max"
+          },
+          "night_sweats_persistent": {
+            "default": false,
+            "title": "Night Sweats Persistent",
+            "type": "boolean"
+          },
+          "qualifying_features": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifying Features",
+            "type": "array"
+          },
+          "rationale": {
+            "title": "Rationale",
+            "type": "string"
+          },
+          "sleep_disturbance_present": {
+            "default": false,
+            "title": "Sleep Disturbance Present",
+            "type": "boolean"
+          },
+          "urogenital_atrophy_present": {
+            "default": false,
+            "title": "Urogenital Atrophy Present",
+            "type": "boolean"
+          },
+          "vaginal_dryness_max": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vaginal Dryness Max"
+          },
+          "vaginal_dryness_persistent": {
+            "default": false,
+            "title": "Vaginal Dryness Persistent",
+            "type": "boolean"
+          },
+          "vasomotor_present": {
+            "default": false,
+            "title": "Vasomotor Present",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "rationale"
+        ],
+        "title": "PerimenopauseSymptomSignal",
+        "type": "object"
+      },
       "PmddCycleEvaluation": {
         "additionalProperties": false,
         "properties": {
@@ -3298,6 +3761,48 @@
           }
         },
         "summary": "Evaluate Pcos Pattern",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
+    "/api/v1/analyzers/perimenopause/evaluate": {
+      "post": {
+        "description": "Estimate a STRAW+10 reproductive-aging stage from self-tracked bleeding and symptoms.\n\nThis endpoint never diagnoses menopause or premature ovarian insufficiency.\nIt surfaces a STRAW+10 stage estimate (Harlow et al. 2012) with explicit\nsuppressors for hormonal contraception, pregnancy, postpartum, and lactation\nand an inapplicability flag for post-hysterectomy/ablation contexts.",
+        "operationId": "evaluate_perimenopause_stage_api_v1_analyzers_perimenopause_evaluate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PerimenopauseEvaluationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PerimenopauseEvaluationResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Evaluate Perimenopause Stage",
         "tags": [
           "v1"
         ]
