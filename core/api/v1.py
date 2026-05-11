@@ -2,7 +2,7 @@
 
 from fastapi import APIRouter
 
-from core.analyzers import evaluate_pmdd
+from core.analyzers import evaluate_pcos, evaluate_pmdd
 from core.bundles import validate_local_data_bundle, validate_local_store_snapshot
 from core.contracts import (
     AppConfig,
@@ -14,6 +14,8 @@ from core.contracts import (
     LocalStoreSnapshotValidationRequest,
     ObservationValidationRequest,
     ObservationValidationResult,
+    PcosEvaluationRequest,
+    PcosEvaluationResult,
     PmddEvaluationRequest,
     PmddEvaluationResult,
     PrivacyManifest,
@@ -101,3 +103,21 @@ async def validate_bundle(request: LocalDataBundleValidationRequest) -> LocalDat
 async def evaluate_pmdd_pattern(request: PmddEvaluationRequest) -> PmddEvaluationResult:
     """Evaluate recent observations for repeated PMDD-style late-luteal patterns."""
     return evaluate_pmdd(request.subject_id, request.observations)
+
+
+@router.post("/analyzers/pcos/evaluate", response_model=PcosEvaluationResult)
+async def evaluate_pcos_pattern(request: PcosEvaluationRequest) -> PcosEvaluationResult:
+    """Evaluate self-tracked observations against the 2023 IEG PCOS feature pattern.
+
+    This endpoint never diagnoses PCOS. It summarises whether self-reported cycle
+    irregularity and clinical hyperandrogenism features are present, flags
+    suppressors that confound interpretation, and lists differentials a clinician
+    should rule out.
+    """
+    return evaluate_pcos(
+        request.subject_id,
+        request.observations,
+        years_since_menarche=request.years_since_menarche,
+        evaluated_at=request.evaluated_at,
+        evaluation_window_days=request.evaluation_window_days,
+    )

@@ -3,7 +3,18 @@ import subprocess
 import sys
 from pathlib import Path
 
-from core.contracts import ContractCompatibilityResult, ContractVersion, LocalDataBundle, LocalStoreSnapshot, ObservationEvent, PmddEvaluationResult, PrivacyManifest, TrackerDefinition, TrackerPack
+from core.contracts import (
+    ContractCompatibilityResult,
+    ContractVersion,
+    LocalDataBundle,
+    LocalStoreSnapshot,
+    ObservationEvent,
+    PcosEvaluationResult,
+    PmddEvaluationResult,
+    PrivacyManifest,
+    TrackerDefinition,
+    TrackerPack,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 SNAPSHOT_DIR = PROJECT_ROOT / "contract_snapshot"
@@ -29,7 +40,8 @@ def test_export_contracts_generates_openapi_and_examples():
 
     _validate(ContractVersion, json.loads((SNAPSHOT_DIR / "contract-version.v1.json").read_text(encoding="utf-8")))
     changelog = json.loads((SNAPSHOT_DIR / "contract-changelog.v1.json").read_text(encoding="utf-8"))
-    assert changelog[0]["version"] == "2026.05.08"
+    assert changelog[0]["version"] == "2026.05.11"
+    assert any(entry["version"] == "2026.05.08" for entry in changelog)
 
     examples = SNAPSHOT_DIR / "examples"
     _validate(TrackerDefinition, json.loads((examples / "tracker-definition.period-bleeding.json").read_text(encoding="utf-8")))
@@ -57,6 +69,12 @@ def test_export_contracts_generates_openapi_and_examples():
         PmddEvaluationResult,
         json.loads((examples / "analysis-result.pmdd-pattern.json").read_text(encoding="utf-8")),
     )
+    pcos_result = _validate(
+        PcosEvaluationResult,
+        json.loads((examples / "analysis-result.pcos-feature-pattern.json").read_text(encoding="utf-8")),
+    )
+    assert pcos_result.analyzer_code == "pcos_feature_pattern_v1"
+    assert pcos_result.differential_reminders
     acne_observation = _validate(
         ObservationEvent,
         json.loads((examples / "observation.acne-severity.valid.json").read_text(encoding="utf-8")),

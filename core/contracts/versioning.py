@@ -10,15 +10,27 @@ from core.contracts.domain import (
     ContractVersion,
 )
 
-CURRENT_CONTRACT_VERSION = "2026.05.08"
-SUPPORTED_CONTRACT_VERSIONS = [CURRENT_CONTRACT_VERSION]
-MINIMUM_SUPPORTED_VERSION = CURRENT_CONTRACT_VERSION
+CURRENT_CONTRACT_VERSION = "2026.05.11"
+SUPPORTED_CONTRACT_VERSIONS = [CURRENT_CONTRACT_VERSION, "2026.05.08"]
+MINIMUM_SUPPORTED_VERSION = "2026.05.08"
 COMPATIBILITY_POLICY = (
     "Additive changes may extend schemas, endpoints, examples, or enum-adjacent metadata without removing fields. "
     "Breaking changes remove or rename fields, change value semantics, or make previously valid payloads invalid. "
     "Flutter should accept additive versions with regeneration/tests and require an explicit migration for breaking versions."
 )
 CHANGELOG = [
+    ContractChangelogEntry(
+        version="2026.05.11",
+        released_on=date(2026, 5, 11),
+        change_type="additive",
+        summary=(
+            "Additive PCOS feature-pattern analyzer contracts and evaluation endpoint, aligned to the 2023 "
+            "International Evidence-based Guideline (Teede et al.). Self-report features map to Rotterdam "
+            "ovulatory-dysfunction and clinical-hyperandrogenism criteria; polycystic ovary morphology and "
+            "biochemical androgens remain clinician-owned and out of scope for this analyzer."
+        ),
+        migration_note="Clients may regenerate OpenAPI and optionally adopt the PCOS analyzer endpoint.",
+    ),
     ContractChangelogEntry(
         version="2026.05.08",
         released_on=date(2026, 5, 8),

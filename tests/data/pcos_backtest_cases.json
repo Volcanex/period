@@ -1,0 +1,1435 @@
+[
+  {
+    "case_id": "adult-features-present",
+    "subject_id": "pcos-case-1",
+    "expected_status": "features_present",
+    "years_since_menarche": 12,
+    "observations": [
+      {
+        "id": "pcos-case-1-001",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-04T12:00:00Z",
+        "observed_on": "2026-01-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-002",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-05T12:00:00Z",
+        "observed_on": "2026-01-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-003",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-06T12:00:00Z",
+        "observed_on": "2026-01-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-004",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-07T12:00:00Z",
+        "observed_on": "2026-01-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-005",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-15T12:00:00Z",
+        "observed_on": "2026-02-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-006",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-16T12:00:00Z",
+        "observed_on": "2026-02-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-007",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-17T12:00:00Z",
+        "observed_on": "2026-02-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-008",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-18T12:00:00Z",
+        "observed_on": "2026-02-18",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-009",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-03T12:00:00Z",
+        "observed_on": "2026-04-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-010",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-04T12:00:00Z",
+        "observed_on": "2026-04-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-011",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-05T12:00:00Z",
+        "observed_on": "2026-04-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-012",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-06T12:00:00Z",
+        "observed_on": "2026-04-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-013",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-02T12:00:00Z",
+        "observed_on": "2026-06-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-014",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-03T12:00:00Z",
+        "observed_on": "2026-06-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-015",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-04T12:00:00Z",
+        "observed_on": "2026-06-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-016",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-05T12:00:00Z",
+        "observed_on": "2026-06-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-1-017",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-03-10T12:00:00Z",
+        "observed_on": "2026-03-10",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "pcos-case-1-018",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-03-15T12:00:00Z",
+        "observed_on": "2026-03-15",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-1-019",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-03-22T12:00:00Z",
+        "observed_on": "2026-03-22",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "pcos-case-1-020",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-04-01T12:00:00Z",
+        "observed_on": "2026-04-01",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-1-021",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-04-11T12:00:00Z",
+        "observed_on": "2026-04-11",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-1-022",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-04-21T12:00:00Z",
+        "observed_on": "2026-04-21",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-1-023",
+        "subject_id": "pcos-case-1",
+        "tracker_code": "weight",
+        "observed_at": "2026-05-01T12:00:00Z",
+        "observed_on": "2026-05-01",
+        "source": "user_entered",
+        "value": 78.2,
+        "unit": "kg"
+      }
+    ]
+  },
+  {
+    "case_id": "adult-features-absent",
+    "subject_id": "pcos-case-2",
+    "expected_status": "features_absent",
+    "years_since_menarche": 14,
+    "observations": [
+      {
+        "id": "pcos-case-2-001",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-05T12:00:00Z",
+        "observed_on": "2026-01-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-002",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-06T12:00:00Z",
+        "observed_on": "2026-01-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-003",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-07T12:00:00Z",
+        "observed_on": "2026-01-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-004",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-08T12:00:00Z",
+        "observed_on": "2026-01-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-005",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-02T12:00:00Z",
+        "observed_on": "2026-02-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-006",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-03T12:00:00Z",
+        "observed_on": "2026-02-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-007",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-04T12:00:00Z",
+        "observed_on": "2026-02-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-008",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-05T12:00:00Z",
+        "observed_on": "2026-02-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-009",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-02T12:00:00Z",
+        "observed_on": "2026-03-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-010",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-03T12:00:00Z",
+        "observed_on": "2026-03-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-011",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-04T12:00:00Z",
+        "observed_on": "2026-03-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-012",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-05T12:00:00Z",
+        "observed_on": "2026-03-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-013",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-31T12:00:00Z",
+        "observed_on": "2026-03-31",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-014",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-01T12:00:00Z",
+        "observed_on": "2026-04-01",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-015",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-02T12:00:00Z",
+        "observed_on": "2026-04-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-016",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-03T12:00:00Z",
+        "observed_on": "2026-04-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-017",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-30T12:00:00Z",
+        "observed_on": "2026-04-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-018",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-01T12:00:00Z",
+        "observed_on": "2026-05-01",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-019",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-02T12:00:00Z",
+        "observed_on": "2026-05-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-020",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-03T12:00:00Z",
+        "observed_on": "2026-05-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-021",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-28T12:00:00Z",
+        "observed_on": "2026-05-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-022",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-29T12:00:00Z",
+        "observed_on": "2026-05-29",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-023",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-30T12:00:00Z",
+        "observed_on": "2026-05-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-024",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-31T12:00:00Z",
+        "observed_on": "2026-05-31",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-2-025",
+        "subject_id": "pcos-case-2",
+        "tracker_code": "weight",
+        "observed_at": "2026-04-01T12:00:00Z",
+        "observed_on": "2026-04-01",
+        "source": "user_entered",
+        "value": 60.0,
+        "unit": "kg"
+      }
+    ]
+  },
+  {
+    "case_id": "adult-irregularity-only",
+    "subject_id": "pcos-case-3",
+    "expected_status": "features_partial",
+    "years_since_menarche": 8,
+    "observations": [
+      {
+        "id": "pcos-case-3-001",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-06T12:00:00Z",
+        "observed_on": "2026-01-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-002",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-07T12:00:00Z",
+        "observed_on": "2026-01-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-003",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-08T12:00:00Z",
+        "observed_on": "2026-01-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-004",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-09T12:00:00Z",
+        "observed_on": "2026-01-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-005",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-19T12:00:00Z",
+        "observed_on": "2026-02-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-006",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-20T12:00:00Z",
+        "observed_on": "2026-02-20",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-007",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-21T12:00:00Z",
+        "observed_on": "2026-02-21",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-008",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-22T12:00:00Z",
+        "observed_on": "2026-02-22",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-009",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-11T12:00:00Z",
+        "observed_on": "2026-04-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-010",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-12T12:00:00Z",
+        "observed_on": "2026-04-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-011",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-13T12:00:00Z",
+        "observed_on": "2026-04-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-012",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-14T12:00:00Z",
+        "observed_on": "2026-04-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-3-013",
+        "subject_id": "pcos-case-3",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-04-10T12:00:00Z",
+        "observed_on": "2026-04-10",
+        "source": "user_entered",
+        "value": "mild"
+      }
+    ]
+  },
+  {
+    "case_id": "adult-hyperandrogenism-only",
+    "subject_id": "pcos-case-4",
+    "expected_status": "features_partial",
+    "years_since_menarche": 10,
+    "observations": [
+      {
+        "id": "pcos-case-4-001",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-07T12:00:00Z",
+        "observed_on": "2026-01-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-002",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-08T12:00:00Z",
+        "observed_on": "2026-01-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-003",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-09T12:00:00Z",
+        "observed_on": "2026-01-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-004",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-10T12:00:00Z",
+        "observed_on": "2026-01-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-005",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-05T12:00:00Z",
+        "observed_on": "2026-02-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-006",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-06T12:00:00Z",
+        "observed_on": "2026-02-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-007",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-07T12:00:00Z",
+        "observed_on": "2026-02-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-008",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-08T12:00:00Z",
+        "observed_on": "2026-02-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-009",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-07T12:00:00Z",
+        "observed_on": "2026-03-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-010",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-08T12:00:00Z",
+        "observed_on": "2026-03-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-011",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-09T12:00:00Z",
+        "observed_on": "2026-03-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-012",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-10T12:00:00Z",
+        "observed_on": "2026-03-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-013",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-05T12:00:00Z",
+        "observed_on": "2026-04-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-014",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-06T12:00:00Z",
+        "observed_on": "2026-04-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-015",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-07T12:00:00Z",
+        "observed_on": "2026-04-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-016",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-08T12:00:00Z",
+        "observed_on": "2026-04-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-017",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-05T12:00:00Z",
+        "observed_on": "2026-05-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-018",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-06T12:00:00Z",
+        "observed_on": "2026-05-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-019",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-07T12:00:00Z",
+        "observed_on": "2026-05-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-020",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-08T12:00:00Z",
+        "observed_on": "2026-05-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-4-021",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-02-05T12:00:00Z",
+        "observed_on": "2026-02-05",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "pcos-case-4-022",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-02-20T12:00:00Z",
+        "observed_on": "2026-02-20",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-4-023",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-03-07T12:00:00Z",
+        "observed_on": "2026-03-07",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-4-024",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-02-10T12:00:00Z",
+        "observed_on": "2026-02-10",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-4-025",
+        "subject_id": "pcos-case-4",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-02-22T12:00:00Z",
+        "observed_on": "2026-02-22",
+        "source": "user_entered",
+        "value": "moderate"
+      }
+    ]
+  },
+  {
+    "case_id": "adolescent-pubertal-feature-noise",
+    "subject_id": "pcos-case-5",
+    "expected_status": "features_partial",
+    "years_since_menarche": 0.6,
+    "observations": [
+      {
+        "id": "pcos-case-5-001",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-10T12:00:00Z",
+        "observed_on": "2026-01-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-002",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-11T12:00:00Z",
+        "observed_on": "2026-01-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-003",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-12T12:00:00Z",
+        "observed_on": "2026-01-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-004",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-13T12:00:00Z",
+        "observed_on": "2026-01-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-005",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-06T12:00:00Z",
+        "observed_on": "2026-03-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-006",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-07T12:00:00Z",
+        "observed_on": "2026-03-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-007",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-08T12:00:00Z",
+        "observed_on": "2026-03-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-008",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-09T12:00:00Z",
+        "observed_on": "2026-03-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-009",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-23T12:00:00Z",
+        "observed_on": "2026-04-23",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-010",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-24T12:00:00Z",
+        "observed_on": "2026-04-24",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-011",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-25T12:00:00Z",
+        "observed_on": "2026-04-25",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-012",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-26T12:00:00Z",
+        "observed_on": "2026-04-26",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-5-013",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-03-01T12:00:00Z",
+        "observed_on": "2026-03-01",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "pcos-case-5-014",
+        "subject_id": "pcos-case-5",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-03-11T12:00:00Z",
+        "observed_on": "2026-03-11",
+        "source": "user_entered",
+        "value": "severe"
+      }
+    ]
+  },
+  {
+    "case_id": "adolescent-early-both",
+    "subject_id": "pcos-case-6",
+    "expected_status": "features_present",
+    "years_since_menarche": 2.0,
+    "observations": [
+      {
+        "id": "pcos-case-6-001",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-08T12:00:00Z",
+        "observed_on": "2026-01-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-002",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-09T12:00:00Z",
+        "observed_on": "2026-01-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-003",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-10T12:00:00Z",
+        "observed_on": "2026-01-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-004",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-11T12:00:00Z",
+        "observed_on": "2026-01-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-005",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-07T12:00:00Z",
+        "observed_on": "2026-03-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-006",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-08T12:00:00Z",
+        "observed_on": "2026-03-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-007",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-09T12:00:00Z",
+        "observed_on": "2026-03-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-008",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-10T12:00:00Z",
+        "observed_on": "2026-03-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-009",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-25T12:00:00Z",
+        "observed_on": "2026-04-25",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-010",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-26T12:00:00Z",
+        "observed_on": "2026-04-26",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-011",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-27T12:00:00Z",
+        "observed_on": "2026-04-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-012",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-28T12:00:00Z",
+        "observed_on": "2026-04-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-6-013",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-03-05T12:00:00Z",
+        "observed_on": "2026-03-05",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "pcos-case-6-014",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-03-20T12:00:00Z",
+        "observed_on": "2026-03-20",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-6-015",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-04-01T12:00:00Z",
+        "observed_on": "2026-04-01",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-6-016",
+        "subject_id": "pcos-case-6",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-04-11T12:00:00Z",
+        "observed_on": "2026-04-11",
+        "source": "user_entered",
+        "value": "moderate"
+      }
+    ]
+  },
+  {
+    "case_id": "suppressed-cocp",
+    "subject_id": "pcos-case-7",
+    "expected_status": "suppressed",
+    "years_since_menarche": 11,
+    "observations": [
+      {
+        "id": "pcos-case-7-001",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-05T12:00:00Z",
+        "observed_on": "2026-01-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-002",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-06T12:00:00Z",
+        "observed_on": "2026-01-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-003",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-07T12:00:00Z",
+        "observed_on": "2026-01-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-004",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-08T12:00:00Z",
+        "observed_on": "2026-01-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-005",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-14T12:00:00Z",
+        "observed_on": "2026-02-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-006",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-15T12:00:00Z",
+        "observed_on": "2026-02-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-007",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-16T12:00:00Z",
+        "observed_on": "2026-02-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-008",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-17T12:00:00Z",
+        "observed_on": "2026-02-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-009",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-31T12:00:00Z",
+        "observed_on": "2026-03-31",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-010",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-01T12:00:00Z",
+        "observed_on": "2026-04-01",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-011",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-02T12:00:00Z",
+        "observed_on": "2026-04-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-012",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-03T12:00:00Z",
+        "observed_on": "2026-04-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-7-013",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-02-01T12:00:00Z",
+        "observed_on": "2026-02-01",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "pcos-case-7-014",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-02-11T12:00:00Z",
+        "observed_on": "2026-02-11",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-7-015",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "contraception_use",
+        "observed_at": "2026-01-01T12:00:00Z",
+        "observed_on": "2026-01-01",
+        "source": "user_entered",
+        "value": "pill"
+      },
+      {
+        "id": "pcos-case-7-016",
+        "subject_id": "pcos-case-7",
+        "tracker_code": "contraception_start",
+        "observed_at": "2026-01-01T12:00:00Z",
+        "observed_on": "2026-01-01",
+        "source": "user_entered",
+        "value": "2026-01-01"
+      }
+    ]
+  },
+  {
+    "case_id": "suppressed-pregnancy",
+    "subject_id": "pcos-case-8",
+    "expected_status": "suppressed",
+    "years_since_menarche": 9,
+    "observations": [
+      {
+        "id": "pcos-case-8-001",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-07T12:00:00Z",
+        "observed_on": "2026-01-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-8-002",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-08T12:00:00Z",
+        "observed_on": "2026-01-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-8-003",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-09T12:00:00Z",
+        "observed_on": "2026-01-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-8-004",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-10T12:00:00Z",
+        "observed_on": "2026-01-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-8-005",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-08T12:00:00Z",
+        "observed_on": "2026-03-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-8-006",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-09T12:00:00Z",
+        "observed_on": "2026-03-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-8-007",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-10T12:00:00Z",
+        "observed_on": "2026-03-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-8-008",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-11T12:00:00Z",
+        "observed_on": "2026-03-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "pcos-case-8-009",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "pregnancy_test",
+        "observed_at": "2026-04-01T12:00:00Z",
+        "observed_on": "2026-04-01",
+        "source": "user_entered",
+        "value": "positive"
+      },
+      {
+        "id": "pcos-case-8-010",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-02-10T12:00:00Z",
+        "observed_on": "2026-02-10",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-8-011",
+        "subject_id": "pcos-case-8",
+        "tracker_code": "acne_severity",
+        "observed_at": "2026-02-22T12:00:00Z",
+        "observed_on": "2026-02-22",
+        "source": "user_entered",
+        "value": "moderate"
+      }
+    ]
+  },
+  {
+    "case_id": "insufficient-data",
+    "subject_id": "pcos-case-9",
+    "expected_status": "insufficient_data",
+    "years_since_menarche": 10,
+    "observations": [
+      {
+        "id": "pcos-case-9-001",
+        "subject_id": "pcos-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-28T12:00:00Z",
+        "observed_on": "2026-04-28",
+        "source": "user_entered",
+        "value": "medium"
+      }
+    ]
+  },
+  {
+    "case_id": "fallback-self-report-irregular",
+    "subject_id": "pcos-case-10",
+    "expected_status": "features_present",
+    "years_since_menarche": 12,
+    "observations": [
+      {
+        "id": "pcos-case-10-001",
+        "subject_id": "pcos-case-10",
+        "tracker_code": "cycle_regularity",
+        "observed_at": "2026-05-01T12:00:00Z",
+        "observed_on": "2026-05-01",
+        "source": "user_entered",
+        "value": "infrequent"
+      },
+      {
+        "id": "pcos-case-10-002",
+        "subject_id": "pcos-case-10",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-03-01T12:00:00Z",
+        "observed_on": "2026-03-01",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "pcos-case-10-003",
+        "subject_id": "pcos-case-10",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-03-20T12:00:00Z",
+        "observed_on": "2026-03-20",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-10-004",
+        "subject_id": "pcos-case-10",
+        "tracker_code": "hair_growth",
+        "observed_at": "2026-04-10T12:00:00Z",
+        "observed_on": "2026-04-10",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "pcos-case-10-005",
+        "subject_id": "pcos-case-10",
+        "tracker_code": "acanthosis_nigricans",
+        "observed_at": "2026-04-30T12:00:00Z",
+        "observed_on": "2026-04-30",
+        "source": "user_entered",
+        "value": true
+      },
+      {
+        "id": "pcos-case-10-006",
+        "subject_id": "pcos-case-10",
+        "tracker_code": "weight",
+        "observed_at": "2026-05-01T12:00:00Z",
+        "observed_on": "2026-05-01",
+        "source": "user_entered",
+        "value": 90.5,
+        "unit": "kg"
+      }
+    ]
+  }
+]

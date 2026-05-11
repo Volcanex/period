@@ -1,8 +1,10 @@
 {
-  "current_version": "2026.05.08",
+  "current_version": "2026.05.11",
   "errors": [],
-  "migration_required": false,
+  "migration_required": true,
   "schema_version": "2026.05.08",
-  "status": "accepted",
-  "warnings": []
+  "status": "accepted_with_warnings",
+  "warnings": [
+    "supported_legacy_contract_version"
+  ]
 }

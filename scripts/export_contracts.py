@@ -30,7 +30,12 @@ from core.contracts import (  # noqa: E402
     TrackerPreference,
     TrackerSettings,
 )
-from core.analyzers import evaluate_pmdd, load_pmdd_backtest_fixture
+from core.analyzers import (  # noqa: E402
+    evaluate_pcos,
+    evaluate_pmdd,
+    load_pcos_backtest_fixture,
+    load_pmdd_backtest_fixture,
+)
 from core.contracts.versioning import check_contract_compatibility, contract_version
 from core.privacy import privacy_manifest  # noqa: E402
 from core.bundles import local_store_snapshot_to_bundle
@@ -195,6 +200,15 @@ def examples() -> dict[str, object]:
     bundle = local_store_snapshot_to_bundle(local_store_snapshot)
     pmdd_fixture = load_pmdd_backtest_fixture()[0]
     pmdd_result = evaluate_pmdd(pmdd_fixture.subject_id, list(pmdd_fixture.observations))
+    pcos_fixture = next(
+        case for case in load_pcos_backtest_fixture() if case.case_id == "adult-features-present"
+    )
+    pcos_result = evaluate_pcos(
+        pcos_fixture.subject_id,
+        list(pcos_fixture.observations),
+        years_since_menarche=pcos_fixture.years_since_menarche,
+        evaluated_at=datetime(2026, 5, 11, tzinfo=UTC),
+    )
     packs = {pack.code: pack for pack in tracker_packs()}
     registry = tracker_registry()
     return {
@@ -214,6 +228,7 @@ def examples() -> dict[str, object]:
         "analyzer.metadata.json": analyzer,
         "analysis-result.backtest-summary.json": analysis_result,
         "analysis-result.pmdd-pattern.json": pmdd_result,
+        "analysis-result.pcos-feature-pattern.json": pcos_result,
         "report.clinician-summary.json": report,
         "calendar-annotation.cramps.json": annotation,
         "local-store-snapshot.demo.json": local_store_snapshot,

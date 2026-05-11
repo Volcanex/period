@@ -1,0 +1,95 @@
+{
+  "adolescent_both_features_required": false,
+  "age_group_used": "adult",
+  "analyzer_code": "pcos_feature_pattern_v1",
+  "analyzer_version": "2026.05.11",
+  "confidence": "moderate",
+  "cycle_irregularity": {
+    "age_rule_applied": "adult",
+    "classification": "irregular",
+    "cycles_per_year_estimate": 8.21,
+    "fallback_to_self_report": false,
+    "longest_cycle_days": 47,
+    "meets_irregularity_rule": true,
+    "observed_cycle_count": 2,
+    "observed_cycle_lengths": [
+      42,
+      47
+    ],
+    "rationale": "Cycle <21 or >35 days for an adult cycle (observed 42-47).",
+    "self_reported_regularity": null,
+    "shortest_cycle_days": 42
+  },
+  "diagnostic_framework": "rotterdam_2003_via_2023_ieg",
+  "differential_reminders": [
+    "thyroid_dysfunction",
+    "hyperprolactinemia",
+    "non_classic_congenital_adrenal_hyperplasia",
+    "cushing_syndrome",
+    "androgen_secreting_tumor",
+    "primary_ovarian_insufficiency",
+    "acromegaly",
+    "iatrogenic_androgen_exposure"
+  ],
+  "evaluation_window_end": "2026-05-11",
+  "evaluation_window_start": "2025-05-11",
+  "evidence": [
+    {
+      "assumption": "Self-report features map to Rotterdam ovulatory-dysfunction and clinical-hyperandrogenism criteria; PCOM and biochemical androgens remain clinician-owned.",
+      "confidence": 0.78,
+      "review_status": "draft",
+      "source": "Teede HJ et al. 2023 International Evidence-based Guideline for the Assessment and Management of Polycystic Ovary Syndrome (J Clin Endocrinol Metab 108:2447)",
+      "version": "2026.05.11"
+    },
+    {
+      "assumption": "Cycle-length derivation, persistent-feature thresholds, and contraceptive suppressor logic apply the 2023 guideline conservatively without collapsing uncertainty.",
+      "confidence": 0.55,
+      "review_status": "draft",
+      "source": "Period backend PCOS feature-pattern analyzer v1",
+      "version": "2026.05.11"
+    }
+  ],
+  "evidence_summary": "2 cycle(s) derived \u00b7 2 hyperandrogenic feature(s) \u00b7 no major suppressors",
+  "generated_at": "2026-05-11T00:00:00Z",
+  "hyperandrogenism": {
+    "acne_persistent": true,
+    "acne_severity_max": "severe",
+    "hirsutism_persistent": true,
+    "meets_hyperandrogenism_rule": true,
+    "persistent_feature_count": 2,
+    "qualifying_features": [
+      "acne_persistent",
+      "hirsutism_self_reported"
+    ],
+    "rationale": "At least one persistent clinical hyperandrogenism feature self-reported (persistent = severe at any point, or moderate on >=2 days).",
+    "scalp_hair_thinning_max": null,
+    "scalp_thinning_persistent": false,
+    "unwanted_hair_growth_max": "moderate"
+  },
+  "meets_hyperandrogenism_rule": true,
+  "meets_irregularity_rule": true,
+  "metabolic_context": {
+    "acanthosis_nigricans_reported": false,
+    "flags": [
+      "weight_history_available"
+    ],
+    "glucose_lab_note_count": 0,
+    "insulin_metabolic_note_count": 0,
+    "lipid_note_count": 0,
+    "weight_kg_delta": 0.0,
+    "weight_kg_max": 78.2,
+    "weight_kg_min": 78.2,
+    "weight_observation_count": 1
+  },
+  "pcom_assessment_could_resolve": false,
+  "recommended_actions": [
+    "Discuss the feature pattern with a clinician; only a clinician can diagnose PCOS and exclude mimics.",
+    "Standard biochemical workup includes total/free testosterone (LC-MS preferred), SHBG, and free androgen index; this analyzer does not perform that workup.",
+    "Exclude differential diagnoses with a clinician: thyroid disease, hyperprolactinemia, non-classic congenital adrenal hyperplasia, Cushing syndrome, androgen-secreting tumors, primary ovarian insufficiency, acromegaly, and iatrogenic causes."
+  ],
+  "rotterdam_self_report_feature_count": 2,
+  "status": "features_present",
+  "subject_id": "pcos-case-1",
+  "summary": "Two of the Rotterdam features (ovulatory dysfunction and clinical hyperandrogenism) are present in self-report; clinician evaluation should rule out mimics before any diagnosis.",
+  "suppressors": []
+}

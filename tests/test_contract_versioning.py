@@ -11,8 +11,8 @@ def test_contract_version_declares_current_support_window_and_policy():
     version = contract_version()
     assert isinstance(version, ContractVersion)
     assert version.current_version == CURRENT_CONTRACT_VERSION
-    assert version.minimum_supported_version == CURRENT_CONTRACT_VERSION
-    assert version.supported_versions == [CURRENT_CONTRACT_VERSION]
+    assert CURRENT_CONTRACT_VERSION in version.supported_versions
+    assert version.minimum_supported_version in version.supported_versions
     assert version.changelog[0].change_type == "additive"
     assert any(entry.change_type == "initial" for entry in version.changelog)
     assert "Breaking changes" in version.compatibility_policy
