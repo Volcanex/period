@@ -1,0 +1,4 @@
+[project]
+name = "period"
+version = "0.1.0"
+description = "Backend contract skeleton for a future Flutter period-tracking app"
