@@ -1,8 +1,8 @@
 {
   "analyzer_code": "cycle_length_backtest_summary",
-  "analyzer_version": "2026.05.02",
+  "analyzer_version": "2026.05.08",
   "evidence": [],
-  "generated_at": "2026-05-02T10:30:00Z",
+  "generated_at": "2026-05-08T10:30:00Z",
   "id": "analysis-demo-1",
   "payload": {
     "folds": 6321,

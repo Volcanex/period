@@ -23,11 +23,20 @@ from core.contracts import (  # noqa: E402
     LocalStoreSnapshot,
     RecordLifecycle,
     ObservationEvent,
+    PmddEvaluationResult,
     Prediction,
     Report,
     Subject,
     TrackerPreference,
     TrackerSettings,
+)
+from core.analyzers import (  # noqa: E402
+    evaluate_pcos,
+    evaluate_perimenopause,
+    evaluate_pmdd,
+    load_pcos_backtest_fixture,
+    load_perimenopause_backtest_fixture,
+    load_pmdd_backtest_fixture,
 )
 from core.contracts.versioning import check_contract_compatibility, contract_version
 from core.privacy import privacy_manifest  # noqa: E402
@@ -57,7 +66,7 @@ def write_json(path: Path, payload) -> None:
 
 
 def examples() -> dict[str, object]:
-    now = datetime(2026, 5, 2, 10, 30, tzinfo=UTC)
+    now = datetime(2026, 5, 8, 10, 30, tzinfo=UTC)
     subject = Subject(
         id="subject-demo-1",
         birth_year=1994,
@@ -76,6 +85,24 @@ def examples() -> dict[str, object]:
         observed_on=date(2026, 5, 2),
         source="user_entered",
         value="moderate",
+    )
+    pcos_observation = ObservationEvent(
+        id="obs-demo-acne-1",
+        subject_id=subject.id,
+        tracker_code="acne_severity",
+        observed_at=now,
+        observed_on=date(2026, 5, 2),
+        source="user_entered",
+        value="mild",
+    )
+    pcos_cycle_observation = ObservationEvent(
+        id="obs-demo-cycle-regularity-1",
+        subject_id=subject.id,
+        tracker_code="cycle_regularity",
+        observed_at=now,
+        observed_on=date(2026, 5, 2),
+        source="user_entered",
+        value="variable",
     )
     projection = CycleProjection(
         id="cycle-demo-1",
@@ -106,7 +133,7 @@ def examples() -> dict[str, object]:
         description="Metadata-only analyzer declaration for reproducible model evaluation outputs.",
         input_contracts=["ObservationEvent", "CycleProjection"],
         output_contract="AnalysisResult",
-        version="2026.05.02",
+        version="2026.05.08",
     )
     analysis_result = AnalysisResult(
         id="analysis-demo-1",
@@ -142,6 +169,7 @@ def examples() -> dict[str, object]:
         priority=50,
     )
     tracker_settings = default_tracker_settings(subject.id)
+    tracker_settings.updated_at = now  # pin so the snapshot is deterministic.
     tracker_settings.enabled_pack_codes.append("pcos_support")
     tracker_settings.tracker_preferences.append(
         TrackerPreference(tracker_code="acne_severity", enabled=True, pinned=True, display_order=0)
@@ -149,7 +177,7 @@ def examples() -> dict[str, object]:
     active_catalog = resolve_tracker_settings(tracker_settings).active_catalog
     local_store_snapshot = LocalStoreSnapshot(
         metadata=LocalStoreMetadata(
-            schema_version="2026.05.02",
+            schema_version="2026.05.08",
             app_version="period-flutter-dev",
             device_timezone=subject.timezone,
             created_at=now,
@@ -173,20 +201,53 @@ def examples() -> dict[str, object]:
         },
     )
     bundle = local_store_snapshot_to_bundle(local_store_snapshot)
+    pmdd_fixture = load_pmdd_backtest_fixture()[0]
+    pmdd_result = evaluate_pmdd(
+        pmdd_fixture.subject_id,
+        list(pmdd_fixture.observations),
+        evaluated_at=datetime(2026, 5, 8, 10, 30, tzinfo=UTC),
+    )
+    pcos_fixture = next(
+        case for case in load_pcos_backtest_fixture() if case.case_id == "adult-features-present"
+    )
+    pcos_result = evaluate_pcos(
+        pcos_fixture.subject_id,
+        list(pcos_fixture.observations),
+        years_since_menarche=pcos_fixture.years_since_menarche,
+        evaluated_at=datetime(2026, 5, 11, tzinfo=UTC),
+    )
+    perimenopause_fixture = next(
+        case for case in load_perimenopause_backtest_fixture() if case.case_id == "early-transition-minus-2"
+    )
+    perimenopause_result = evaluate_perimenopause(
+        perimenopause_fixture.subject_id,
+        list(perimenopause_fixture.observations),
+        chronological_age=perimenopause_fixture.chronological_age,
+        post_hysterectomy=perimenopause_fixture.post_hysterectomy,
+        known_fmp_date=perimenopause_fixture.known_fmp_date,
+        evaluated_at=datetime(2027, 1, 1, tzinfo=UTC),
+    )
     packs = {pack.code: pack for pack in tracker_packs()}
     registry = tracker_registry()
     return {
         "subject.demo.json": subject,
         "tracker-definition.period-bleeding.json": registry["period_bleeding"],
+        "tracker-definition.acne-severity.json": registry["acne_severity"],
+        "tracker-definition.cycle-regularity.json": registry["cycle_regularity"],
         "tracker-pack.pcos-support.json": packs["pcos_support"],
         "tracker-pack.endometriosis-support.json": packs["endometriosis_support"],
         "tracker-settings.demo.json": tracker_settings,
         "active-tracker-catalog.demo.json": active_catalog,
         "observation.cramps.valid.json": observation,
+        "observation.acne-severity.valid.json": pcos_observation,
+        "observation.cycle-regularity.valid.json": pcos_cycle_observation,
         "cycle-projection.ongoing.json": projection,
         "prediction.client-derived.json": prediction,
         "analyzer.metadata.json": analyzer,
         "analysis-result.backtest-summary.json": analysis_result,
+        "analysis-result.pmdd-pattern.json": pmdd_result,
+        "analysis-result.pcos-feature-pattern.json": pcos_result,
+        "analysis-result.perimenopause-straw10.json": perimenopause_result,
         "report.clinician-summary.json": report,
         "calendar-annotation.cramps.json": annotation,
         "local-store-snapshot.demo.json": local_store_snapshot,
@@ -199,7 +260,7 @@ def main() -> int:
     write_json(SNAPSHOT_DIR / "openapi.v1.json", app.openapi())
     write_json(SNAPSHOT_DIR / "contract-version.v1.json", contract_version())
     write_json(SNAPSHOT_DIR / "contract-changelog.v1.json", contract_version().changelog)
-    write_json(EXAMPLES_DIR / "contract-compatibility.accepted.json", check_contract_compatibility("2026.05.02"))
+    write_json(EXAMPLES_DIR / "contract-compatibility.accepted.json", check_contract_compatibility("2026.05.08"))
     write_json(EXAMPLES_DIR / "contract-compatibility.unsupported.json", check_contract_compatibility("2026.01.01"))
     for name, payload in examples().items():
         write_json(EXAMPLES_DIR / name, payload)

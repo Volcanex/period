@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter
 
+from core.analyzers import evaluate_pcos, evaluate_perimenopause, evaluate_pmdd
 from core.bundles import validate_local_data_bundle, validate_local_store_snapshot
 from core.contracts import (
     AppConfig,
@@ -13,6 +14,12 @@ from core.contracts import (
     LocalStoreSnapshotValidationRequest,
     ObservationValidationRequest,
     ObservationValidationResult,
+    PcosEvaluationRequest,
+    PcosEvaluationResult,
+    PerimenopauseEvaluationRequest,
+    PerimenopauseEvaluationResult,
+    PmddEvaluationRequest,
+    PmddEvaluationResult,
     PrivacyManifest,
     TrackerDefinition,
     TrackerPack,
@@ -92,3 +99,49 @@ async def validate_store_snapshot(request: LocalStoreSnapshotValidationRequest) 
 async def validate_bundle(request: LocalDataBundleValidationRequest) -> LocalDataBundleValidationResult:
     """Validate a local-first import/export bundle without storing it."""
     return validate_local_data_bundle(request.bundle)
+
+
+@router.post("/analyzers/pmdd/evaluate", response_model=PmddEvaluationResult)
+async def evaluate_pmdd_pattern(request: PmddEvaluationRequest) -> PmddEvaluationResult:
+    """Evaluate recent observations for repeated PMDD-style late-luteal patterns."""
+    return evaluate_pmdd(request.subject_id, request.observations)
+
+
+@router.post("/analyzers/pcos/evaluate", response_model=PcosEvaluationResult)
+async def evaluate_pcos_pattern(request: PcosEvaluationRequest) -> PcosEvaluationResult:
+    """Evaluate self-tracked observations against the 2023 IEG PCOS feature pattern.
+
+    This endpoint never diagnoses PCOS. It summarises whether self-reported cycle
+    irregularity and clinical hyperandrogenism features are present, flags
+    suppressors that confound interpretation, and lists differentials a clinician
+    should rule out.
+    """
+    return evaluate_pcos(
+        request.subject_id,
+        request.observations,
+        years_since_menarche=request.years_since_menarche,
+        evaluated_at=request.evaluated_at,
+        evaluation_window_days=request.evaluation_window_days,
+    )
+
+
+@router.post("/analyzers/perimenopause/evaluate", response_model=PerimenopauseEvaluationResult)
+async def evaluate_perimenopause_stage(
+    request: PerimenopauseEvaluationRequest,
+) -> PerimenopauseEvaluationResult:
+    """Estimate a STRAW+10 reproductive-aging stage from self-tracked bleeding and symptoms.
+
+    This endpoint never diagnoses menopause or premature ovarian insufficiency.
+    It surfaces a STRAW+10 stage estimate (Harlow et al. 2012) with explicit
+    suppressors for hormonal contraception, pregnancy, postpartum, and lactation
+    and an inapplicability flag for post-hysterectomy/ablation contexts.
+    """
+    return evaluate_perimenopause(
+        request.subject_id,
+        request.observations,
+        chronological_age=request.chronological_age,
+        post_hysterectomy=request.post_hysterectomy,
+        known_fmp_date=request.known_fmp_date,
+        evaluated_at=request.evaluated_at,
+        evaluation_window_days=request.evaluation_window_days,
+    )

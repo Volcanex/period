@@ -249,6 +249,295 @@ class AnalysisResult(ContractModel):
     evidence: list[EvidenceReference] = Field(default_factory=list)
 
 
+class PmddEvaluationRequest(ContractModel):
+    subject_id: str
+    observations: list[ObservationEvent] = Field(default_factory=list)
+
+
+class PmddSymptomCycleScore(ContractModel):
+    code: str
+    premenstrual_mean: float | None = Field(None, ge=1, le=6)
+    postmenstrual_mean: float | None = Field(None, ge=1, le=6)
+    premenstrual_max: int | None = Field(None, ge=1, le=6)
+    postmenstrual_max: int | None = Field(None, ge=1, le=6)
+    severe_premenstrual_day_count: int = Field(default=0, ge=0)
+    relative_elevation: float | None = Field(None, ge=0)
+    qualifies: bool = False
+
+
+class PmddCycleEvaluation(ContractModel):
+    onset_date: date
+    premenstrual_coverage: float = Field(default=0, ge=0, le=1)
+    postmenstrual_coverage: float = Field(default=0, ge=0, le=1)
+    evaluable: bool = False
+    core_symptom_count: int = Field(default=0, ge=0)
+    total_symptom_count: int = Field(default=0, ge=0)
+    impairment_count: int = Field(default=0, ge=0)
+    core_symptom_rule_met: bool = False
+    total_symptom_rule_met: bool = False
+    impairment_rule_met: bool = False
+    cycle_positive: bool = False
+    qualifying_core_symptoms: list[str] = Field(default_factory=list)
+    qualifying_secondary_symptoms: list[str] = Field(default_factory=list)
+    qualifying_impairment_symptoms: list[str] = Field(default_factory=list)
+    symptom_scores: list[PmddSymptomCycleScore] = Field(default_factory=list)
+
+
+class PmddEvaluationResult(ContractModel):
+    analyzer_code: Literal["pmdd_pattern_v1"]
+    analyzer_version: str
+    subject_id: str
+    generated_at: datetime
+    status: Literal["insufficient_data", "suppressed", "quiet", "activation", "pattern"]
+    confidence: Literal["none", "low", "moderate", "high"]
+    supporting_cycle_count: int = Field(default=0, ge=0)
+    evaluable_cycle_count: int = Field(default=0, ge=0)
+    rich_pattern_logged: bool = False
+    pack_recommended: bool = False
+    coverage: float = Field(default=0, ge=0, le=1)
+    activation_score: float = Field(default=0, ge=0)
+    diagnostic_framework: Literal["drsp_cpass_like"] = "drsp_cpass_like"
+    scoring_method: Literal["range_of_scale_used_30pct"] = "range_of_scale_used_30pct"
+    positive_cycle_count: int = Field(default=0, ge=0)
+    meets_chronicity_rule: bool = False
+    meets_drsp_content_rule: bool = False
+    meets_drsp_impairment_rule: bool = False
+    suppressors: list[str] = Field(default_factory=list)
+    summary: str
+    evidence_summary: str
+    cycle_evaluations: list[PmddCycleEvaluation] = Field(default_factory=list)
+    recommended_actions: list[str] = Field(default_factory=list)
+    evidence: list[EvidenceReference] = Field(default_factory=list)
+
+
+class PcosEvaluationRequest(ContractModel):
+    subject_id: str
+    observations: list[ObservationEvent] = Field(default_factory=list)
+    years_since_menarche: float | None = Field(
+        None,
+        ge=0,
+        le=60,
+        description=(
+            "Optional context used to apply 2023 International Evidence-based Guideline cycle-irregularity rules "
+            "by reproductive age. Adolescent rules apply when <3 years post-menarche."
+        ),
+    )
+    evaluated_at: datetime | None = Field(
+        None,
+        description="Optional anchor time for the rolling evaluation window. Defaults to now.",
+    )
+    evaluation_window_days: int = Field(
+        default=365,
+        ge=60,
+        le=1825,
+        description="Trailing window (days) of observations used for cycle and feature derivation.",
+    )
+
+
+PcosCycleClassification = Literal[
+    "regular",
+    "irregular",
+    "amenorrhea",
+    "pubertal_transition",
+    "insufficient_data",
+]
+
+PcosAgeRule = Literal[
+    "pubertal_transition",
+    "early_post_menarche",
+    "adult",
+    "default_adult",
+]
+
+PcosSeverity = Literal["none", "mild", "moderate", "severe"]
+
+
+class PcosCycleIrregularitySignal(ContractModel):
+    classification: PcosCycleClassification
+    age_rule_applied: PcosAgeRule
+    observed_cycle_count: int = Field(default=0, ge=0)
+    observed_cycle_lengths: list[int] = Field(default_factory=list)
+    longest_cycle_days: int | None = Field(None, ge=0)
+    shortest_cycle_days: int | None = Field(None, ge=0)
+    cycles_per_year_estimate: float | None = Field(None, ge=0)
+    self_reported_regularity: Literal["regular", "variable", "infrequent", "absent", "unknown"] | None = None
+    fallback_to_self_report: bool = False
+    meets_irregularity_rule: bool = False
+    rationale: str
+
+
+class PcosHyperandrogenismSignal(ContractModel):
+    acne_severity_max: PcosSeverity | None = None
+    unwanted_hair_growth_max: PcosSeverity | None = None
+    scalp_hair_thinning_max: PcosSeverity | None = None
+    acne_persistent: bool = False
+    hirsutism_persistent: bool = False
+    scalp_thinning_persistent: bool = False
+    qualifying_features: list[str] = Field(default_factory=list)
+    persistent_feature_count: int = Field(default=0, ge=0)
+    meets_hyperandrogenism_rule: bool = False
+    rationale: str
+
+
+class PcosMetabolicSignal(ContractModel):
+    acanthosis_nigricans_reported: bool = False
+    weight_observation_count: int = Field(default=0, ge=0)
+    weight_kg_min: float | None = Field(None, ge=0)
+    weight_kg_max: float | None = Field(None, ge=0)
+    weight_kg_delta: float | None = None
+    insulin_metabolic_note_count: int = Field(default=0, ge=0)
+    glucose_lab_note_count: int = Field(default=0, ge=0)
+    lipid_note_count: int = Field(default=0, ge=0)
+    flags: list[str] = Field(default_factory=list)
+
+
+PcosStatus = Literal[
+    "insufficient_data",
+    "suppressed",
+    "features_absent",
+    "features_partial",
+    "features_present",
+]
+
+
+class PcosEvaluationResult(ContractModel):
+    analyzer_code: Literal["pcos_feature_pattern_v1"]
+    analyzer_version: str
+    subject_id: str
+    generated_at: datetime
+    evaluation_window_start: date | None = None
+    evaluation_window_end: date | None = None
+    status: PcosStatus
+    confidence: Literal["none", "low", "moderate", "high"]
+    diagnostic_framework: Literal["rotterdam_2003_via_2023_ieg"] = "rotterdam_2003_via_2023_ieg"
+    age_group_used: Literal["adolescent_pubertal", "adolescent_post", "adult", "unknown"]
+    cycle_irregularity: PcosCycleIrregularitySignal
+    hyperandrogenism: PcosHyperandrogenismSignal
+    metabolic_context: PcosMetabolicSignal
+    rotterdam_self_report_feature_count: int = Field(default=0, ge=0, le=2)
+    meets_irregularity_rule: bool = False
+    meets_hyperandrogenism_rule: bool = False
+    pcom_assessment_could_resolve: bool = False
+    adolescent_both_features_required: bool = False
+    suppressors: list[str] = Field(default_factory=list)
+    differential_reminders: list[str] = Field(default_factory=list)
+    summary: str
+    evidence_summary: str
+    recommended_actions: list[str] = Field(default_factory=list)
+    evidence: list[EvidenceReference] = Field(default_factory=list)
+
+
+Straw10Stage = Literal[
+    "minus_3b",
+    "minus_3a",
+    "minus_2",
+    "minus_1",
+    "plus_1a",
+    "plus_1b",
+    "plus_1c",
+    "plus_2",
+    "indeterminate",
+]
+
+PerimenopauseStatus = Literal[
+    "indeterminate",
+    "suppressed",
+    "inapplicable",
+    "reproductive",
+    "early_transition",
+    "late_transition",
+    "postmenopause",
+]
+
+PerimenopauseSeverity = Literal["none", "mild", "moderate", "severe"]
+
+
+class PerimenopauseEvaluationRequest(ContractModel):
+    subject_id: str
+    observations: list[ObservationEvent] = Field(default_factory=list)
+    chronological_age: float | None = Field(
+        None,
+        ge=10,
+        le=120,
+        description="Optional chronological age; STRAW+10 applies regardless of age but extreme values trigger differential reminders.",
+    )
+    post_hysterectomy: bool = Field(
+        default=False,
+        description="If true, menstrual STRAW+10 criteria are inapplicable and the analyzer returns 'inapplicable'.",
+    )
+    known_fmp_date: date | None = Field(
+        None,
+        description="Optional user-confirmed Final Menstrual Period date. When provided, post-FMP staging uses this anchor.",
+    )
+    evaluated_at: datetime | None = Field(
+        None,
+        description="Optional anchor time. Defaults to now.",
+    )
+    evaluation_window_days: int = Field(
+        default=540,
+        ge=120,
+        le=3650,
+        description=(
+            "Trailing window (days). STRAW+10 needs a wider window than PCOS because the late transition and "
+            "early postmenopause stages span multiple years."
+        ),
+    )
+
+
+class PerimenopauseCycleSignal(ContractModel):
+    observed_cycle_count: int = Field(default=0, ge=0)
+    cycle_lengths: list[int] = Field(default_factory=list)
+    consecutive_pair_differences: list[int] = Field(default_factory=list)
+    max_consecutive_pair_difference: int | None = Field(None, ge=0)
+    pairs_with_seven_day_variability: int = Field(default=0, ge=0)
+    persistent_seven_day_variability: bool = False
+    longest_inter_bleed_gap_days: int | None = Field(None, ge=0)
+    amenorrhea_60_plus_days_observed: bool = False
+    amenorrhea_365_plus_days_observed: bool = False
+    last_bleed_date: date | None = None
+    self_reported_pattern_change: bool | None = None
+    rationale: str
+
+
+class PerimenopauseSymptomSignal(ContractModel):
+    hot_flashes_max: PerimenopauseSeverity | None = None
+    night_sweats_max: PerimenopauseSeverity | None = None
+    vaginal_dryness_max: PerimenopauseSeverity | None = None
+    hot_flashes_persistent: bool = False
+    night_sweats_persistent: bool = False
+    vaginal_dryness_persistent: bool = False
+    vasomotor_present: bool = False
+    urogenital_atrophy_present: bool = False
+    sleep_disturbance_present: bool = False
+    mood_change_present: bool = False
+    qualifying_features: list[str] = Field(default_factory=list)
+    rationale: str
+
+
+class PerimenopauseEvaluationResult(ContractModel):
+    analyzer_code: Literal["perimenopause_straw10_v1"]
+    analyzer_version: str
+    subject_id: str
+    generated_at: datetime
+    evaluation_window_start: date | None = None
+    evaluation_window_end: date | None = None
+    status: PerimenopauseStatus
+    confidence: Literal["none", "low", "moderate", "high"]
+    diagnostic_framework: Literal["straw_plus_10"] = "straw_plus_10"
+    straw_stage: Straw10Stage
+    fmp_candidate_date: date | None = None
+    months_since_last_bleed: float | None = Field(None, ge=0)
+    cycle_signal: PerimenopauseCycleSignal
+    symptom_signal: PerimenopauseSymptomSignal
+    suppressors: list[str] = Field(default_factory=list)
+    inapplicability_flags: list[str] = Field(default_factory=list)
+    differential_reminders: list[str] = Field(default_factory=list)
+    summary: str
+    evidence_summary: str
+    recommended_actions: list[str] = Field(default_factory=list)
+    evidence: list[EvidenceReference] = Field(default_factory=list)
+
+
 class Report(ContractModel):
     id: str
     subject_id: str
@@ -342,6 +631,6 @@ class AppConfig(ContractModel):
     api_version: str = "v1"
     contract_version: str
     privacy_posture: Literal["local_first_private"] = "local_first_private"
-    calculation_owner: Literal["device"] = "device"
+    calculation_owner: Literal["device", "server", "hybrid"] = "hybrid"
     supported_locales: list[str] = Field(default_factory=list)
     notes: list[str] = Field(default_factory=list)

@@ -1,0 +1,13 @@
+{
+  "ended_at": null,
+  "id": "obs-demo-acne-1",
+  "note": null,
+  "observed_at": "2026-05-08T10:30:00Z",
+  "observed_on": "2026-05-02",
+  "raw_payload": null,
+  "source": "user_entered",
+  "subject_id": "subject-demo-1",
+  "tracker_code": "acne_severity",
+  "unit": null,
+  "value": "mild"
+}

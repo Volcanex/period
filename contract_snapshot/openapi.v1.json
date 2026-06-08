@@ -304,8 +304,12 @@
             "type": "string"
           },
           "calculation_owner": {
-            "const": "device",
-            "default": "device",
+            "default": "hybrid",
+            "enum": [
+              "device",
+              "server",
+              "hybrid"
+            ],
             "title": "Calculation Owner",
             "type": "string"
           },
@@ -1540,6 +1544,1357 @@
         "title": "ObservationValidationResult",
         "type": "object"
       },
+      "PcosCycleIrregularitySignal": {
+        "additionalProperties": false,
+        "properties": {
+          "age_rule_applied": {
+            "enum": [
+              "pubertal_transition",
+              "early_post_menarche",
+              "adult",
+              "default_adult"
+            ],
+            "title": "Age Rule Applied",
+            "type": "string"
+          },
+          "classification": {
+            "enum": [
+              "regular",
+              "irregular",
+              "amenorrhea",
+              "pubertal_transition",
+              "insufficient_data"
+            ],
+            "title": "Classification",
+            "type": "string"
+          },
+          "cycles_per_year_estimate": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cycles Per Year Estimate"
+          },
+          "fallback_to_self_report": {
+            "default": false,
+            "title": "Fallback To Self Report",
+            "type": "boolean"
+          },
+          "longest_cycle_days": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longest Cycle Days"
+          },
+          "meets_irregularity_rule": {
+            "default": false,
+            "title": "Meets Irregularity Rule",
+            "type": "boolean"
+          },
+          "observed_cycle_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Observed Cycle Count",
+            "type": "integer"
+          },
+          "observed_cycle_lengths": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Observed Cycle Lengths",
+            "type": "array"
+          },
+          "rationale": {
+            "title": "Rationale",
+            "type": "string"
+          },
+          "self_reported_regularity": {
+            "anyOf": [
+              {
+                "enum": [
+                  "regular",
+                  "variable",
+                  "infrequent",
+                  "absent",
+                  "unknown"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Self Reported Regularity"
+          },
+          "shortest_cycle_days": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shortest Cycle Days"
+          }
+        },
+        "required": [
+          "classification",
+          "age_rule_applied",
+          "rationale"
+        ],
+        "title": "PcosCycleIrregularitySignal",
+        "type": "object"
+      },
+      "PcosEvaluationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "evaluated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional anchor time for the rolling evaluation window. Defaults to now.",
+            "title": "Evaluated At"
+          },
+          "evaluation_window_days": {
+            "default": 365,
+            "description": "Trailing window (days) of observations used for cycle and feature derivation.",
+            "maximum": 1825.0,
+            "minimum": 60.0,
+            "title": "Evaluation Window Days",
+            "type": "integer"
+          },
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/ObservationEvent"
+            },
+            "title": "Observations",
+            "type": "array"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          },
+          "years_since_menarche": {
+            "anyOf": [
+              {
+                "maximum": 60.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional context used to apply 2023 International Evidence-based Guideline cycle-irregularity rules by reproductive age. Adolescent rules apply when <3 years post-menarche.",
+            "title": "Years Since Menarche"
+          }
+        },
+        "required": [
+          "subject_id"
+        ],
+        "title": "PcosEvaluationRequest",
+        "type": "object"
+      },
+      "PcosEvaluationResult": {
+        "additionalProperties": false,
+        "properties": {
+          "adolescent_both_features_required": {
+            "default": false,
+            "title": "Adolescent Both Features Required",
+            "type": "boolean"
+          },
+          "age_group_used": {
+            "enum": [
+              "adolescent_pubertal",
+              "adolescent_post",
+              "adult",
+              "unknown"
+            ],
+            "title": "Age Group Used",
+            "type": "string"
+          },
+          "analyzer_code": {
+            "const": "pcos_feature_pattern_v1",
+            "title": "Analyzer Code",
+            "type": "string"
+          },
+          "analyzer_version": {
+            "title": "Analyzer Version",
+            "type": "string"
+          },
+          "confidence": {
+            "enum": [
+              "none",
+              "low",
+              "moderate",
+              "high"
+            ],
+            "title": "Confidence",
+            "type": "string"
+          },
+          "cycle_irregularity": {
+            "$ref": "#/components/schemas/PcosCycleIrregularitySignal"
+          },
+          "diagnostic_framework": {
+            "const": "rotterdam_2003_via_2023_ieg",
+            "default": "rotterdam_2003_via_2023_ieg",
+            "title": "Diagnostic Framework",
+            "type": "string"
+          },
+          "differential_reminders": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Differential Reminders",
+            "type": "array"
+          },
+          "evaluation_window_end": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluation Window End"
+          },
+          "evaluation_window_start": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluation Window Start"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "evidence_summary": {
+            "title": "Evidence Summary",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "hyperandrogenism": {
+            "$ref": "#/components/schemas/PcosHyperandrogenismSignal"
+          },
+          "meets_hyperandrogenism_rule": {
+            "default": false,
+            "title": "Meets Hyperandrogenism Rule",
+            "type": "boolean"
+          },
+          "meets_irregularity_rule": {
+            "default": false,
+            "title": "Meets Irregularity Rule",
+            "type": "boolean"
+          },
+          "metabolic_context": {
+            "$ref": "#/components/schemas/PcosMetabolicSignal"
+          },
+          "pcom_assessment_could_resolve": {
+            "default": false,
+            "title": "Pcom Assessment Could Resolve",
+            "type": "boolean"
+          },
+          "recommended_actions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Recommended Actions",
+            "type": "array"
+          },
+          "rotterdam_self_report_feature_count": {
+            "default": 0,
+            "maximum": 2.0,
+            "minimum": 0.0,
+            "title": "Rotterdam Self Report Feature Count",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "insufficient_data",
+              "suppressed",
+              "features_absent",
+              "features_partial",
+              "features_present"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "suppressors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Suppressors",
+            "type": "array"
+          }
+        },
+        "required": [
+          "analyzer_code",
+          "analyzer_version",
+          "subject_id",
+          "generated_at",
+          "status",
+          "confidence",
+          "age_group_used",
+          "cycle_irregularity",
+          "hyperandrogenism",
+          "metabolic_context",
+          "summary",
+          "evidence_summary"
+        ],
+        "title": "PcosEvaluationResult",
+        "type": "object"
+      },
+      "PcosHyperandrogenismSignal": {
+        "additionalProperties": false,
+        "properties": {
+          "acne_persistent": {
+            "default": false,
+            "title": "Acne Persistent",
+            "type": "boolean"
+          },
+          "acne_severity_max": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acne Severity Max"
+          },
+          "hirsutism_persistent": {
+            "default": false,
+            "title": "Hirsutism Persistent",
+            "type": "boolean"
+          },
+          "meets_hyperandrogenism_rule": {
+            "default": false,
+            "title": "Meets Hyperandrogenism Rule",
+            "type": "boolean"
+          },
+          "persistent_feature_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Persistent Feature Count",
+            "type": "integer"
+          },
+          "qualifying_features": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifying Features",
+            "type": "array"
+          },
+          "rationale": {
+            "title": "Rationale",
+            "type": "string"
+          },
+          "scalp_hair_thinning_max": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scalp Hair Thinning Max"
+          },
+          "scalp_thinning_persistent": {
+            "default": false,
+            "title": "Scalp Thinning Persistent",
+            "type": "boolean"
+          },
+          "unwanted_hair_growth_max": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unwanted Hair Growth Max"
+          }
+        },
+        "required": [
+          "rationale"
+        ],
+        "title": "PcosHyperandrogenismSignal",
+        "type": "object"
+      },
+      "PcosMetabolicSignal": {
+        "additionalProperties": false,
+        "properties": {
+          "acanthosis_nigricans_reported": {
+            "default": false,
+            "title": "Acanthosis Nigricans Reported",
+            "type": "boolean"
+          },
+          "flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Flags",
+            "type": "array"
+          },
+          "glucose_lab_note_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Glucose Lab Note Count",
+            "type": "integer"
+          },
+          "insulin_metabolic_note_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Insulin Metabolic Note Count",
+            "type": "integer"
+          },
+          "lipid_note_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Lipid Note Count",
+            "type": "integer"
+          },
+          "weight_kg_delta": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight Kg Delta"
+          },
+          "weight_kg_max": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight Kg Max"
+          },
+          "weight_kg_min": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Weight Kg Min"
+          },
+          "weight_observation_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Weight Observation Count",
+            "type": "integer"
+          }
+        },
+        "title": "PcosMetabolicSignal",
+        "type": "object"
+      },
+      "PerimenopauseCycleSignal": {
+        "additionalProperties": false,
+        "properties": {
+          "amenorrhea_365_plus_days_observed": {
+            "default": false,
+            "title": "Amenorrhea 365 Plus Days Observed",
+            "type": "boolean"
+          },
+          "amenorrhea_60_plus_days_observed": {
+            "default": false,
+            "title": "Amenorrhea 60 Plus Days Observed",
+            "type": "boolean"
+          },
+          "consecutive_pair_differences": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Consecutive Pair Differences",
+            "type": "array"
+          },
+          "cycle_lengths": {
+            "items": {
+              "type": "integer"
+            },
+            "title": "Cycle Lengths",
+            "type": "array"
+          },
+          "last_bleed_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Bleed Date"
+          },
+          "longest_inter_bleed_gap_days": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longest Inter Bleed Gap Days"
+          },
+          "max_consecutive_pair_difference": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Consecutive Pair Difference"
+          },
+          "observed_cycle_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Observed Cycle Count",
+            "type": "integer"
+          },
+          "pairs_with_seven_day_variability": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Pairs With Seven Day Variability",
+            "type": "integer"
+          },
+          "persistent_seven_day_variability": {
+            "default": false,
+            "title": "Persistent Seven Day Variability",
+            "type": "boolean"
+          },
+          "rationale": {
+            "title": "Rationale",
+            "type": "string"
+          },
+          "self_reported_pattern_change": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Self Reported Pattern Change"
+          }
+        },
+        "required": [
+          "rationale"
+        ],
+        "title": "PerimenopauseCycleSignal",
+        "type": "object"
+      },
+      "PerimenopauseEvaluationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "chronological_age": {
+            "anyOf": [
+              {
+                "maximum": 120.0,
+                "minimum": 10.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional chronological age; STRAW+10 applies regardless of age but extreme values trigger differential reminders.",
+            "title": "Chronological Age"
+          },
+          "evaluated_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional anchor time. Defaults to now.",
+            "title": "Evaluated At"
+          },
+          "evaluation_window_days": {
+            "default": 540,
+            "description": "Trailing window (days). STRAW+10 needs a wider window than PCOS because the late transition and early postmenopause stages span multiple years.",
+            "maximum": 3650.0,
+            "minimum": 120.0,
+            "title": "Evaluation Window Days",
+            "type": "integer"
+          },
+          "known_fmp_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional user-confirmed Final Menstrual Period date. When provided, post-FMP staging uses this anchor.",
+            "title": "Known Fmp Date"
+          },
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/ObservationEvent"
+            },
+            "title": "Observations",
+            "type": "array"
+          },
+          "post_hysterectomy": {
+            "default": false,
+            "description": "If true, menstrual STRAW+10 criteria are inapplicable and the analyzer returns 'inapplicable'.",
+            "title": "Post Hysterectomy",
+            "type": "boolean"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject_id"
+        ],
+        "title": "PerimenopauseEvaluationRequest",
+        "type": "object"
+      },
+      "PerimenopauseEvaluationResult": {
+        "additionalProperties": false,
+        "properties": {
+          "analyzer_code": {
+            "const": "perimenopause_straw10_v1",
+            "title": "Analyzer Code",
+            "type": "string"
+          },
+          "analyzer_version": {
+            "title": "Analyzer Version",
+            "type": "string"
+          },
+          "confidence": {
+            "enum": [
+              "none",
+              "low",
+              "moderate",
+              "high"
+            ],
+            "title": "Confidence",
+            "type": "string"
+          },
+          "cycle_signal": {
+            "$ref": "#/components/schemas/PerimenopauseCycleSignal"
+          },
+          "diagnostic_framework": {
+            "const": "straw_plus_10",
+            "default": "straw_plus_10",
+            "title": "Diagnostic Framework",
+            "type": "string"
+          },
+          "differential_reminders": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Differential Reminders",
+            "type": "array"
+          },
+          "evaluation_window_end": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluation Window End"
+          },
+          "evaluation_window_start": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Evaluation Window Start"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "evidence_summary": {
+            "title": "Evidence Summary",
+            "type": "string"
+          },
+          "fmp_candidate_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fmp Candidate Date"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "inapplicability_flags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Inapplicability Flags",
+            "type": "array"
+          },
+          "months_since_last_bleed": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Months Since Last Bleed"
+          },
+          "recommended_actions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Recommended Actions",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "indeterminate",
+              "suppressed",
+              "inapplicable",
+              "reproductive",
+              "early_transition",
+              "late_transition",
+              "postmenopause"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "straw_stage": {
+            "enum": [
+              "minus_3b",
+              "minus_3a",
+              "minus_2",
+              "minus_1",
+              "plus_1a",
+              "plus_1b",
+              "plus_1c",
+              "plus_2",
+              "indeterminate"
+            ],
+            "title": "Straw Stage",
+            "type": "string"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "suppressors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Suppressors",
+            "type": "array"
+          },
+          "symptom_signal": {
+            "$ref": "#/components/schemas/PerimenopauseSymptomSignal"
+          }
+        },
+        "required": [
+          "analyzer_code",
+          "analyzer_version",
+          "subject_id",
+          "generated_at",
+          "status",
+          "confidence",
+          "straw_stage",
+          "cycle_signal",
+          "symptom_signal",
+          "summary",
+          "evidence_summary"
+        ],
+        "title": "PerimenopauseEvaluationResult",
+        "type": "object"
+      },
+      "PerimenopauseSymptomSignal": {
+        "additionalProperties": false,
+        "properties": {
+          "hot_flashes_max": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hot Flashes Max"
+          },
+          "hot_flashes_persistent": {
+            "default": false,
+            "title": "Hot Flashes Persistent",
+            "type": "boolean"
+          },
+          "mood_change_present": {
+            "default": false,
+            "title": "Mood Change Present",
+            "type": "boolean"
+          },
+          "night_sweats_max": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Night Sweats Max"
+          },
+          "night_sweats_persistent": {
+            "default": false,
+            "title": "Night Sweats Persistent",
+            "type": "boolean"
+          },
+          "qualifying_features": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifying Features",
+            "type": "array"
+          },
+          "rationale": {
+            "title": "Rationale",
+            "type": "string"
+          },
+          "sleep_disturbance_present": {
+            "default": false,
+            "title": "Sleep Disturbance Present",
+            "type": "boolean"
+          },
+          "urogenital_atrophy_present": {
+            "default": false,
+            "title": "Urogenital Atrophy Present",
+            "type": "boolean"
+          },
+          "vaginal_dryness_max": {
+            "anyOf": [
+              {
+                "enum": [
+                  "none",
+                  "mild",
+                  "moderate",
+                  "severe"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vaginal Dryness Max"
+          },
+          "vaginal_dryness_persistent": {
+            "default": false,
+            "title": "Vaginal Dryness Persistent",
+            "type": "boolean"
+          },
+          "vasomotor_present": {
+            "default": false,
+            "title": "Vasomotor Present",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "rationale"
+        ],
+        "title": "PerimenopauseSymptomSignal",
+        "type": "object"
+      },
+      "PmddCycleEvaluation": {
+        "additionalProperties": false,
+        "properties": {
+          "core_symptom_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Core Symptom Count",
+            "type": "integer"
+          },
+          "core_symptom_rule_met": {
+            "default": false,
+            "title": "Core Symptom Rule Met",
+            "type": "boolean"
+          },
+          "cycle_positive": {
+            "default": false,
+            "title": "Cycle Positive",
+            "type": "boolean"
+          },
+          "evaluable": {
+            "default": false,
+            "title": "Evaluable",
+            "type": "boolean"
+          },
+          "impairment_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Impairment Count",
+            "type": "integer"
+          },
+          "impairment_rule_met": {
+            "default": false,
+            "title": "Impairment Rule Met",
+            "type": "boolean"
+          },
+          "onset_date": {
+            "format": "date",
+            "title": "Onset Date",
+            "type": "string"
+          },
+          "postmenstrual_coverage": {
+            "default": 0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Postmenstrual Coverage",
+            "type": "number"
+          },
+          "premenstrual_coverage": {
+            "default": 0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Premenstrual Coverage",
+            "type": "number"
+          },
+          "qualifying_core_symptoms": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifying Core Symptoms",
+            "type": "array"
+          },
+          "qualifying_impairment_symptoms": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifying Impairment Symptoms",
+            "type": "array"
+          },
+          "qualifying_secondary_symptoms": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Qualifying Secondary Symptoms",
+            "type": "array"
+          },
+          "symptom_scores": {
+            "items": {
+              "$ref": "#/components/schemas/PmddSymptomCycleScore"
+            },
+            "title": "Symptom Scores",
+            "type": "array"
+          },
+          "total_symptom_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Total Symptom Count",
+            "type": "integer"
+          },
+          "total_symptom_rule_met": {
+            "default": false,
+            "title": "Total Symptom Rule Met",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "onset_date"
+        ],
+        "title": "PmddCycleEvaluation",
+        "type": "object"
+      },
+      "PmddEvaluationRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "observations": {
+            "items": {
+              "$ref": "#/components/schemas/ObservationEvent"
+            },
+            "title": "Observations",
+            "type": "array"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "subject_id"
+        ],
+        "title": "PmddEvaluationRequest",
+        "type": "object"
+      },
+      "PmddEvaluationResult": {
+        "additionalProperties": false,
+        "properties": {
+          "activation_score": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Activation Score",
+            "type": "number"
+          },
+          "analyzer_code": {
+            "const": "pmdd_pattern_v1",
+            "title": "Analyzer Code",
+            "type": "string"
+          },
+          "analyzer_version": {
+            "title": "Analyzer Version",
+            "type": "string"
+          },
+          "confidence": {
+            "enum": [
+              "none",
+              "low",
+              "moderate",
+              "high"
+            ],
+            "title": "Confidence",
+            "type": "string"
+          },
+          "coverage": {
+            "default": 0,
+            "maximum": 1.0,
+            "minimum": 0.0,
+            "title": "Coverage",
+            "type": "number"
+          },
+          "cycle_evaluations": {
+            "items": {
+              "$ref": "#/components/schemas/PmddCycleEvaluation"
+            },
+            "title": "Cycle Evaluations",
+            "type": "array"
+          },
+          "diagnostic_framework": {
+            "const": "drsp_cpass_like",
+            "default": "drsp_cpass_like",
+            "title": "Diagnostic Framework",
+            "type": "string"
+          },
+          "evaluable_cycle_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Evaluable Cycle Count",
+            "type": "integer"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceReference"
+            },
+            "title": "Evidence",
+            "type": "array"
+          },
+          "evidence_summary": {
+            "title": "Evidence Summary",
+            "type": "string"
+          },
+          "generated_at": {
+            "format": "date-time",
+            "title": "Generated At",
+            "type": "string"
+          },
+          "meets_chronicity_rule": {
+            "default": false,
+            "title": "Meets Chronicity Rule",
+            "type": "boolean"
+          },
+          "meets_drsp_content_rule": {
+            "default": false,
+            "title": "Meets Drsp Content Rule",
+            "type": "boolean"
+          },
+          "meets_drsp_impairment_rule": {
+            "default": false,
+            "title": "Meets Drsp Impairment Rule",
+            "type": "boolean"
+          },
+          "pack_recommended": {
+            "default": false,
+            "title": "Pack Recommended",
+            "type": "boolean"
+          },
+          "positive_cycle_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Positive Cycle Count",
+            "type": "integer"
+          },
+          "recommended_actions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Recommended Actions",
+            "type": "array"
+          },
+          "rich_pattern_logged": {
+            "default": false,
+            "title": "Rich Pattern Logged",
+            "type": "boolean"
+          },
+          "scoring_method": {
+            "const": "range_of_scale_used_30pct",
+            "default": "range_of_scale_used_30pct",
+            "title": "Scoring Method",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "insufficient_data",
+              "suppressed",
+              "quiet",
+              "activation",
+              "pattern"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "subject_id": {
+            "title": "Subject Id",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "supporting_cycle_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Supporting Cycle Count",
+            "type": "integer"
+          },
+          "suppressors": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Suppressors",
+            "type": "array"
+          }
+        },
+        "required": [
+          "analyzer_code",
+          "analyzer_version",
+          "subject_id",
+          "generated_at",
+          "status",
+          "confidence",
+          "summary",
+          "evidence_summary"
+        ],
+        "title": "PmddEvaluationResult",
+        "type": "object"
+      },
+      "PmddSymptomCycleScore": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "postmenstrual_max": {
+            "anyOf": [
+              {
+                "maximum": 6.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postmenstrual Max"
+          },
+          "postmenstrual_mean": {
+            "anyOf": [
+              {
+                "maximum": 6.0,
+                "minimum": 1.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postmenstrual Mean"
+          },
+          "premenstrual_max": {
+            "anyOf": [
+              {
+                "maximum": 6.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Premenstrual Max"
+          },
+          "premenstrual_mean": {
+            "anyOf": [
+              {
+                "maximum": 6.0,
+                "minimum": 1.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Premenstrual Mean"
+          },
+          "qualifies": {
+            "default": false,
+            "title": "Qualifies",
+            "type": "boolean"
+          },
+          "relative_elevation": {
+            "anyOf": [
+              {
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Relative Elevation"
+          },
+          "severe_premenstrual_day_count": {
+            "default": 0,
+            "minimum": 0.0,
+            "title": "Severe Premenstrual Day Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "title": "PmddSymptomCycleScore",
+        "type": "object"
+      },
       "Prediction": {
         "additionalProperties": false,
         "properties": {
@@ -2366,6 +3721,132 @@
         "summary": "Health",
         "tags": [
           "system"
+        ]
+      }
+    },
+    "/api/v1/analyzers/pcos/evaluate": {
+      "post": {
+        "description": "Evaluate self-tracked observations against the 2023 IEG PCOS feature pattern.\n\nThis endpoint never diagnoses PCOS. It summarises whether self-reported cycle\nirregularity and clinical hyperandrogenism features are present, flags\nsuppressors that confound interpretation, and lists differentials a clinician\nshould rule out.",
+        "operationId": "evaluate_pcos_pattern_api_v1_analyzers_pcos_evaluate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PcosEvaluationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PcosEvaluationResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Evaluate Pcos Pattern",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
+    "/api/v1/analyzers/perimenopause/evaluate": {
+      "post": {
+        "description": "Estimate a STRAW+10 reproductive-aging stage from self-tracked bleeding and symptoms.\n\nThis endpoint never diagnoses menopause or premature ovarian insufficiency.\nIt surfaces a STRAW+10 stage estimate (Harlow et al. 2012) with explicit\nsuppressors for hormonal contraception, pregnancy, postpartum, and lactation\nand an inapplicability flag for post-hysterectomy/ablation contexts.",
+        "operationId": "evaluate_perimenopause_stage_api_v1_analyzers_perimenopause_evaluate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PerimenopauseEvaluationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PerimenopauseEvaluationResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Evaluate Perimenopause Stage",
+        "tags": [
+          "v1"
+        ]
+      }
+    },
+    "/api/v1/analyzers/pmdd/evaluate": {
+      "post": {
+        "description": "Evaluate recent observations for repeated PMDD-style late-luteal patterns.",
+        "operationId": "evaluate_pmdd_pattern_api_v1_analyzers_pmdd_evaluate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PmddEvaluationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PmddEvaluationResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Evaluate Pmdd Pattern",
+        "tags": [
+          "v1"
         ]
       }
     },

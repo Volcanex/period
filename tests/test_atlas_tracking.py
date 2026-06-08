@@ -1,10 +1,9 @@
 from datetime import UTC, datetime
 
-from fastapi.testclient import TestClient
-
 from core.contracts import ObservationEvent, ObservationValidationRequest, TrackerPack
 from core.tracking import tracker_definitions, tracker_packs, tracker_registry, validate_observation_event
 from server import app
+from tests.http_client import SyncASGIClient
 
 
 def test_base_symptoms_are_universal_and_pcos_is_a_pack():
@@ -14,8 +13,11 @@ def test_base_symptoms_are_universal_and_pcos_is_a_pack():
     assert "period_bleeding" in packs["base_symptoms"].tracker_codes
     assert "pcos_support" in packs
     assert "acne_severity" in packs["pcos_support"].tracker_codes
+    assert "cycle_regularity" in packs["pcos_support"].tracker_codes
+    assert "acanthosis_nigricans" in packs["pcos_support"].tracker_codes
     assert "period_bleeding" in packs["pcos_support"].tracker_codes
     assert "does not infer or diagnose PCOS" in packs["pcos_support"].clinical_note
+    assert any("PCOS" in evidence.source for evidence in packs["pcos_support"].evidence)
 
 
 def test_tracker_registry_has_unique_codes():
@@ -54,7 +56,7 @@ def test_validate_observation_rejects_invalid_enum_value():
 
 
 def test_validate_observation_endpoint_round_trip():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     event = ObservationEvent(
         id="obs-temp-1",
         subject_id="subject-1",
@@ -73,7 +75,7 @@ def test_validate_observation_endpoint_round_trip():
 
 
 def test_tracker_pack_endpoint_exposes_pcos_pack():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     response = client.get("/api/v1/tracker-packs")
     assert response.status_code == 200
     packs = {pack["code"]: pack for pack in response.json()}

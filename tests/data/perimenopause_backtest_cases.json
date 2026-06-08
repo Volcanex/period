@@ -1,0 +1,2283 @@
+[
+  {
+    "case_id": "reproductive-minus-3b",
+    "subject_id": "perimeno-case-1",
+    "expected_status": "reproductive",
+    "expected_stage": "minus_3b",
+    "chronological_age": 32,
+    "observations": [
+      {
+        "id": "perimeno-case-1-001",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-30T12:00:00Z",
+        "observed_on": "2026-01-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-002",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-31T12:00:00Z",
+        "observed_on": "2026-01-31",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-003",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-01T12:00:00Z",
+        "observed_on": "2026-02-01",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-004",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-02T12:00:00Z",
+        "observed_on": "2026-02-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-005",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-27T12:00:00Z",
+        "observed_on": "2026-02-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-006",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-28T12:00:00Z",
+        "observed_on": "2026-02-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-007",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-01T12:00:00Z",
+        "observed_on": "2026-03-01",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-008",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-02T12:00:00Z",
+        "observed_on": "2026-03-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-009",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-27T12:00:00Z",
+        "observed_on": "2026-03-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-010",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-28T12:00:00Z",
+        "observed_on": "2026-03-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-011",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-29T12:00:00Z",
+        "observed_on": "2026-03-29",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-012",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-30T12:00:00Z",
+        "observed_on": "2026-03-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-013",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-24T12:00:00Z",
+        "observed_on": "2026-04-24",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-014",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-25T12:00:00Z",
+        "observed_on": "2026-04-25",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-015",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-26T12:00:00Z",
+        "observed_on": "2026-04-26",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-016",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-27T12:00:00Z",
+        "observed_on": "2026-04-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-017",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-22T12:00:00Z",
+        "observed_on": "2026-05-22",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-018",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-23T12:00:00Z",
+        "observed_on": "2026-05-23",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-019",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-24T12:00:00Z",
+        "observed_on": "2026-05-24",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-020",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-25T12:00:00Z",
+        "observed_on": "2026-05-25",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-021",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-19T12:00:00Z",
+        "observed_on": "2026-06-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-022",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-20T12:00:00Z",
+        "observed_on": "2026-06-20",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-023",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-21T12:00:00Z",
+        "observed_on": "2026-06-21",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-024",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-22T12:00:00Z",
+        "observed_on": "2026-06-22",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-025",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-17T12:00:00Z",
+        "observed_on": "2026-07-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-026",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-18T12:00:00Z",
+        "observed_on": "2026-07-18",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-027",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-19T12:00:00Z",
+        "observed_on": "2026-07-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-028",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-20T12:00:00Z",
+        "observed_on": "2026-07-20",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-029",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-14T12:00:00Z",
+        "observed_on": "2026-08-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-030",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-15T12:00:00Z",
+        "observed_on": "2026-08-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-031",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-16T12:00:00Z",
+        "observed_on": "2026-08-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-032",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-17T12:00:00Z",
+        "observed_on": "2026-08-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-033",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-11T12:00:00Z",
+        "observed_on": "2026-09-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-034",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-12T12:00:00Z",
+        "observed_on": "2026-09-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-035",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-13T12:00:00Z",
+        "observed_on": "2026-09-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-036",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-14T12:00:00Z",
+        "observed_on": "2026-09-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-037",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-09T12:00:00Z",
+        "observed_on": "2026-10-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-038",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-10T12:00:00Z",
+        "observed_on": "2026-10-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-039",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-11T12:00:00Z",
+        "observed_on": "2026-10-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-040",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-12T12:00:00Z",
+        "observed_on": "2026-10-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-041",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-06T12:00:00Z",
+        "observed_on": "2026-11-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-042",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-07T12:00:00Z",
+        "observed_on": "2026-11-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-043",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-08T12:00:00Z",
+        "observed_on": "2026-11-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-044",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-09T12:00:00Z",
+        "observed_on": "2026-11-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-045",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-04T12:00:00Z",
+        "observed_on": "2026-12-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-046",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-05T12:00:00Z",
+        "observed_on": "2026-12-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-047",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-06T12:00:00Z",
+        "observed_on": "2026-12-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-1-048",
+        "subject_id": "perimeno-case-1",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-07T12:00:00Z",
+        "observed_on": "2026-12-07",
+        "source": "user_entered",
+        "value": "medium"
+      }
+    ]
+  },
+  {
+    "case_id": "late-reproductive-minus-3a",
+    "subject_id": "perimeno-case-2",
+    "expected_status": "reproductive",
+    "expected_stage": "minus_3a",
+    "chronological_age": 42,
+    "observations": [
+      {
+        "id": "perimeno-case-2-001",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-18T12:00:00Z",
+        "observed_on": "2026-04-18",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-002",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-19T12:00:00Z",
+        "observed_on": "2026-04-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-003",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-20T12:00:00Z",
+        "observed_on": "2026-04-20",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-004",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-21T12:00:00Z",
+        "observed_on": "2026-04-21",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-005",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-17T12:00:00Z",
+        "observed_on": "2026-05-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-006",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-18T12:00:00Z",
+        "observed_on": "2026-05-18",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-007",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-19T12:00:00Z",
+        "observed_on": "2026-05-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-008",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-20T12:00:00Z",
+        "observed_on": "2026-05-20",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-009",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-14T12:00:00Z",
+        "observed_on": "2026-06-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-010",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-15T12:00:00Z",
+        "observed_on": "2026-06-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-011",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-16T12:00:00Z",
+        "observed_on": "2026-06-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-012",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-17T12:00:00Z",
+        "observed_on": "2026-06-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-013",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-11T12:00:00Z",
+        "observed_on": "2026-07-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-014",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-12T12:00:00Z",
+        "observed_on": "2026-07-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-015",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-13T12:00:00Z",
+        "observed_on": "2026-07-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-016",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-14T12:00:00Z",
+        "observed_on": "2026-07-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-017",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-06T12:00:00Z",
+        "observed_on": "2026-08-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-018",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-07T12:00:00Z",
+        "observed_on": "2026-08-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-019",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-08T12:00:00Z",
+        "observed_on": "2026-08-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-020",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-09T12:00:00Z",
+        "observed_on": "2026-08-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-021",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-01T12:00:00Z",
+        "observed_on": "2026-09-01",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-022",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-02T12:00:00Z",
+        "observed_on": "2026-09-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-023",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-03T12:00:00Z",
+        "observed_on": "2026-09-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-024",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-04T12:00:00Z",
+        "observed_on": "2026-09-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-025",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-26T12:00:00Z",
+        "observed_on": "2026-09-26",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-026",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-27T12:00:00Z",
+        "observed_on": "2026-09-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-027",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-28T12:00:00Z",
+        "observed_on": "2026-09-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-028",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-29T12:00:00Z",
+        "observed_on": "2026-09-29",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-029",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-20T12:00:00Z",
+        "observed_on": "2026-10-20",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-030",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-21T12:00:00Z",
+        "observed_on": "2026-10-21",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-031",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-22T12:00:00Z",
+        "observed_on": "2026-10-22",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-032",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-23T12:00:00Z",
+        "observed_on": "2026-10-23",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-033",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-13T12:00:00Z",
+        "observed_on": "2026-11-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-034",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-14T12:00:00Z",
+        "observed_on": "2026-11-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-035",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-15T12:00:00Z",
+        "observed_on": "2026-11-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-036",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-16T12:00:00Z",
+        "observed_on": "2026-11-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-037",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-08T12:00:00Z",
+        "observed_on": "2026-12-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-038",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-09T12:00:00Z",
+        "observed_on": "2026-12-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-039",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-10T12:00:00Z",
+        "observed_on": "2026-12-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-040",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-11T12:00:00Z",
+        "observed_on": "2026-12-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-2-041",
+        "subject_id": "perimeno-case-2",
+        "tracker_code": "cycle_pattern_change",
+        "observed_at": "2026-12-02T12:00:00Z",
+        "observed_on": "2026-12-02",
+        "source": "user_entered",
+        "value": "yes"
+      }
+    ]
+  },
+  {
+    "case_id": "early-transition-minus-2",
+    "subject_id": "perimeno-case-3",
+    "expected_status": "early_transition",
+    "expected_stage": "minus_2",
+    "chronological_age": 46,
+    "observations": [
+      {
+        "id": "perimeno-case-3-001",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-14T12:00:00Z",
+        "observed_on": "2026-01-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-002",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-15T12:00:00Z",
+        "observed_on": "2026-01-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-003",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-16T12:00:00Z",
+        "observed_on": "2026-01-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-004",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-17T12:00:00Z",
+        "observed_on": "2026-01-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-005",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-11T12:00:00Z",
+        "observed_on": "2026-02-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-006",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-12T12:00:00Z",
+        "observed_on": "2026-02-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-007",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-13T12:00:00Z",
+        "observed_on": "2026-02-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-008",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-14T12:00:00Z",
+        "observed_on": "2026-02-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-009",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-12T12:00:00Z",
+        "observed_on": "2026-03-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-010",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-13T12:00:00Z",
+        "observed_on": "2026-03-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-011",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-14T12:00:00Z",
+        "observed_on": "2026-03-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-012",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-15T12:00:00Z",
+        "observed_on": "2026-03-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-013",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-19T12:00:00Z",
+        "observed_on": "2026-04-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-014",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-20T12:00:00Z",
+        "observed_on": "2026-04-20",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-015",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-21T12:00:00Z",
+        "observed_on": "2026-04-21",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-016",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-22T12:00:00Z",
+        "observed_on": "2026-04-22",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-017",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-19T12:00:00Z",
+        "observed_on": "2026-05-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-018",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-20T12:00:00Z",
+        "observed_on": "2026-05-20",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-019",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-21T12:00:00Z",
+        "observed_on": "2026-05-21",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-020",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-05-22T12:00:00Z",
+        "observed_on": "2026-05-22",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-021",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-29T12:00:00Z",
+        "observed_on": "2026-06-29",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-022",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-30T12:00:00Z",
+        "observed_on": "2026-06-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-023",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-01T12:00:00Z",
+        "observed_on": "2026-07-01",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-024",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-02T12:00:00Z",
+        "observed_on": "2026-07-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-025",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-01T12:00:00Z",
+        "observed_on": "2026-08-01",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-026",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-02T12:00:00Z",
+        "observed_on": "2026-08-02",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-027",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-03T12:00:00Z",
+        "observed_on": "2026-08-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-028",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-04T12:00:00Z",
+        "observed_on": "2026-08-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-029",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-14T12:00:00Z",
+        "observed_on": "2026-09-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-030",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-15T12:00:00Z",
+        "observed_on": "2026-09-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-031",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-16T12:00:00Z",
+        "observed_on": "2026-09-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-032",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-17T12:00:00Z",
+        "observed_on": "2026-09-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-033",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-16T12:00:00Z",
+        "observed_on": "2026-10-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-034",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-17T12:00:00Z",
+        "observed_on": "2026-10-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-035",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-18T12:00:00Z",
+        "observed_on": "2026-10-18",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-036",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-19T12:00:00Z",
+        "observed_on": "2026-10-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-037",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-27T12:00:00Z",
+        "observed_on": "2026-11-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-038",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-28T12:00:00Z",
+        "observed_on": "2026-11-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-039",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-29T12:00:00Z",
+        "observed_on": "2026-11-29",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-040",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-30T12:00:00Z",
+        "observed_on": "2026-11-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-3-041",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-11-02T12:00:00Z",
+        "observed_on": "2026-11-02",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "perimeno-case-3-042",
+        "subject_id": "perimeno-case-3",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-11-14T12:00:00Z",
+        "observed_on": "2026-11-14",
+        "source": "user_entered",
+        "value": "mild"
+      }
+    ]
+  },
+  {
+    "case_id": "late-transition-minus-1",
+    "subject_id": "perimeno-case-4",
+    "expected_status": "late_transition",
+    "expected_stage": "minus_1",
+    "chronological_age": 49,
+    "observations": [
+      {
+        "id": "perimeno-case-4-001",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-27T12:00:00Z",
+        "observed_on": "2025-11-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-002",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-28T12:00:00Z",
+        "observed_on": "2025-11-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-003",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-29T12:00:00Z",
+        "observed_on": "2025-11-29",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-004",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-30T12:00:00Z",
+        "observed_on": "2025-11-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-005",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-12-27T12:00:00Z",
+        "observed_on": "2025-12-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-006",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-12-28T12:00:00Z",
+        "observed_on": "2025-12-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-007",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-12-29T12:00:00Z",
+        "observed_on": "2025-12-29",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-008",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-12-30T12:00:00Z",
+        "observed_on": "2025-12-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-009",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-05T12:00:00Z",
+        "observed_on": "2026-02-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-010",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-06T12:00:00Z",
+        "observed_on": "2026-02-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-011",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-07T12:00:00Z",
+        "observed_on": "2026-02-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-012",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-08T12:00:00Z",
+        "observed_on": "2026-02-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-013",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-27T12:00:00Z",
+        "observed_on": "2026-03-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-014",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-28T12:00:00Z",
+        "observed_on": "2026-03-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-015",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-29T12:00:00Z",
+        "observed_on": "2026-03-29",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-016",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-03-30T12:00:00Z",
+        "observed_on": "2026-03-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-017",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-25T12:00:00Z",
+        "observed_on": "2026-06-25",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-018",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-26T12:00:00Z",
+        "observed_on": "2026-06-26",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-019",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-27T12:00:00Z",
+        "observed_on": "2026-06-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-020",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-06-28T12:00:00Z",
+        "observed_on": "2026-06-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-021",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-14T12:00:00Z",
+        "observed_on": "2026-08-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-022",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-15T12:00:00Z",
+        "observed_on": "2026-08-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-023",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-16T12:00:00Z",
+        "observed_on": "2026-08-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-024",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-17T12:00:00Z",
+        "observed_on": "2026-08-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-025",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-13T12:00:00Z",
+        "observed_on": "2026-10-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-026",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-14T12:00:00Z",
+        "observed_on": "2026-10-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-027",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-15T12:00:00Z",
+        "observed_on": "2026-10-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-028",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-16T12:00:00Z",
+        "observed_on": "2026-10-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-4-029",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-09-03T12:00:00Z",
+        "observed_on": "2026-09-03",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "perimeno-case-4-030",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-09-18T12:00:00Z",
+        "observed_on": "2026-09-18",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "perimeno-case-4-031",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-10-03T12:00:00Z",
+        "observed_on": "2026-10-03",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "perimeno-case-4-032",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "night_sweats",
+        "observed_at": "2026-09-23T12:00:00Z",
+        "observed_on": "2026-09-23",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "perimeno-case-4-033",
+        "subject_id": "perimeno-case-4",
+        "tracker_code": "night_sweats",
+        "observed_at": "2026-10-05T12:00:00Z",
+        "observed_on": "2026-10-05",
+        "source": "user_entered",
+        "value": "moderate"
+      }
+    ]
+  },
+  {
+    "case_id": "postmenopause-plus-1a",
+    "subject_id": "perimeno-case-5",
+    "expected_status": "postmenopause",
+    "expected_stage": "plus_1a",
+    "chronological_age": 52,
+    "observations": [
+      {
+        "id": "perimeno-case-5-001",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-07-10T12:00:00Z",
+        "observed_on": "2025-07-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-002",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-07-11T12:00:00Z",
+        "observed_on": "2025-07-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-003",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-07-12T12:00:00Z",
+        "observed_on": "2025-07-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-004",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-07-13T12:00:00Z",
+        "observed_on": "2025-07-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-005",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-09-08T12:00:00Z",
+        "observed_on": "2025-09-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-006",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-09-09T12:00:00Z",
+        "observed_on": "2025-09-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-007",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-09-10T12:00:00Z",
+        "observed_on": "2025-09-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-008",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-09-11T12:00:00Z",
+        "observed_on": "2025-09-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-009",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-07T12:00:00Z",
+        "observed_on": "2025-11-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-010",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-08T12:00:00Z",
+        "observed_on": "2025-11-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-011",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-09T12:00:00Z",
+        "observed_on": "2025-11-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-012",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-10T12:00:00Z",
+        "observed_on": "2025-11-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-5-013",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-07-05T12:00:00Z",
+        "observed_on": "2026-07-05",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "perimeno-case-5-014",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-07-25T12:00:00Z",
+        "observed_on": "2026-07-25",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "perimeno-case-5-015",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-08-19T12:00:00Z",
+        "observed_on": "2026-08-19",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "perimeno-case-5-016",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "vaginal_dryness",
+        "observed_at": "2026-11-02T12:00:00Z",
+        "observed_on": "2026-11-02",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "perimeno-case-5-017",
+        "subject_id": "perimeno-case-5",
+        "tracker_code": "vaginal_dryness",
+        "observed_at": "2026-11-14T12:00:00Z",
+        "observed_on": "2026-11-14",
+        "source": "user_entered",
+        "value": "moderate"
+      }
+    ]
+  },
+  {
+    "case_id": "postmenopause-plus-1b-known-fmp",
+    "subject_id": "perimeno-case-6",
+    "expected_status": "postmenopause",
+    "expected_stage": "plus_1b",
+    "chronological_age": 54,
+    "known_fmp_date": "2024-07-15",
+    "observations": [
+      {
+        "id": "perimeno-case-6-001",
+        "subject_id": "perimeno-case-6",
+        "tracker_code": "vaginal_dryness",
+        "observed_at": "2026-07-05T12:00:00Z",
+        "observed_on": "2026-07-05",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "perimeno-case-6-002",
+        "subject_id": "perimeno-case-6",
+        "tracker_code": "vaginal_dryness",
+        "observed_at": "2026-07-25T12:00:00Z",
+        "observed_on": "2026-07-25",
+        "source": "user_entered",
+        "value": "moderate"
+      }
+    ]
+  },
+  {
+    "case_id": "postmenopause-plus-1c-known-fmp",
+    "subject_id": "perimeno-case-7",
+    "expected_status": "postmenopause",
+    "expected_stage": "plus_1c",
+    "chronological_age": 57,
+    "known_fmp_date": "2022-01-27",
+    "observations": [
+      {
+        "id": "perimeno-case-7-001",
+        "subject_id": "perimeno-case-7",
+        "tracker_code": "vaginal_dryness",
+        "observed_at": "2026-12-22T12:00:00Z",
+        "observed_on": "2026-12-22",
+        "source": "user_entered",
+        "value": "mild"
+      }
+    ]
+  },
+  {
+    "case_id": "postmenopause-plus-2-known-fmp",
+    "subject_id": "perimeno-case-8",
+    "expected_status": "postmenopause",
+    "expected_stage": "plus_2",
+    "chronological_age": 61,
+    "known_fmp_date": "2018-10-15",
+    "observations": [
+      {
+        "id": "perimeno-case-8-001",
+        "subject_id": "perimeno-case-8",
+        "tracker_code": "vaginal_dryness",
+        "observed_at": "2026-12-02T12:00:00Z",
+        "observed_on": "2026-12-02",
+        "source": "user_entered",
+        "value": "moderate"
+      }
+    ]
+  },
+  {
+    "case_id": "suppressed-cocp",
+    "subject_id": "perimeno-case-9",
+    "expected_status": "suppressed",
+    "expected_stage": "indeterminate",
+    "chronological_age": 47,
+    "observations": [
+      {
+        "id": "perimeno-case-9-001",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-17T12:00:00Z",
+        "observed_on": "2026-07-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-002",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-18T12:00:00Z",
+        "observed_on": "2026-07-18",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-003",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-19T12:00:00Z",
+        "observed_on": "2026-07-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-004",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-20T12:00:00Z",
+        "observed_on": "2026-07-20",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-005",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-14T12:00:00Z",
+        "observed_on": "2026-08-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-006",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-15T12:00:00Z",
+        "observed_on": "2026-08-15",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-007",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-16T12:00:00Z",
+        "observed_on": "2026-08-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-008",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-08-17T12:00:00Z",
+        "observed_on": "2026-08-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-009",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-11T12:00:00Z",
+        "observed_on": "2026-09-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-010",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-12T12:00:00Z",
+        "observed_on": "2026-09-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-011",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-13T12:00:00Z",
+        "observed_on": "2026-09-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-012",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-09-14T12:00:00Z",
+        "observed_on": "2026-09-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-013",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-09T12:00:00Z",
+        "observed_on": "2026-10-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-014",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-10T12:00:00Z",
+        "observed_on": "2026-10-10",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-015",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-11T12:00:00Z",
+        "observed_on": "2026-10-11",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-016",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-12T12:00:00Z",
+        "observed_on": "2026-10-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-017",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-06T12:00:00Z",
+        "observed_on": "2026-11-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-018",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-07T12:00:00Z",
+        "observed_on": "2026-11-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-019",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-08T12:00:00Z",
+        "observed_on": "2026-11-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-020",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-11-09T12:00:00Z",
+        "observed_on": "2026-11-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-021",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-04T12:00:00Z",
+        "observed_on": "2026-12-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-022",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-05T12:00:00Z",
+        "observed_on": "2026-12-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-023",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-06T12:00:00Z",
+        "observed_on": "2026-12-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-024",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-07T12:00:00Z",
+        "observed_on": "2026-12-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-9-025",
+        "subject_id": "perimeno-case-9",
+        "tracker_code": "contraception_use",
+        "observed_at": "2026-06-15T12:00:00Z",
+        "observed_on": "2026-06-15",
+        "source": "user_entered",
+        "value": "pill"
+      }
+    ]
+  },
+  {
+    "case_id": "inapplicable-post-hysterectomy",
+    "subject_id": "perimeno-case-10",
+    "expected_status": "inapplicable",
+    "expected_stage": "indeterminate",
+    "chronological_age": 51,
+    "post_hysterectomy": true,
+    "observations": [
+      {
+        "id": "perimeno-case-10-001",
+        "subject_id": "perimeno-case-10",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-07-05T12:00:00Z",
+        "observed_on": "2026-07-05",
+        "source": "user_entered",
+        "value": "severe"
+      },
+      {
+        "id": "perimeno-case-10-002",
+        "subject_id": "perimeno-case-10",
+        "tracker_code": "hot_flashes",
+        "observed_at": "2026-09-03T12:00:00Z",
+        "observed_on": "2026-09-03",
+        "source": "user_entered",
+        "value": "moderate"
+      },
+      {
+        "id": "perimeno-case-10-003",
+        "subject_id": "perimeno-case-10",
+        "tracker_code": "vaginal_dryness",
+        "observed_at": "2026-11-02T12:00:00Z",
+        "observed_on": "2026-11-02",
+        "source": "user_entered",
+        "value": "moderate"
+      }
+    ]
+  },
+  {
+    "case_id": "indeterminate-too-few-cycles",
+    "subject_id": "perimeno-case-11",
+    "expected_status": "indeterminate",
+    "expected_stage": "indeterminate",
+    "chronological_age": 44,
+    "observations": [
+      {
+        "id": "perimeno-case-11-001",
+        "subject_id": "perimeno-case-11",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-12T12:00:00Z",
+        "observed_on": "2026-12-12",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-11-002",
+        "subject_id": "perimeno-case-11",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-13T12:00:00Z",
+        "observed_on": "2026-12-13",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-11-003",
+        "subject_id": "perimeno-case-11",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-14T12:00:00Z",
+        "observed_on": "2026-12-14",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-11-004",
+        "subject_id": "perimeno-case-11",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-12-15T12:00:00Z",
+        "observed_on": "2026-12-15",
+        "source": "user_entered",
+        "value": "medium"
+      }
+    ]
+  },
+  {
+    "case_id": "premature-under-40-late-transition",
+    "subject_id": "perimeno-case-12",
+    "expected_status": "late_transition",
+    "expected_stage": "minus_1",
+    "chronological_age": 35,
+    "observations": [
+      {
+        "id": "perimeno-case-12-001",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-27T12:00:00Z",
+        "observed_on": "2025-11-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-002",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-28T12:00:00Z",
+        "observed_on": "2025-11-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-003",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-29T12:00:00Z",
+        "observed_on": "2025-11-29",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-004",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2025-11-30T12:00:00Z",
+        "observed_on": "2025-11-30",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-005",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-06T12:00:00Z",
+        "observed_on": "2026-01-06",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-006",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-07T12:00:00Z",
+        "observed_on": "2026-01-07",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-007",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-08T12:00:00Z",
+        "observed_on": "2026-01-08",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-008",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-01-09T12:00:00Z",
+        "observed_on": "2026-01-09",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-009",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-25T12:00:00Z",
+        "observed_on": "2026-02-25",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-010",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-26T12:00:00Z",
+        "observed_on": "2026-02-26",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-011",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-27T12:00:00Z",
+        "observed_on": "2026-02-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-012",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-02-28T12:00:00Z",
+        "observed_on": "2026-02-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-013",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-16T12:00:00Z",
+        "observed_on": "2026-04-16",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-014",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-17T12:00:00Z",
+        "observed_on": "2026-04-17",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-015",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-18T12:00:00Z",
+        "observed_on": "2026-04-18",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-016",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-04-19T12:00:00Z",
+        "observed_on": "2026-04-19",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-017",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-25T12:00:00Z",
+        "observed_on": "2026-07-25",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-018",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-26T12:00:00Z",
+        "observed_on": "2026-07-26",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-019",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-27T12:00:00Z",
+        "observed_on": "2026-07-27",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-020",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-07-28T12:00:00Z",
+        "observed_on": "2026-07-28",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-021",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-03T12:00:00Z",
+        "observed_on": "2026-10-03",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-022",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-04T12:00:00Z",
+        "observed_on": "2026-10-04",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-023",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-05T12:00:00Z",
+        "observed_on": "2026-10-05",
+        "source": "user_entered",
+        "value": "medium"
+      },
+      {
+        "id": "perimeno-case-12-024",
+        "subject_id": "perimeno-case-12",
+        "tracker_code": "period_bleeding",
+        "observed_at": "2026-10-06T12:00:00Z",
+        "observed_on": "2026-10-06",
+        "source": "user_entered",
+        "value": "medium"
+      }
+    ]
+  }
+]

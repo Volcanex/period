@@ -1,11 +1,10 @@
 import json
 from pathlib import Path
 
-from fastapi.testclient import TestClient
-
-from core.contracts import AnalysisResult, Analyzer, AppConfig, CalendarFeed, ContractVersion, CycleProjection, LocalDataBundle, LocalStoreSnapshot, ObservationEvent, Prediction, PrivacyManifest, Report, Subject, TrackerDefinition, TrackerSettings
+from core.contracts import AnalysisResult, Analyzer, AppConfig, CalendarFeed, CycleProjection, ObservationEvent, PmddEvaluationRequest, PmddEvaluationResult, Prediction, Report, Subject, TrackerDefinition
 from core.contracts.registry import tracker_definitions
 from server import app
+from tests.http_client import SyncASGIClient
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 FIXTURES = PROJECT_ROOT / "tests" / "fixtures"
@@ -22,24 +21,24 @@ def validate(model, payload: dict):
 
 
 def test_health_endpoint_returns_stable_json():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     response = client.get("/api/_health")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
 
 
 def test_app_config_endpoint_matches_contract():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     response = client.get("/api/v1/app-config")
     assert response.status_code == 200
     config = validate(AppConfig, response.json())
     assert config.api_version == "v1"
-    assert config.calculation_owner == "device"
+    assert config.calculation_owner == "hybrid"
     assert config.privacy_posture == "local_first_private"
 
 
 def test_tracker_definitions_endpoint_matches_contract():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     response = client.get("/api/v1/tracker-definitions")
     assert response.status_code == 200
     definitions = [validate(TrackerDefinition, item) for item in response.json()]
@@ -61,8 +60,43 @@ def test_domain_fixtures_validate_against_contracts():
         validate(model, load_fixture(fixture))
 
 
+def test_pmdd_contract_models_validate():
+    request = validate(
+        PmddEvaluationRequest,
+        {
+            "subject_id": "subject-1",
+            "observations": [],
+        },
+    )
+    assert request.subject_id == "subject-1"
+
+    result = validate(
+        PmddEvaluationResult,
+        {
+            "analyzer_code": "pmdd_pattern_v1",
+            "analyzer_version": "2026.05.08",
+            "subject_id": "subject-1",
+            "generated_at": "2026-05-08T10:30:00Z",
+            "status": "insufficient_data",
+            "confidence": "low",
+            "supporting_cycle_count": 0,
+            "evaluable_cycle_count": 0,
+            "rich_pattern_logged": False,
+            "pack_recommended": True,
+            "coverage": 0.2,
+            "activation_score": 0.0,
+            "suppressors": [],
+            "summary": "More data needed.",
+            "evidence_summary": "0 recent windows · no major suppressors",
+            "recommended_actions": ["Log more daily observations."],
+            "evidence": [],
+        },
+    )
+    assert result.status == "insufficient_data"
+
+
 def test_openapi_includes_v1_routes_and_domain_schemas():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     response = client.get("/openapi.json")
     assert response.status_code == 200
     spec = response.json()
@@ -71,13 +105,14 @@ def test_openapi_includes_v1_routes_and_domain_schemas():
     assert "/api/v1/contract-compatibility" in spec["paths"]
     assert "/api/v1/tracker-definitions" in spec["paths"]
     assert "/api/v1/tracker-packs" in spec["paths"]
+    assert "/api/v1/analyzers/pmdd/evaluate" in spec["paths"]
     assert "/api/v1/privacy-manifest" in spec["paths"]
     assert "/api/v1/tracker-settings/default" in spec["paths"]
     assert "/api/v1/tracker-settings/resolve" in spec["paths"]
     assert "/api/v1/validate-local-data-bundle" in spec["paths"]
     assert "/api/v1/validate-local-store-snapshot" in spec["paths"]
     schemas = spec["components"]["schemas"]
-    for name in ["AppConfig", "TrackerDefinition", "Subject", "ObservationEvent", "CycleProjection", "Prediction", "Analyzer", "AnalysisResult", "Report", "CalendarFeed", "LocalDataBundle", "PrivacyManifest", "TrackerSettings", "ActiveTrackerCatalog", "ContractVersion", "ContractCompatibilityResult", "LocalStoreSnapshot", "RecordLifecycle"]:
+    for name in ["AppConfig", "TrackerDefinition", "Subject", "ObservationEvent", "CycleProjection", "Prediction", "Analyzer", "AnalysisResult", "PmddEvaluationRequest", "PmddEvaluationResult", "Report", "CalendarFeed", "LocalDataBundle", "PrivacyManifest", "TrackerSettings", "ActiveTrackerCatalog", "ContractVersion", "ContractCompatibilityResult", "LocalStoreSnapshot", "RecordLifecycle"]:
         assert name in schemas
 
 

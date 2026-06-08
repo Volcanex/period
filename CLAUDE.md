@@ -1,17 +1,18 @@
-# Period - Backend Contract Skeleton
+# Period - Backend Contract and Modeling Platform
 
-Period is a backend-only FastAPI contract skeleton for a future Flutter app. Do not build product frontend here. The mobile client owns UX, local storage, and primary reproductive-health calculations. The backend owns stable schemas, OpenAPI, fixtures, validation boundaries, and tiny API endpoints.
+Period is a backend-first FastAPI platform for a future Flutter app. Do not build product frontend here. The mobile client still owns UX and local storage, but the backend may now own stable schemas, OpenAPI, fixtures, validation boundaries, tracker catalogs, derived signals, analyzers, and server-side reproductive-health models.
 
 ## Non-Goals
 
 - No HTML product frontend, page compiler, templates, or static site layer.
 - No database, account system, sync engine, analytics pipeline, billing, or auth in this pass.
-- No server-owned period prediction or ovulation calculation endpoints.
-- No runnable analyzer plugin system yet.
+- No clinician-facing diagnosis or treatment claims.
+- No open-ended plugin system until analyzer/versioning boundaries are explicit.
 
 ## API Shape
 
-Public routes stay intentionally small:
+Public routes may expand beyond validation-only surfaces when the backend becomes
+the right owner for stable tracker semantics or reproducible models:
 
 - `GET /api/_health` for operational health.
 - `GET /api/v1/app-config`
@@ -25,22 +26,24 @@ Public routes stay intentionally small:
 - `POST /api/v1/validate-observation` for single-event contract validation.
 - `POST /api/v1/validate-local-data-bundle` for user-controlled import/export validation.
 - `POST /api/v1/validate-local-store-snapshot` for stateless Flutter local-store shape validation.
-
-If future contracts include projections or predictions, treat them as client-derived data submitted or validated by shape. Do not add endpoints named like `/calculate-period` or `/predict-cycle` unless the product explicitly changes ownership of calculations.
+- `POST /api/v1/analyzers/pmdd/evaluate` for prospective DRSP/C-PASS-style PMDD pattern evaluation.
+- `POST /api/v1/analyzers/pcos/evaluate` for self-report PCOS feature evaluation aligned to the 2023 International Evidence-based Guideline (non-diagnostic).
+- `POST /api/v1/analyzers/perimenopause/evaluate` for STRAW+10 reproductive-aging stage estimation from self-tracked bleeding and symptoms (non-diagnostic).
+- Future endpoints may include tracker-derived summaries, analyzer outputs, and reproducible model results when the backend is the canonical owner.
 
 ## Contract Ownership
 
-Pydantic models in `core/contracts/` are the backend source of truth. `AGENTS.md` files are canonical agent guidance and `CLAUDE.md` files are generated mirrors for Claude Code. Flutter should mirror them through OpenAPI and JSON examples in `contract_snapshot/`, plus test fixtures in `tests/fixtures/`. Contracts should preserve uncertainty: distinguish raw observations, imported data, inferred projections, and predictions.
+Pydantic models in `core/contracts/` are the backend source of truth. `AGENTS.md` files are canonical agent guidance and `CLAUDE.md` files are generated mirrors for Claude Code. Flutter should mirror them through OpenAPI and JSON examples in `contract_snapshot/`, plus test fixtures in `tests/fixtures/`. Contracts should preserve uncertainty: distinguish raw observations, imported data, backend-derived signals, inferred projections, analyzer outputs, and predictions.
 
 ## Core Model Research Baseline
 
-The reference cycle model should follow a Bayesian hierarchical state-space posture: population priors shrink sparse individual histories, sequential updates refine a person's latent cycle-length state, and long apparent cycles may be modeled as self-tracking skip artifacts. The backend implementation is a reproducible reference for tests and Flutter parity, not the production calculation owner.
+The reference cycle model should follow a Bayesian hierarchical state-space posture: population priors shrink sparse individual histories, sequential updates refine a person's latent cycle-length state, and long apparent cycles may be modeled as self-tracking skip artifacts. The backend implementation may now be the production calculation owner when a model is versioned, reproducible, and explicitly documented.
 
 ## Research Methodology: Evidence Ledger
 
-Every tracker, analyzer, and report field should document source, assumption, confidence, version, and review status before it becomes product-critical. Observed data, user-entered data, imported data, inferred projections, and predictions are separate evidence categories. Clinical-sensitive states should remain marked as suspected unless confirmed by user-entered or imported evidence.
+Every tracker, analyzer, and report field should document source, assumption, confidence, version, and review status before it becomes product-critical. Observed data, user-entered data, imported data, backend-derived signals, inferred projections, analyzer outputs, and predictions are separate evidence categories. Clinical-sensitive states should remain marked as suspected unless confirmed by user-entered or imported evidence.
 
-Analyzer contracts must be reproducible and versioned, but this skeleton does not implement clinical algorithms. Period is not a diagnostic device and does not provide medical diagnosis; contracts must carry uncertainty rather than flattening it away.
+Analyzer contracts must be reproducible and versioned. Period is not a diagnostic device and does not provide medical diagnosis; contracts and models must carry uncertainty rather than flattening it away.
 
 FHIR means Fast Healthcare Interoperability Resources in this project: a future healthcare data exchange mapping target. HealthKit and Health Connect are future mobile health platform mapping targets. All three are metadata-only here, not runtime dependencies or implemented adapters.
 
@@ -51,6 +54,7 @@ FHIR means Fast Healthcare Interoperability Resources in this project: a future 
 |------|---------|
 | `contract_snapshot/AGENTS.md` | Contract Snapshot |
 | `core/AGENTS.md` | Core Backend |
+| `core/analyzers/AGENTS.md` | Analyzers |
 | `core/bundles/AGENTS.md` | Local Data Bundles |
 | `core/contracts/AGENTS.md` | Contracts |
 | `core/model/AGENTS.md` | Cycle Model |
@@ -58,7 +62,7 @@ FHIR means Fast Healthcare Interoperability Resources in this project: a future 
 | `core/tracking/AGENTS.md` | Atlas Tracking Bridge |
 | `tests/AGENTS.md` | Tests |
 
-_Auto-compiled 2026-05-14 19:43 UTC - 8 doc(s) found._
+_Auto-compiled 2026-05-11 04:06 UTC - 9 doc(s) found._
 <!-- DOCS:END -->
 
 ## Before Every Commit
@@ -72,4 +76,4 @@ _Auto-compiled 2026-05-14 19:43 UTC - 8 doc(s) found._
 
 ## Flutter Frontend Readiness
 
-The frontend should start from generated OpenAPI models plus `contract_snapshot/examples/`. The primary on-device graph is `LocalStoreSnapshot`; `LocalDataBundle` is an export/import boundary. Keep calculations and persistence on device. Backend validation is for contract confidence, not runtime ownership.
+The frontend should start from generated OpenAPI models plus `contract_snapshot/examples/`. The primary on-device graph is `LocalStoreSnapshot`; `LocalDataBundle` is an export/import boundary. Backend endpoints may now provide canonical tracker catalogs, validation, derived summaries, and model outputs. Device persistence remains local unless product scope changes.

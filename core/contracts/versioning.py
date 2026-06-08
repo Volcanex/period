@@ -10,15 +10,46 @@ from core.contracts.domain import (
     ContractVersion,
 )
 
-CURRENT_CONTRACT_VERSION = "2026.05.02"
-SUPPORTED_CONTRACT_VERSIONS = [CURRENT_CONTRACT_VERSION]
-MINIMUM_SUPPORTED_VERSION = CURRENT_CONTRACT_VERSION
+CURRENT_CONTRACT_VERSION = "2026.05.12"
+SUPPORTED_CONTRACT_VERSIONS = [CURRENT_CONTRACT_VERSION, "2026.05.11", "2026.05.08"]
+MINIMUM_SUPPORTED_VERSION = "2026.05.08"
 COMPATIBILITY_POLICY = (
     "Additive changes may extend schemas, endpoints, examples, or enum-adjacent metadata without removing fields. "
     "Breaking changes remove or rename fields, change value semantics, or make previously valid payloads invalid. "
     "Flutter should accept additive versions with regeneration/tests and require an explicit migration for breaking versions."
 )
 CHANGELOG = [
+    ContractChangelogEntry(
+        version="2026.05.12",
+        released_on=date(2026, 5, 12),
+        change_type="additive",
+        summary=(
+            "Additive perimenopause STRAW+10 analyzer contracts and evaluation endpoint (Harlow et al. 2012). "
+            "Stages bleeding-pattern variability and amenorrhea windows to -3b through +2; flags hormonal "
+            "contraception, pregnancy, postpartum, lactation as suppressors and post-hysterectomy as "
+            "inapplicable per STRAW+10 applicability limits."
+        ),
+        migration_note="Clients may regenerate OpenAPI and optionally adopt the perimenopause analyzer endpoint.",
+    ),
+    ContractChangelogEntry(
+        version="2026.05.11",
+        released_on=date(2026, 5, 11),
+        change_type="additive",
+        summary=(
+            "Additive PCOS feature-pattern analyzer contracts and evaluation endpoint, aligned to the 2023 "
+            "International Evidence-based Guideline (Teede et al.). Self-report features map to Rotterdam "
+            "ovulatory-dysfunction and clinical-hyperandrogenism criteria; polycystic ovary morphology and "
+            "biochemical androgens remain clinician-owned and out of scope for this analyzer."
+        ),
+        migration_note="Clients may regenerate OpenAPI and optionally adopt the PCOS analyzer endpoint.",
+    ),
+    ContractChangelogEntry(
+        version="2026.05.08",
+        released_on=date(2026, 5, 8),
+        change_type="additive",
+        summary="Additive PMDD analyzer contracts and backend evaluation endpoint; calculation ownership clarified as hybrid.",
+        migration_note="Clients may regenerate OpenAPI and optionally adopt the PMDD analyzer endpoint.",
+    ),
     ContractChangelogEntry(
         version="2026.05.02",
         released_on=date(2026, 5, 2),

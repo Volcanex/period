@@ -1,16 +1,16 @@
 from datetime import UTC, datetime
 
-from fastapi.testclient import TestClient
-
 from core.bundles import validate_local_data_bundle
 from core.contracts import LocalDataBundle, LocalDataBundleValidationRequest, ObservationEvent, Subject
+from core.contracts.versioning import CURRENT_CONTRACT_VERSION
 from core.privacy import privacy_manifest
 from server import app
+from tests.http_client import SyncASGIClient
 
 
 def _bundle(event: ObservationEvent) -> LocalDataBundle:
     return LocalDataBundle(
-        schema_version="2026.05.02",
+        schema_version=CURRENT_CONTRACT_VERSION,
         exported_at=datetime(2026, 5, 2, 10, 0, tzinfo=UTC),
         subject=Subject(id="subject-1", birth_year=1990, timezone="UTC", locale="en-US"),
         observations=[event],
@@ -48,7 +48,7 @@ def test_local_data_bundle_validation_reports_subject_and_tracker_errors():
 
 
 def test_validate_local_data_bundle_endpoint_is_contract_only():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     event = ObservationEvent(
         id="obs-3",
         subject_id="subject-1",
@@ -74,7 +74,7 @@ def test_privacy_manifest_keeps_user_health_data_device_owned():
 
 
 def test_privacy_manifest_endpoint_matches_contract():
-    client = TestClient(app)
+    client = SyncASGIClient(app)
     response = client.get("/api/v1/privacy-manifest")
     assert response.status_code == 200
     assert response.json()["posture"] == "local_first_private"
