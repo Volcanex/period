@@ -4,6 +4,7 @@
 import os
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 import uvicorn
 
@@ -47,6 +48,13 @@ app = FastAPI(
     title="Period",
     description="Backend-only contract skeleton for a local-first Flutter period tracking app. Device clients own primary calculations.",
     version="0.1.0",
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://period.gabrielpenman.com"],
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 app.include_router(v1_router, prefix="/api/v1")

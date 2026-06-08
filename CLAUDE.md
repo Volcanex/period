@@ -58,7 +58,7 @@ FHIR means Fast Healthcare Interoperability Resources in this project: a future 
 | `core/tracking/AGENTS.md` | Atlas Tracking Bridge |
 | `tests/AGENTS.md` | Tests |
 
-_Auto-compiled 2026-05-04 08:22 UTC - 8 doc(s) found._
+_Auto-compiled 2026-05-14 19:43 UTC - 8 doc(s) found._
 <!-- DOCS:END -->
 
 ## Before Every Commit
