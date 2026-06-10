@@ -18,3 +18,6 @@ caddy-config/
 
 # Local compose overrides — the .example file is committed.
 docker-compose.override.yml
+
+# Claude Code local session data
+.claude/
