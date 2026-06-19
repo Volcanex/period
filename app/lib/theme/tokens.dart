@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 
-/// Design tokens for Period — direct port of `colors_and_type.css`.
-/// Source of truth: `/sequence/project/design/colors_and_type.css` from the
-/// design handoff. Names match the CSS variables.
-///
-/// app.css overrides the dark-mode media query and pins the prototype to
-/// light. We do the same here: the screen is always shown on a pale sky
-/// "base" color, regardless of system theme.
+/// Design tokens for Period — direct port of `colors_and_type.css`, with a
+/// small app-level dark theme layered on top for the live demo.
 class Tokens {
   Tokens._();
 
+  static bool _dark = false;
+
+  static bool get dark => _dark;
+  static void setDark(bool value) => _dark = value;
+
   // ---- brand palette ----
-  static const ink = Color(0xFF0E0E10);
-  static const paper = Color(0xFFF4F1EA);
-  static const eggshell = Color(0xFFFBF8F2);
+  static Color get ink => _dark ? const Color(0xFFF4F1EA) : _inkLight;
+  static Color get paper => _dark ? const Color(0xFF121217) : _paperLight;
+  static Color get eggshell => _dark ? const Color(0xFF1B1B22) : _eggshellLight;
   static const oxide = Color(0xFF7A1F1F);
   static const oxidePressed = Color(0xFF5A1818);
   static const ember = Color(0xFFE85D2C);
-  static const graphite = Color(0xFF2A2A2E);
-  static const graphite2 = Color(0xFF4A4A50);
+  static Color get graphite => _dark ? const Color(0xFFC5C2BE) : _graphiteLight;
+  static Color get graphite2 =>
+      _dark ? const Color(0xFFA09C98) : _graphite2Light;
 
   // ---- sky scale ----
   static const sky1 = Color(0xFFEAF1F7);
@@ -29,25 +30,67 @@ class Tokens {
 
   // ---- cycle phase tints ----
   static const phaseMenstrual = oxide;
-  static const phaseMenstrualSoft = Color(0xFFE8D2D2);
-  static const phaseFollicular = Color(0xFFFFFFFF);
-  static const phaseFollicularEdge = Color(0xFFD8E2EC);
-  static const phaseOvulation = Color(0xFFB7CFE2);
-  static const phaseOvulationDeep = sky4;
-  static const phaseLuteal = Color(0xFFDCD0E0);
-  static const phaseLutealDeep = Color(0xFF8A6E96);
+  static Color get phaseMenstrualSoft =>
+      _dark ? const Color(0xFF342024) : const Color(0xFFE8D2D2);
+  static Color get phaseFollicular =>
+      _dark ? const Color(0xFF252631) : const Color(0xFFFFFFFF);
+  static Color get phaseFollicularEdge =>
+      _dark ? const Color(0xFF3A4654) : const Color(0xFFD8E2EC);
+  static Color get phaseOvulation =>
+      _dark ? const Color(0xFF223244) : const Color(0xFFB7CFE2);
+  static Color get phaseOvulationDeep => _dark ? const Color(0xFF8FAFCB) : sky4;
+  static Color get phaseLuteal =>
+      _dark ? const Color(0xFF322838) : const Color(0xFFDCD0E0);
+  static Color get phaseLutealDeep =>
+      _dark ? const Color(0xFFB99AC7) : const Color(0xFF8A6E96);
 
-  // ---- semantic roles (light, prototype-pinned) ----
-  static const base = Color(0xFFF2F5F8); // app.css override: pale sky scaffold
-  static const bg = Color(0xFFFFFFFF);
-  static const bgElevated = eggshell;
-  static const bgTonal = sky1;
-  static const fg = ink;
-  static const fgMuted = graphite2;
+  // Calendar-only blends: pale enough that the grid stays calm.
+  static Color get phaseCalMenstrual =>
+      _dark ? const Color(0xFF2A171B) : const Color(0xFFF2D8D8);
+  static Color get phaseCalFollicular =>
+      _dark ? const Color(0xFF22232B) : const Color(0xFFFFFFFF);
+  static Color get phaseCalOvulation =>
+      _dark ? const Color(0xFF1C2A38) : const Color(0xFFD6E2EE);
+  static Color get phaseCalLuteal =>
+      _dark ? const Color(0xFF2A2230) : const Color(0xFFEDE6F0);
+  static Color get phaseCalMenstrualGlow =>
+      _dark ? const Color(0xFFFFA45C) : const Color(0xFFF2A447);
+  static Color get phaseCalFollicularGlow =>
+      _dark ? const Color(0xFFFFC078) : const Color(0xFFF4B15F);
+  static Color get phaseCalOvulationGlow =>
+      _dark ? const Color(0xFFFFBB70) : const Color(0xFFEFA85A);
+  static Color get phaseCalLutealGlow =>
+      _dark ? const Color(0xFFFFB08A) : const Color(0xFFEFA06D);
+  static Color get phaseCalMenstrualToday =>
+      _dark ? const Color(0xFF9F3A20) : const Color(0xFFE86D2D);
+  static Color get phaseCalFollicularToday =>
+      _dark ? const Color(0xFF5C4A1E) : const Color(0xFFFFE79A);
+  static Color get phaseCalOvulationToday =>
+      _dark ? const Color(0xFF245C82) : const Color(0xFF9FD7F5);
+  static Color get phaseCalLutealToday =>
+      _dark ? const Color(0xFF6C426D) : const Color(0xFFE9B7CF);
+
+  // ---- semantic roles ----
+  static Color get base =>
+      _dark ? const Color(0xFF0E0E13) : const Color(0xFFF2F5F8);
+  static Color get bg =>
+      _dark ? const Color(0xFF171820) : const Color(0xFFFFFFFF);
+  static Color get bgElevated => eggshell;
+  static Color get bgTonal =>
+      _dark ? const Color(0xFF202632) : const Color(0xFFEAF1F7);
+  static Color get fg => ink;
+  static Color get fgMuted => graphite2;
   static const fgOnOxide = Color(0xFFFFFFFF);
-  static const border = graphite;
+  static Color get border => graphite;
   // app.css pins border-soft to 40% (the colors_and_type.css default is 55%).
-  static final borderSoft = graphite.withValues(alpha: 0.40);
+  static Color get borderSoft =>
+      graphite.withValues(alpha: _dark ? 0.32 : 0.40);
+
+  static const _inkLight = Color(0xFF0E0E10);
+  static const _paperLight = Color(0xFFF4F1EA);
+  static const _eggshellLight = Color(0xFFFBF8F2);
+  static const _graphiteLight = Color(0xFF2A2A2E);
+  static const _graphite2Light = Color(0xFF4A4A50);
 
   // ---- spacing (4px base) ----
   static const sp1 = 4.0;

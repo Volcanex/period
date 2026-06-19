@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 
-enum AppTab { today, calendar, insights, trackers, exports }
+enum AppTab { today, calendar, insights, trackers, settings }
 
 extension AppTabLabel on AppTab {
   String get label => switch (this) {
-        AppTab.today => 'today',
-        AppTab.calendar => 'calendar',
-        AppTab.insights => 'insights',
-        AppTab.trackers => 'trackers',
-        AppTab.exports => 'export',
-      };
+    AppTab.today => 'today',
+    AppTab.calendar => 'calendar',
+    AppTab.insights => 'insights',
+    AppTab.trackers => 'trackers',
+    AppTab.settings => 'settings',
+  };
 
+  // Visual approximations of the design's Phosphor icons in Material's
+  // built-in font, which tree-shakes to ~8 KB instead of pulling 2.6 MB of
+  // unused Phosphor weights. If pixel-exact Phosphor matters, swap to
+  // CustomPaint stencils or hand-rolled SVGs later.
   IconData get icon => switch (this) {
-        AppTab.today => PhosphorIcons.circle(),
-        AppTab.calendar => PhosphorIcons.calendarBlank(),
-        AppTab.insights => PhosphorIcons.chartLine(),
-        AppTab.trackers => PhosphorIcons.listChecks(),
-        AppTab.exports => PhosphorIcons.arrowSquareOut(),
-      };
+    AppTab.today => Icons.circle_outlined,
+    AppTab.calendar => Icons.calendar_month_outlined,
+    AppTab.insights => Icons.show_chart,
+    AppTab.trackers => Icons.checklist_rounded,
+    AppTab.settings => Icons.settings_outlined,
+  };
 }
 
 class AppBottomTabBar extends StatelessWidget {
@@ -45,7 +48,13 @@ class AppBottomTabBar extends StatelessWidget {
       child: Row(
         children: [
           for (final tab in AppTab.values)
-            Expanded(child: _TabItem(tab: tab, active: tab == current, onTap: () => onChanged(tab))),
+            Expanded(
+              child: _TabItem(
+                tab: tab,
+                active: tab == current,
+                onTap: () => onChanged(tab),
+              ),
+            ),
         ],
       ),
     );
@@ -57,7 +66,11 @@ class _TabItem extends StatelessWidget {
   final bool active;
   final VoidCallback onTap;
 
-  const _TabItem({required this.tab, required this.active, required this.onTap});
+  const _TabItem({
+    required this.tab,
+    required this.active,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +88,7 @@ class _TabItem extends StatelessWidget {
                 left: 0,
                 right: 0,
                 child: Center(
-                  child: Container(
-                    width: 24,
-                    height: 2,
-                    color: Tokens.ink,
-                  ),
+                  child: Container(width: 24, height: 2, color: Tokens.ink),
                 ),
               ),
             Center(
@@ -90,7 +99,11 @@ class _TabItem extends StatelessWidget {
                   const SizedBox(height: 3),
                   Text(
                     tab.label,
-                    style: Type.mono(size: 9, color: color, letterSpacingEm: 0.04),
+                    style: Type.mono(
+                      size: 9,
+                      color: color,
+                      letterSpacingEm: 0.04,
+                    ),
                   ),
                 ],
               ),

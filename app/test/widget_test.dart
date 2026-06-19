@@ -1,18 +1,257 @@
 // Basic smoke test for the Today screen.
 
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:period_app/api/contracts/tracker_definition.dart';
+import 'package:period_app/data/clock.dart';
+import 'package:period_app/data/models.dart';
 import 'package:period_app/main.dart';
+import 'package:period_app/model/cycle_model.dart';
+import 'package:period_app/screens/calendar/sheets/day_sheet.dart';
+import 'package:period_app/state/local_period_store.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
-  testWidgets('Today screen renders with date and bleeding card', (tester) async {
+  testWidgets('Today screen renders with date and bleeding card', (
+    tester,
+  ) async {
+    // Pin the clock so the date assertion is stable across test runs.
+    Clock.overrideNow(DateTime(2026, 5, 4));
+    SharedPreferences.setMockInitialValues({});
+    addTearDown(() => Clock.overrideNow(null));
+
     await tester.pumpWidget(const PeriodApp());
-    // GoogleFonts pulls fonts at runtime; pump a couple of frames so async
-    // font loads settle without making the test brittle.
     await tester.pump();
-    await tester.pump(const Duration(milliseconds: 200));
+    await tester.pump(const Duration(milliseconds: 500));
 
     expect(find.text('today'), findsWidgets);
     expect(find.text('bleeding'), findsOneWidget);
     expect(find.text('mon, may 4'), findsOneWidget);
+  });
+
+  testWidgets('Calendar past day opens editable local log sheet', (
+    tester,
+  ) async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    SharedPreferences.setMockInitialValues({});
+    addTearDown(() => Clock.overrideNow(null));
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    await tester.tap(find.text('calendar'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('4').first);
+    await tester.pumpAndSettle();
+
+    expect(find.text('DAY LOG'), findsOneWidget);
+    expect(find.text('bleeding'), findsOneWidget);
+    expect(find.text('MOOD'), findsOneWidget);
+  });
+
+  testWidgets('Day sheet logs active boolean tracker from catalog', (
+    tester,
+  ) async {
+    bool? sexLogged;
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: DaySheet(
+            date: DateTime(2026, 5, 4),
+            phaseLabel: 'menstrual',
+            kindLabel: 'logged flow',
+            cycleDay: 1,
+            log: const DayLog(),
+            activeDefinitions: const [
+              TrackerDefinition(
+                code: 'sex',
+                displayName: 'Sex',
+                valueType: 'boolean',
+                temporalGrain: 'day',
+                calendarLayer: 'symptom',
+                calendarPriority: 50,
+                version: 'test',
+                evidence: [],
+              ),
+            ],
+            isToday: false,
+            onBleedingChanged: (_) {},
+            onSymptomChanged: (_, _) {},
+            onMoodChanged: (_) {},
+            onNumericChanged: (_, _) {},
+            onEnumChanged: (_, _) {},
+            onBooleanChanged: (code, value) {
+              if (code == 'sex') sexLogged = value;
+            },
+            onTextChanged: (_, _) {},
+            onNoteChanged: (_) {},
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('sex'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('yes'));
+    await tester.tap(find.text('save'));
+    await tester.pumpAndSettle();
+
+    expect(sexLogged, isTrue);
+  });
+
+  testWidgets('Enabled packs put canonical trackers on Today', (tester) async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    SharedPreferences.setMockInitialValues({});
+    addTearDown(() => Clock.overrideNow(null));
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    await tester.tap(find.text('trackers'));
+    await tester.pumpAndSettle();
+    expect(find.text('sleep'), findsWidgets);
+
+    await tester.ensureVisible(find.text('sleep').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('sleep').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('today'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('SLEEP'), findsWidgets);
+  });
+
+  testWidgets('Today edit and gear route to real tabs', (tester) async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    SharedPreferences.setMockInitialValues({});
+    addTearDown(() => Clock.overrideNow(null));
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    await tester.tap(find.text('EDIT'));
+    await tester.pumpAndSettle();
+    expect(find.text('TRACKER PACKS'), findsOneWidget);
+
+    await tester.tap(find.text('today'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byIcon(Icons.settings_outlined).first);
+    await tester.pumpAndSettle();
+    expect(find.text('CYCLE DEFAULTS'), findsOneWidget);
+  });
+
+  test('local store derives cycle from logged bleeding starts', () async {
+    Clock.overrideNow(DateTime(2026, 5, 4));
+    SharedPreferences.setMockInitialValues({});
+    addTearDown(() => Clock.overrideNow(null));
+
+    final store = LocalPeriodStore();
+    await store.load();
+
+    store.setBleeding(DateTime(2026, 4, 6), BleedLevel.med);
+    store.setBleeding(DateTime(2026, 4, 7), BleedLevel.light);
+    store.setBleeding(DateTime(2026, 5, 4), BleedLevel.med);
+
+    expect(store.cycleAnchor, DateTime(2026, 5, 4));
+    expect(store.cycleLen, 28);
+    expect(store.cycleStateFor(DateTime(2026, 5, 4)).cycleDay, 1);
+  });
+
+  test(
+    'local store emits contract-shaped observations from daily logs',
+    () async {
+      Clock.overrideNow(DateTime(2026, 5, 4));
+      SharedPreferences.setMockInitialValues({});
+      addTearDown(() => Clock.overrideNow(null));
+
+      final store = LocalPeriodStore();
+      await store.load();
+
+      store.setBleeding(DateTime(2026, 5, 4), BleedLevel.med);
+      store.setSymptom(DateTime(2026, 5, 4), 'pelvic pain', Severity.moderate);
+      store.setSymptom(DateTime(2026, 5, 4), 'anxiety', Severity.mild);
+      store.setNumeric(DateTime(2026, 5, 4), 'sleep', 7.5);
+      store.setMood(DateTime(2026, 5, 4), 'good');
+      store.setBooleanValue(DateTime(2026, 5, 4), 'spotting', true);
+      store.setEnumValue(DateTime(2026, 5, 4), 'cervical_mucus', 'egg_white');
+      store.setTextValue(DateTime(2026, 5, 4), 'medication', 'magnesium');
+
+      final observations = store.observations;
+      expect(
+        observations.map((o) => o.trackerCode),
+        contains('period_bleeding'),
+      );
+      expect(observations.map((o) => o.trackerCode), contains('pelvic_pain'));
+      expect(
+        observations.map((o) => o.trackerCode),
+        contains('anxiety_severity'),
+      );
+      expect(observations.map((o) => o.trackerCode), contains('sleep_hours'));
+      expect(observations.map((o) => o.trackerCode), contains('mood'));
+      expect(observations.map((o) => o.trackerCode), contains('spotting'));
+      expect(
+        observations.map((o) => o.trackerCode),
+        contains('cervical_mucus'),
+      );
+      expect(observations.map((o) => o.trackerCode), contains('medication'));
+      expect(observations.every((o) => o.source == 'user_entered'), isTrue);
+    },
+  );
+
+  test('cycle model shrinks sparse history toward population prior', () {
+    final state = fitCycleModel([
+      const CycleLengthObservation(cycleIndex: 0, lengthDays: 35),
+    ]);
+    expect(state.posteriorMeanDays, greaterThan(29));
+    expect(state.posteriorMeanDays, lessThan(35));
+
+    final prediction = predictNextCycle(state);
+    expect(prediction.p10LengthDays, lessThan(prediction.p50LengthDays));
+    expect(prediction.p50LengthDays, lessThan(prediction.p90LengthDays));
+    expect(prediction.predictiveSdDays, greaterThan(0));
+  });
+
+  test('cycle confidence follows predictive window and history floor', () {
+    final starter = predictNextCycle(fitCycleModel([]));
+    expect(
+      confidenceLabelForPrediction(starter, cycleStartCount: 1),
+      'starter',
+    );
+
+    final medium = predictNextCycle(
+      fitCycleModel([
+        const CycleLengthObservation(cycleIndex: 0, lengthDays: 28),
+        const CycleLengthObservation(cycleIndex: 1, lengthDays: 29),
+        const CycleLengthObservation(cycleIndex: 2, lengthDays: 28),
+      ]),
+    );
+    expect(medium.p80WindowDays, lessThanOrEqualTo(12));
+    expect(confidenceLabelForPrediction(medium, cycleStartCount: 4), 'medium');
+
+    final high = CyclePrediction(
+      expectedLengthDays: 28,
+      p10LengthDays: 25,
+      p50LengthDays: 28,
+      p90LengthDays: 31,
+      predictiveSdDays: 2.3,
+      skippedTrackingProbability: 0,
+      elapsedCycleDay: null,
+    );
+    expect(confidenceLabelForPrediction(high, cycleStartCount: 6), 'high');
+  });
+
+  test('cycle model adjusts likely skipped tracking cycle', () {
+    final state = fitCycleModel([
+      const CycleLengthObservation(cycleIndex: 0, lengthDays: 27),
+      const CycleLengthObservation(cycleIndex: 1, lengthDays: 28),
+      const CycleLengthObservation(cycleIndex: 2, lengthDays: 56),
+    ]);
+    expect(state.skipProbabilities.last, greaterThan(0.80));
+    expect(state.adjustedLengths.last, lessThan(35));
+    expect(state.posteriorMeanDays, lessThan(31));
   });
 }

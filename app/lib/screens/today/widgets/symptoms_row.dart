@@ -25,11 +25,7 @@ class SymptomsRow extends StatelessWidget {
       runSpacing: 6,
       children: [
         for (final s in symptoms)
-          _SymChip(
-            label: s,
-            severity: values[s],
-            onTap: () => onTapSymptom(s),
-          ),
+          _SymChip(label: s, severity: values[s], onTap: () => onTapSymptom(s)),
         _MoreChip(onTap: onTapMore),
       ],
     );
@@ -41,7 +37,11 @@ class _SymChip extends StatelessWidget {
   final Severity? severity;
   final VoidCallback onTap;
 
-  const _SymChip({required this.label, required this.severity, required this.onTap});
+  const _SymChip({
+    required this.label,
+    required this.severity,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +175,11 @@ class DottedBorderBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(color: Tokens.borderSoft, width: 1, style: BorderStyle.solid),
+        border: Border.all(
+          color: Tokens.borderSoft,
+          width: 1,
+          style: BorderStyle.solid,
+        ),
         borderRadius: BorderRadius.circular(Tokens.r1),
       ),
       child: child,

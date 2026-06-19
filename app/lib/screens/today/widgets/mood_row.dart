@@ -39,7 +39,11 @@ class _MoodTile extends StatelessWidget {
   final bool active;
   final VoidCallback onTap;
 
-  const _MoodTile({required this.label, required this.active, required this.onTap});
+  const _MoodTile({
+    required this.label,
+    required this.active,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

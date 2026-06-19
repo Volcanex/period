@@ -1,11 +1,11 @@
 {
-    "name": "period_app",
-    "short_name": "period_app",
+    "name": "Period",
+    "short_name": "Period",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#F2F5F8",
+    "theme_color": "#F2F5F8",
+    "description": "Local-first cycle tracking for bleeding, symptoms, and patterns.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

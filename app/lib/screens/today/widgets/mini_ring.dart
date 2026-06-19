@@ -122,7 +122,13 @@ class _MiniRingPainter extends CustomPainter {
       ..strokeCap = StrokeCap.butt;
     final start = -math.pi / 2 + fStart * 2 * math.pi;
     final sweep = len * 2 * math.pi;
-    canvas.drawArc(Rect.fromCircle(center: Offset(cx, cy), radius: r), start, sweep, false, paint);
+    canvas.drawArc(
+      Rect.fromCircle(center: Offset(cx, cy), radius: r),
+      start,
+      sweep,
+      false,
+      paint,
+    );
   }
 
   void _drawDashedCircle(

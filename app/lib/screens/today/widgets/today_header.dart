@@ -63,7 +63,7 @@ class TodayHeader extends StatelessWidget {
             MiniRing(
               day: state.cycleDay!,
               cycleLen: state.cycleLen,
-              flowLen: 5,
+              flowLen: state.flowLen,
               size: 84,
             ),
           ],
@@ -102,29 +102,31 @@ class _PhaseLine extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 8),
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: phase.name,
-                style: Type.display(
-                  size: 22,
-                  weight: Tokens.fwMedium,
-                  height: 1.1,
-                  letterSpacingEm: -0.01,
+        Flexible(
+          child: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: phase.name,
+                  style: Type.display(
+                    size: 22,
+                    weight: Tokens.fwMedium,
+                    height: 1.1,
+                    letterSpacingEm: -0.01,
+                  ),
                 ),
-              ),
-              TextSpan(
-                text: ' phase',
-                style: Type.display(
-                  size: 22,
-                  weight: Tokens.fwRegular,
-                  color: Tokens.graphite2,
-                  height: 1.1,
-                  letterSpacingEm: -0.01,
+                TextSpan(
+                  text: ' phase',
+                  style: Type.display(
+                    size: 22,
+                    weight: Tokens.fwRegular,
+                    color: Tokens.graphite2,
+                    height: 1.1,
+                    letterSpacingEm: -0.01,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -143,7 +145,11 @@ class _CycleLine extends StatelessWidget {
         children: [
           TextSpan(
             text: 'cycle ',
-            style: Type.mono(size: 12, color: Tokens.graphite2, letterSpacingEm: 0.02),
+            style: Type.mono(
+              size: 12,
+              color: Tokens.graphite2,
+              letterSpacingEm: 0.02,
+            ),
           ),
           TextSpan(
             text: 'day ${state.cycleDay}',
@@ -156,7 +162,11 @@ class _CycleLine extends StatelessWidget {
           ),
           TextSpan(
             text: ' of ${state.cycleLen}',
-            style: Type.mono(size: 12, color: Tokens.graphite2, letterSpacingEm: 0.02),
+            style: Type.mono(
+              size: 12,
+              color: Tokens.graphite2,
+              letterSpacingEm: 0.02,
+            ),
           ),
         ],
       ),
@@ -167,8 +177,18 @@ class _CycleLine extends StatelessWidget {
 String _formatDate(DateTime d) {
   const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
   const months = [
-    'jan', 'feb', 'mar', 'apr', 'may', 'jun',
-    'jul', 'aug', 'sep', 'oct', 'nov', 'dec',
+    'jan',
+    'feb',
+    'mar',
+    'apr',
+    'may',
+    'jun',
+    'jul',
+    'aug',
+    'sep',
+    'oct',
+    'nov',
+    'dec',
   ];
   return '${days[d.weekday - 1]}, ${months[d.month - 1]} ${d.day}';
 }

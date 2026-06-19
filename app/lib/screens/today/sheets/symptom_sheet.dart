@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../data/models.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
+import 'sheet_scaffold.dart';
 
 /// Bottom sheet for picking severity and adding an optional note for a symptom.
 class SymptomSheet extends StatefulWidget {
@@ -41,7 +42,7 @@ class _SymptomSheetState extends State<SymptomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return _SheetScaffold(
+    return SheetScaffold(
       title: widget.symptom,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -49,10 +50,7 @@ class _SymptomSheetState extends State<SymptomSheet> {
         children: [
           Text('SEVERITY', style: Type.eyebrow()),
           const SizedBox(height: 10),
-          _SeverityRow(
-            value: sev,
-            onChanged: (v) => setState(() => sev = v),
-          ),
+          _SeverityRow(value: sev, onChanged: (v) => setState(() => sev = v)),
           const SizedBox(height: 14),
           Text('NOTE · OPTIONAL', style: Type.eyebrow()),
           const SizedBox(height: 10),
@@ -76,12 +74,16 @@ class _SymptomSheetState extends State<SymptomSheet> {
                 contentPadding: EdgeInsets.zero,
                 border: InputBorder.none,
                 hintText: 'add context…',
-                hintStyle: Type.body(size: 14, color: Tokens.graphite2, height: 1.55),
+                hintStyle: Type.body(
+                  size: 14,
+                  color: Tokens.graphite2,
+                  height: 1.55,
+                ),
               ),
             ),
           ),
           const SizedBox(height: 14),
-          _PrimaryButton(
+          SheetPrimaryButton(
             label: 'save',
             onPressed: () {
               widget.onSet(sev);
@@ -135,7 +137,11 @@ class _SevStep extends StatelessWidget {
   final _SevCell cell;
   final bool active;
   final VoidCallback onTap;
-  const _SevStep({required this.cell, required this.active, required this.onTap});
+  const _SevStep({
+    required this.cell,
+    required this.active,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -171,11 +177,15 @@ class _SevStep extends StatelessWidget {
                             Container(
                               width: 4,
                               height: cell.bars[i].toDouble(),
-                              color: cell.value == Severity.severe && active && i == cell.bars.length - 1
+                              color:
+                                  cell.value == Severity.severe &&
+                                      active &&
+                                      i == cell.bars.length - 1
                                   ? Tokens.oxide
                                   : (active ? Tokens.paper : Tokens.graphite2),
                             ),
-                            if (i != cell.bars.length - 1) const SizedBox(width: 2),
+                            if (i != cell.bars.length - 1)
+                              const SizedBox(width: 2),
                           ],
                         ],
                       ),
@@ -193,109 +203,6 @@ class _SevStep extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class _SheetScaffold extends StatelessWidget {
-  final String title;
-  final Widget child;
-  const _SheetScaffold({required this.title, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(16, 12, 16, 28),
-        decoration: const BoxDecoration(
-          color: Tokens.paper,
-          border: Border(
-            top: BorderSide(color: Tokens.graphite, width: Tokens.bwRule),
-          ),
-          borderRadius: BorderRadius.vertical(top: Radius.circular(Tokens.r3)),
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Handle.
-            Center(
-              child: Container(
-                width: 36,
-                height: 3,
-                decoration: BoxDecoration(
-                  color: Tokens.graphite2,
-                  borderRadius: BorderRadius.circular(2),
-                ),
-              ),
-            ),
-            const SizedBox(height: 12),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Text(
-                    title,
-                    style: Type.display(
-                      size: 18,
-                      weight: Tokens.fwMedium,
-                      height: 1.1,
-                      letterSpacingEm: -0.01,
-                    ),
-                  ),
-                ),
-                MouseRegion(
-                  cursor: SystemMouseCursors.click,
-                  child: GestureDetector(
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Text(
-                      'CLOSE',
-                      style: Type.mono(
-                        size: 11,
-                        color: Tokens.graphite2,
-                        letterSpacingEm: 0.06,
-                        height: 1.0,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 14),
-            child,
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _PrimaryButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onPressed;
-  const _PrimaryButton({required this.label, required this.onPressed});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          backgroundColor: Tokens.ink,
-          foregroundColor: Tokens.paper,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Tokens.r2),
-            side: const BorderSide(color: Tokens.ink, width: Tokens.bwRule),
-          ),
-          textStyle: Type.body(size: 14, weight: Tokens.fwMedium, height: 1.0),
-        ),
-        onPressed: onPressed,
-        child: Text(label, style: Type.body(size: 14, weight: Tokens.fwMedium, color: Tokens.paper, height: 1.0)),
       ),
     );
   }

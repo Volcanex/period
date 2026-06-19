@@ -22,8 +22,11 @@ class RecentPattern extends StatelessWidget {
         children: [
           Text('RECENT PATTERN', style: Type.eyebrow()),
           const SizedBox(height: 10),
-          if (state.avg != null) _PatternLine(state: state) else _NoPattern(),
-          if (state.avg != null) ...[
+          if (state.avg != null && state.cycleCount >= 2)
+            _PatternLine(state: state)
+          else
+            _NoPattern(state: state),
+          if (state.avg != null && state.cycleCount >= 2) ...[
             const SizedBox(height: 16),
             const _Histogram(),
           ],
@@ -34,10 +37,15 @@ class RecentPattern extends StatelessWidget {
 }
 
 class _NoPattern extends StatelessWidget {
+  final CycleState state;
+  const _NoPattern({required this.state});
+
   @override
   Widget build(BuildContext context) {
     return Text(
-      'not enough data yet. log a few cycles before any averages appear.',
+      state.cycleCount <= 1
+          ? 'using the population prior until you log at least 2 period starts.'
+          : 'not enough data yet. log a few cycles before any averages appear.',
       style: Type.body(size: 13, color: Tokens.graphite2, height: 1.45),
     );
   }
@@ -61,7 +69,7 @@ class _PatternLine extends StatelessWidget {
       TextSpan(
         children: [
           TextSpan(text: 'your last ', style: body),
-          TextSpan(text: '3 cycles', style: em),
+          TextSpan(text: '${state.cycleCount} cycles', style: em),
           TextSpan(text: ' averaged ', style: body),
           TextSpan(text: state.avg!, style: em),
           TextSpan(text: '.\nflow length averaged ', style: body),
@@ -76,7 +84,8 @@ class _PatternLine extends StatelessWidget {
 class _Histogram extends StatelessWidget {
   const _Histogram();
 
-  // Same fixture as today.jsx (lines 357-368): 11 bars, 3 flow markers labeled 28/29/30.
+  // Same fixture as today.jsx (lines 357-368): 11 bars, 3 flow markers
+  // labeled 28/29/30 (cycle lengths in days for those flow events).
   static const _bars = <_Bar>[
     _Bar(0.40, true, '28'),
     _Bar(0.20, false, null),
@@ -91,16 +100,20 @@ class _Histogram extends StatelessWidget {
     _Bar(0.70, false, null),
   ];
 
+  static const _barArea = 28.0;
+  static const _labelArea = 14.0;
+  static const _gap = 4.0;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 28 + 14, // bar height + label spacing
+      height: _barArea + _labelArea,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           for (var i = 0; i < _bars.length; i++) ...[
             Expanded(child: _BarView(bar: _bars[i])),
-            if (i != _bars.length - 1) const SizedBox(width: 4),
+            if (i != _bars.length - 1) const SizedBox(width: _gap),
           ],
         ],
       ),
@@ -115,39 +128,38 @@ class _BarView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = bar.flow ? Tokens.oxide : Tokens.ink;
-    return Stack(
-      clipBehavior: Clip.none,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            FractionallySizedBox(
-              widthFactor: 1.0,
-              heightFactor: bar.h,
-              child: Container(
-                color: color,
-                constraints: const BoxConstraints(minHeight: 4),
+        SizedBox(
+          height: _Histogram._barArea,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: (_Histogram._barArea * bar.h).clamp(
+                4.0,
+                _Histogram._barArea,
               ),
-            ),
-          ],
-        ),
-        if (bar.label != null)
-          Positioned(
-            left: -4,
-            right: -4,
-            bottom: -14,
-            child: Center(
-              child: Text(
-                bar.label!,
-                style: Type.mono(
-                  size: 9,
-                  color: Tokens.graphite2,
-                  letterSpacingEm: 0.0,
-                  height: 1.0,
-                ),
-              ),
+              decoration: BoxDecoration(color: color),
             ),
           ),
+        ),
+        SizedBox(
+          height: _Histogram._labelArea,
+          child: bar.label == null
+              ? const SizedBox.shrink()
+              : Center(
+                  child: Text(
+                    bar.label!,
+                    style: Type.mono(
+                      size: 9,
+                      color: Tokens.graphite2,
+                      letterSpacingEm: 0.0,
+                      height: 1.0,
+                    ),
+                  ),
+                ),
+        ),
       ],
     );
   }

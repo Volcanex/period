@@ -1,0 +1,690 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../data/clock.dart';
+import '../data/models.dart';
+import '../model/cycle_model.dart';
+import 'local_observation_event.dart';
+
+const _storeKey = 'period.local_store.v1';
+
+class DayLog {
+  final BleedLevel? bleeding;
+  final Map<String, Severity> symptoms;
+  final String? mood;
+  final Map<String, double> numericValues;
+  final Map<String, String> enumValues;
+  final Map<String, bool> booleanValues;
+  final Map<String, String> textValues;
+  final String note;
+
+  const DayLog({
+    this.bleeding,
+    this.symptoms = const {},
+    this.mood,
+    this.numericValues = const {},
+    this.enumValues = const {},
+    this.booleanValues = const {},
+    this.textValues = const {},
+    this.note = '',
+  });
+
+  bool get hasAnyLog =>
+      bleeding != null ||
+      symptoms.isNotEmpty ||
+      mood != null ||
+      numericValues.isNotEmpty ||
+      enumValues.isNotEmpty ||
+      booleanValues.isNotEmpty ||
+      textValues.isNotEmpty ||
+      note.trim().isNotEmpty;
+
+  bool get hasFlow => bleeding != null && bleeding != BleedLevel.none;
+
+  DayLog copyWith({
+    BleedLevel? bleeding,
+    bool clearBleeding = false,
+    Map<String, Severity>? symptoms,
+    String? mood,
+    bool clearMood = false,
+    Map<String, double>? numericValues,
+    Map<String, String>? enumValues,
+    Map<String, bool>? booleanValues,
+    Map<String, String>? textValues,
+    String? note,
+  }) {
+    return DayLog(
+      bleeding: clearBleeding ? null : bleeding ?? this.bleeding,
+      symptoms: symptoms ?? this.symptoms,
+      mood: clearMood ? null : mood ?? this.mood,
+      numericValues: numericValues ?? this.numericValues,
+      enumValues: enumValues ?? this.enumValues,
+      booleanValues: booleanValues ?? this.booleanValues,
+      textValues: textValues ?? this.textValues,
+      note: note ?? this.note,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    if (bleeding != null) 'bleeding': bleeding!.name,
+    if (symptoms.isNotEmpty)
+      'symptoms': symptoms.map((key, value) => MapEntry(key, value.name)),
+    if (mood != null) 'mood': mood,
+    if (numericValues.isNotEmpty) 'numericValues': numericValues,
+    if (enumValues.isNotEmpty) 'enumValues': enumValues,
+    if (booleanValues.isNotEmpty) 'booleanValues': booleanValues,
+    if (textValues.isNotEmpty) 'textValues': textValues,
+    if (note.isNotEmpty) 'note': note,
+  };
+
+  static DayLog fromJson(Map<String, dynamic> json) {
+    final symptomRaw =
+        (json['symptoms'] as Map?)?.cast<String, dynamic>() ?? {};
+    final numericRaw =
+        (json['numericValues'] as Map?)?.cast<String, dynamic>() ?? {};
+    final enumRaw = (json['enumValues'] as Map?)?.cast<String, dynamic>() ?? {};
+    final boolRaw =
+        (json['booleanValues'] as Map?)?.cast<String, dynamic>() ?? {};
+    final textRaw = (json['textValues'] as Map?)?.cast<String, dynamic>() ?? {};
+    return DayLog(
+      bleeding: _enumByName(BleedLevel.values, json['bleeding'] as String?),
+      symptoms: {
+        for (final entry in symptomRaw.entries)
+          if (_enumByName(Severity.values, entry.value as String?) != null)
+            entry.key: _enumByName(Severity.values, entry.value as String?)!,
+      },
+      mood: json['mood'] as String?,
+      numericValues: {
+        for (final entry in numericRaw.entries)
+          if (entry.value is num) entry.key: (entry.value as num).toDouble(),
+      },
+      enumValues: {
+        for (final entry in enumRaw.entries)
+          if (entry.value is String) entry.key: entry.value as String,
+      },
+      booleanValues: {
+        for (final entry in boolRaw.entries)
+          if (entry.value is bool) entry.key: entry.value as bool,
+      },
+      textValues: {
+        for (final entry in textRaw.entries)
+          if (entry.value is String) entry.key: entry.value as String,
+      },
+      note: json['note'] as String? ?? '',
+    );
+  }
+}
+
+class LocalPeriodStore extends ChangeNotifier {
+  bool _loaded = false;
+  late DateTime _cycleAnchor;
+  int _cycleLen = Clock.cycleLen;
+  int _flowLen = Clock.flowLen;
+  int _ovPeak = Clock.ovPeak;
+  Map<String, bool> _packEnabled = {};
+  bool _darkMode = false;
+  Map<String, DayLog> _logs = {};
+  Map<String, String> _observationIds = {};
+  int _idCounter = 0;
+
+  bool get loaded => _loaded;
+  DateTime get cycleAnchor => _cycleAnchor;
+  int get cycleLen => _cycleLen;
+  int get flowLen => _flowLen;
+  int get ovPeak => _ovPeak;
+  Map<String, bool> get packEnabled => Map.unmodifiable(_packEnabled);
+  bool get darkMode => _darkMode;
+  List<LocalObservationEvent> get observations => _observations();
+  int get observationCount => observations.length;
+  int get loggedDayCount => _logs.values.where((log) => log.hasAnyLog).length;
+
+  DayLog logFor(DateTime date) => _logs[_dateKey(date)] ?? const DayLog();
+
+  Future<void> load() async {
+    _cycleAnchor = Clock.cycleAnchor;
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_storeKey);
+    if (raw != null) {
+      try {
+        final json = (jsonDecode(raw) as Map).cast<String, dynamic>();
+        _cycleAnchor =
+            _parseDate(json['cycleAnchor'] as String?) ?? _cycleAnchor;
+        _cycleLen = json['cycleLen'] as int? ?? _cycleLen;
+        _flowLen = json['flowLen'] as int? ?? _flowLen;
+        _ovPeak = json['ovPeak'] as int? ?? _ovPeak;
+        _packEnabled =
+            (json['packEnabled'] as Map?)?.cast<String, bool>() ?? _packEnabled;
+        _darkMode = json['darkMode'] as bool? ?? _darkMode;
+        _observationIds =
+            (json['observationIds'] as Map?)?.cast<String, String>() ?? {};
+        _idCounter = json['idCounter'] as int? ?? _idCounter;
+        final logs = (json['logs'] as Map?)?.cast<String, dynamic>() ?? {};
+        _logs = {
+          for (final entry in logs.entries)
+            entry.key: DayLog.fromJson(
+              (entry.value as Map).cast<String, dynamic>(),
+            ),
+        };
+      } catch (e, st) {
+        debugPrint('LocalPeriodStore load failed, using defaults: $e\n$st');
+      }
+    }
+    _recalculateCycleModel();
+    _syncClock();
+    _loaded = true;
+    notifyListeners();
+  }
+
+  CycleState cycleStateFor(DateTime date) {
+    final cycleDay = cycleDayFor(date);
+    final prediction = _predictionFor(date);
+    var nextAnchor = _cycleAnchor.add(
+      Duration(days: prediction.p50LengthDays.round()),
+    );
+    while (!nextAnchor.isAfter(date)) {
+      nextAnchor = nextAnchor.add(
+        Duration(days: prediction.p50LengthDays.round()),
+      );
+    }
+    final windowStart = _cycleAnchor.add(
+      Duration(days: prediction.p10LengthDays.round()),
+    );
+    final windowEnd = _cycleAnchor.add(
+      Duration(days: prediction.p90LengthDays.round()),
+    );
+    final rangeStart = Clock.today;
+    final rangeEnd = windowEnd.add(Duration(days: _flowLen));
+    final totalDays = (rangeEnd.difference(rangeStart).inDays).clamp(1, 120);
+    double pos(DateTime d) => d.difference(rangeStart).inDays / totalDays;
+    final starts = _flowStarts();
+    final source = starts.length >= 2 ? 'on-device model' : 'population prior';
+
+    return CycleState(
+      key: 'local',
+      eyebrow: 'cycle day',
+      cycleDay: cycleDay,
+      cycleLen: _cycleLen,
+      nextStart: _formatShort(windowStart),
+      nextEnd: _formatShort(windowEnd),
+      nextMode: _formatShort(nextAnchor),
+      confidence: confidenceLabelForPrediction(
+        prediction,
+        cycleStartCount: starts.length,
+      ),
+      avg: '${prediction.expectedLengthDays.toStringAsFixed(1)} days',
+      avgFlow: '$_flowLen days',
+      cycleCount: _estimatedCycleCount(),
+      bandStart: pos(windowStart).clamp(0.0, 1.0),
+      bandEnd: pos(windowEnd).clamp(0.0, 1.0),
+      modePos: pos(nextAnchor).clamp(0.0, 1.0),
+      todayPos: pos(Clock.today).clamp(0.0, 1.0),
+      rangeStartLabel: _formatAxis(rangeStart),
+      rangeMidLabel: _formatAxis(
+        rangeStart.add(Duration(days: totalDays ~/ 2)),
+      ),
+      rangeEndLabel: _formatAxis(rangeEnd),
+      flowLen: _flowLen,
+      predictionSource: source,
+      predictionModelVersion: prediction.algorithmVersion,
+      predictedP10LengthDays: prediction.p10LengthDays,
+      predictedP50LengthDays: prediction.p50LengthDays,
+      predictedP90LengthDays: prediction.p90LengthDays,
+      predictedP80WindowDays: prediction.p80WindowDays,
+      predictiveSdDays: prediction.predictiveSdDays,
+      observationCount: observationCount,
+    );
+  }
+
+  int cycleDayFor(DateTime date) {
+    final diff = _dateOnly(date).difference(_cycleAnchor).inDays;
+    final m = diff % _cycleLen;
+    final mod = m < 0 ? m + _cycleLen : m;
+    return mod + 1;
+  }
+
+  void setBleeding(DateTime date, BleedLevel level) {
+    final key = _dateKey(date);
+    _ensureObservationId(key, 'period_bleeding');
+    final next = logFor(date).copyWith(bleeding: level);
+    _setLog(key, next);
+  }
+
+  void setMood(DateTime date, String? mood) {
+    final key = _dateKey(date);
+    if (mood != null) _ensureObservationId(key, 'mood');
+    final next = logFor(date).copyWith(mood: mood, clearMood: mood == null);
+    _setLog(key, next);
+  }
+
+  void setSymptom(DateTime date, String symptom, Severity? severity) {
+    final key = _dateKey(date);
+    final symptoms = {...logFor(date).symptoms};
+    if (severity == null) {
+      symptoms.remove(symptom);
+    } else {
+      symptoms[symptom] = severity;
+      _ensureObservationId(key, _trackerCodeForSymptom(symptom));
+    }
+    _setLog(key, logFor(date).copyWith(symptoms: symptoms));
+  }
+
+  void setNumeric(DateTime date, String trackerId, double? value) {
+    final key = _dateKey(date);
+    final values = {...logFor(date).numericValues};
+    if (value == null) {
+      values.remove(trackerId);
+    } else {
+      values[trackerId] = value;
+      _ensureObservationId(key, _trackerCodeForNumeric(trackerId));
+    }
+    _setLog(key, logFor(date).copyWith(numericValues: values));
+  }
+
+  void setEnumValue(DateTime date, String trackerCode, String? value) {
+    final key = _dateKey(date);
+    final values = {...logFor(date).enumValues};
+    if (value == null) {
+      values.remove(trackerCode);
+    } else {
+      values[trackerCode] = value;
+      _ensureObservationId(key, trackerCode);
+    }
+    _setLog(key, logFor(date).copyWith(enumValues: values));
+  }
+
+  void setBooleanValue(DateTime date, String trackerCode, bool? value) {
+    final key = _dateKey(date);
+    final values = {...logFor(date).booleanValues};
+    if (value == null) {
+      values.remove(trackerCode);
+    } else {
+      values[trackerCode] = value;
+      _ensureObservationId(key, trackerCode);
+    }
+    _setLog(key, logFor(date).copyWith(booleanValues: values));
+  }
+
+  void setTextValue(DateTime date, String trackerCode, String value) {
+    final key = _dateKey(date);
+    final values = {...logFor(date).textValues};
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) {
+      values.remove(trackerCode);
+    } else {
+      values[trackerCode] = trimmed;
+      _ensureObservationId(key, trackerCode);
+    }
+    _setLog(key, logFor(date).copyWith(textValues: values));
+  }
+
+  void setNote(DateTime date, String note) {
+    final key = _dateKey(date);
+    if (note.trim().isNotEmpty) _ensureObservationId(key, 'note');
+    _setLog(key, logFor(date).copyWith(note: note));
+  }
+
+  void setPackEnabled(String packCode, bool enabled) {
+    _packEnabled = {..._packEnabled, packCode: enabled};
+    _changed();
+  }
+
+  void setDarkMode(bool enabled) {
+    _darkMode = enabled;
+    _changed();
+  }
+
+  void setCycleLength(int days) {
+    _cycleLen = days.clamp(21, 45);
+    _ovPeak = (_cycleLen / 2).round().clamp(10, _cycleLen - 8);
+    _changed();
+  }
+
+  void setFlowLength(int days) {
+    _flowLen = days.clamp(1, 10);
+    _changed();
+  }
+
+  Future<void> resetDemoLogs() async {
+    _logs = {};
+    _observationIds = {};
+    _idCounter = 0;
+    _cycleAnchor = Clock.cycleAnchor;
+    _cycleLen = Clock.cycleLen;
+    _flowLen = Clock.flowLen;
+    _ovPeak = Clock.ovPeak;
+    _changed();
+  }
+
+  Map<String, dynamic> exportSnapshot() => {
+    'schema': 'period.local_snapshot.v1',
+    'exportedAt': DateTime.now().toUtc().toIso8601String(),
+    'cycle': {
+      'anchor': _dateKey(_cycleAnchor),
+      'lengthDays': _cycleLen,
+      'flowLengthDays': _flowLen,
+      'ovulationPeakDay': _ovPeak,
+    },
+    'preferences': {
+      'darkMode': _darkMode,
+      'enabledPacks': {
+        for (final entry in _packEnabled.entries)
+          if (entry.value) entry.key: true,
+      },
+    },
+    'loggedDays': _logs.map((key, value) => MapEntry(key, value.toJson())),
+    'observations': [for (final event in observations) event.toJson()],
+  };
+
+  void _setLog(String key, DayLog log) {
+    if (log.hasAnyLog) {
+      _logs = {..._logs, key: log};
+    } else {
+      _logs = {..._logs}..remove(key);
+    }
+    _recalculateCycleModel();
+    _changed();
+  }
+
+  void _changed() {
+    _syncClock();
+    notifyListeners();
+    unawaited(_persist());
+  }
+
+  void _syncClock() {
+    Clock.overrideCycleConfig(
+      anchor: _cycleAnchor,
+      cycleLen: _cycleLen,
+      flowLen: _flowLen,
+      ovPeak: _ovPeak,
+    );
+  }
+
+  Future<void> _persist() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_storeKey, jsonEncode(_toJson()));
+  }
+
+  Map<String, dynamic> _toJson() => {
+    'cycleAnchor': _dateKey(_cycleAnchor),
+    'cycleLen': _cycleLen,
+    'flowLen': _flowLen,
+    'ovPeak': _ovPeak,
+    'packEnabled': _packEnabled,
+    'darkMode': _darkMode,
+    'observationIds': _observationIds,
+    'idCounter': _idCounter,
+    'logs': _logs.map((key, value) => MapEntry(key, value.toJson())),
+  };
+
+  int _estimatedCycleCount() {
+    final starts = _flowStarts();
+    return starts.isEmpty ? 1 : starts.length.clamp(1, 12);
+  }
+
+  void _recalculateCycleModel() {
+    final starts = _flowStarts();
+    if (starts.isEmpty) return;
+
+    final today = Clock.today;
+    final startsOnOrBeforeToday = starts
+        .where((date) => !date.isAfter(today))
+        .toList(growable: false);
+    _cycleAnchor = startsOnOrBeforeToday.isNotEmpty
+        ? startsOnOrBeforeToday.last
+        : starts.last;
+
+    final intervals = <int>[];
+    for (var i = 1; i < starts.length; i++) {
+      final days = starts[i].difference(starts[i - 1]).inDays;
+      if (days >= 15 && days <= 120) intervals.add(days);
+    }
+    if (intervals.isNotEmpty) {
+      final state = fitCycleModel(_observationsFromIntervals(intervals));
+      final prediction = predictNextCycle(
+        state,
+        elapsedCycleDay: cycleDayFor(Clock.today),
+      );
+      _cycleLen = prediction.p50LengthDays.round().clamp(21, 45);
+      _ovPeak = (_cycleLen / 2).round().clamp(10, _cycleLen - 8);
+    }
+
+    final runLengths = _flowRunLengths(starts);
+    if (runLengths.length >= 2) {
+      _flowLen = _roundedAverage(runLengths).clamp(1, 10);
+    }
+  }
+
+  CyclePrediction _predictionFor(DateTime date) {
+    final starts = _flowStarts();
+    final intervals = <int>[];
+    final skipped = <bool>[];
+    for (var i = 1; i < starts.length; i++) {
+      final days = starts[i].difference(starts[i - 1]).inDays;
+      if (days >= 15 && days <= 120) {
+        intervals.add(days);
+        skipped.add(_skippedTrackingLikely(starts[i - 1], starts[i]));
+      }
+    }
+    final state = fitCycleModel(_observationsFromIntervals(intervals, skipped));
+    return predictNextCycle(state, elapsedCycleDay: cycleDayFor(date));
+  }
+
+  List<CycleLengthObservation> _observationsFromIntervals(
+    List<int> intervals, [
+    List<bool> skipped = const [],
+  ]) {
+    return [
+      for (var i = 0; i < intervals.length; i++)
+        CycleLengthObservation(
+          cycleIndex: i,
+          lengthDays: intervals[i],
+          skippedTrackingSuspected: i < skipped.length && skipped[i],
+        ),
+    ];
+  }
+
+  List<DateTime> _flowStarts() {
+    final flowDates = _flowDateSet().toList()..sort();
+    final flowSet = flowDates.map(_dateKey).toSet();
+    return [
+      for (final date in flowDates)
+        if (!flowSet.contains(_dateKey(date.subtract(const Duration(days: 1)))))
+          date,
+    ];
+  }
+
+  List<int> _flowRunLengths(List<DateTime> starts) {
+    final flowSet = _flowDateSet().map(_dateKey).toSet();
+    final lengths = <int>[];
+    for (final start in starts) {
+      var length = 0;
+      var cursor = start;
+      while (flowSet.contains(_dateKey(cursor))) {
+        length += 1;
+        cursor = cursor.add(const Duration(days: 1));
+      }
+      if (length > 0) lengths.add(length);
+    }
+    return lengths;
+  }
+
+  Set<DateTime> _flowDateSet() {
+    return {
+      for (final entry in _logs.entries)
+        if (_isFlowLog(entry.value)) _parseDate(entry.key)!,
+    };
+  }
+
+  bool _skippedTrackingLikely(DateTime previousStart, DateTime nextStart) {
+    final days = nextStart.difference(previousStart).inDays;
+    if (days < 42) return false;
+    final observedInsideGap = _logs.entries.where((entry) {
+      final date = _parseDate(entry.key);
+      if (date == null || !entry.value.hasAnyLog) return false;
+      return date.isAfter(previousStart.add(const Duration(days: 5))) &&
+          date.isBefore(nextStart.subtract(const Duration(days: 5)));
+    }).length;
+    return observedInsideGap <= 1;
+  }
+
+  String _ensureObservationId(String dayKey, String trackerCode) {
+    final key = '$dayKey|$trackerCode';
+    final existing = _observationIds[key];
+    if (existing != null) return existing;
+    _idCounter += 1;
+    final id =
+        'obs-local-${DateTime.now().microsecondsSinceEpoch.toRadixString(36)}-$_idCounter';
+    _observationIds = {..._observationIds, key: id};
+    return id;
+  }
+
+  List<LocalObservationEvent> _observations() {
+    final events = <LocalObservationEvent>[];
+    final entries = _logs.entries.toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+    for (final entry in entries) {
+      final observedOn = _parseDate(entry.key);
+      if (observedOn == null) continue;
+      final log = entry.value;
+      final observedAt = DateTime(
+        observedOn.year,
+        observedOn.month,
+        observedOn.day,
+        12,
+      );
+      void add(String trackerCode, Object value, {String? unit, String? note}) {
+        events.add(
+          LocalObservationEvent(
+            id: _ensureObservationId(entry.key, trackerCode),
+            subjectId: 'subject-local-1',
+            trackerCode: trackerCode,
+            observedAt: observedAt,
+            observedOn: observedOn,
+            value: value,
+            unit: unit,
+            note: note,
+          ),
+        );
+      }
+
+      final bleeding = log.bleeding;
+      if (bleeding != null) add('period_bleeding', bleeding.value);
+      for (final symptom in log.symptoms.entries) {
+        add(_trackerCodeForSymptom(symptom.key), symptom.value.name);
+      }
+      final mood = log.mood;
+      if (mood != null) add('mood', mood);
+      for (final numeric in log.numericValues.entries) {
+        add(
+          _trackerCodeForNumeric(numeric.key),
+          numeric.value,
+          unit: _unitForNumeric(numeric.key),
+        );
+      }
+      for (final entry in log.enumValues.entries) {
+        add(entry.key, entry.value);
+      }
+      for (final entry in log.booleanValues.entries) {
+        add(entry.key, entry.value);
+      }
+      for (final entry in log.textValues.entries) {
+        add(entry.key, entry.value);
+      }
+      if (log.note.trim().isNotEmpty) add('note', log.note.trim());
+    }
+    return events;
+  }
+}
+
+bool _isFlowLog(DayLog log) {
+  final b = log.bleeding;
+  return b != null && b != BleedLevel.none;
+}
+
+int _roundedAverage(List<int> values) =>
+    (values.reduce((a, b) => a + b) / values.length).round();
+
+T? _enumByName<T extends Enum>(List<T> values, String? name) {
+  if (name == null) return null;
+  for (final value in values) {
+    if (value.name == name) return value;
+  }
+  return null;
+}
+
+DateTime? _parseDate(String? value) {
+  if (value == null) return null;
+  final parts = value.split('-');
+  if (parts.length != 3) return null;
+  final y = int.tryParse(parts[0]);
+  final m = int.tryParse(parts[1]);
+  final d = int.tryParse(parts[2]);
+  if (y == null || m == null || d == null) return null;
+  return DateTime(y, m, d);
+}
+
+DateTime _dateOnly(DateTime d) => DateTime(d.year, d.month, d.day);
+
+String _dateKey(DateTime d) {
+  final date = _dateOnly(d);
+  String two(int v) => v.toString().padLeft(2, '0');
+  return '${date.year}-${two(date.month)}-${two(date.day)}';
+}
+
+String _trackerCodeForSymptom(String symptom) => switch (symptom) {
+  'pelvic_pain' => 'pelvic_pain',
+  'pelvic pain' => 'pelvic_pain',
+  'pain with sex' => 'pain_with_sex',
+  'headache' => 'migraine',
+  'migraine or headache' => 'migraine',
+  'tender' => 'breast_tenderness',
+  'breast tenderness' => 'breast_tenderness',
+  'bloated' => 'bloating',
+  'bloating' => 'bloating',
+  'acne' => 'acne_severity',
+  'anxiety' => 'anxiety_severity',
+  'depression' => 'depression_severity',
+  'low energy' => 'energy',
+  'unwanted hair growth' => 'hair_growth',
+  _ => symptom.trim().toLowerCase().replaceAll(RegExp(r'[^a-z0-9]+'), '_'),
+};
+
+String _trackerCodeForNumeric(String trackerId) => switch (trackerId) {
+  'bbt' => 'basal_body_temperature',
+  'sleep' => 'sleep_hours',
+  _ => trackerId,
+};
+
+String? _unitForNumeric(String trackerId) => switch (trackerId) {
+  'bbt' => 'fahrenheit',
+  'basal_body_temperature' => 'fahrenheit',
+  'sleep' => 'hours',
+  'sleep_hours' => 'hours',
+  'weight' => 'lb',
+  _ => null,
+};
+
+String _formatShort(DateTime d) {
+  const months = [
+    '',
+    'jan',
+    'feb',
+    'mar',
+    'apr',
+    'may',
+    'jun',
+    'jul',
+    'aug',
+    'sep',
+    'oct',
+    'nov',
+    'dec',
+  ];
+  return '${months[d.month]} ${d.day}';
+}
+
+String _formatAxis(DateTime d) => _formatShort(d).toUpperCase();

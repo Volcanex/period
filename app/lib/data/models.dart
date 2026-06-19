@@ -32,6 +32,16 @@ class TrackerDef {
 enum TrackerKind { numeric, category }
 
 const trackerDefs = <String, TrackerDef>{
+  'basal_body_temperature': TrackerDef(
+    id: 'basal_body_temperature',
+    name: 'basal body temp',
+    unit: '°F',
+    placeholder: 'tap to log',
+    step: 0.05,
+    defaultValue: 97.6,
+    min: 95,
+    max: 100,
+  ),
   'bbt': TrackerDef(
     id: 'bbt',
     name: 'basal body temp',
@@ -41,6 +51,16 @@ const trackerDefs = <String, TrackerDef>{
     defaultValue: 97.6,
     min: 95,
     max: 100,
+  ),
+  'sleep_hours': TrackerDef(
+    id: 'sleep_hours',
+    name: 'sleep',
+    unit: 'h',
+    placeholder: 'tap to log',
+    step: 0.25,
+    defaultValue: 7.5,
+    min: 0,
+    max: 14,
   ),
   'sleep': TrackerDef(
     id: 'sleep',
@@ -62,8 +82,57 @@ const trackerDefs = <String, TrackerDef>{
     min: 50,
     max: 400,
   ),
-  'cervical': TrackerDef(
-    id: 'cervical',
+  'period_bleeding': TrackerDef(
+    id: 'period_bleeding',
+    name: 'period bleeding',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'spotting': TrackerDef(
+    id: 'spotting',
+    name: 'spotting',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'cramps': TrackerDef(
+    id: 'cramps',
+    name: 'cramps',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'pelvic_pain': TrackerDef(
+    id: 'pelvic_pain',
+    name: 'pelvic pain',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'headache': TrackerDef(
+    id: 'headache',
+    name: 'headache',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'fatigue': TrackerDef(
+    id: 'fatigue',
+    name: 'fatigue',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'energy': TrackerDef(
+    id: 'energy',
+    name: 'energy',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'cervical_mucus': TrackerDef(
+    id: 'cervical_mucus',
     name: 'cervical mucus',
     unit: '',
     placeholder: 'tap to log',
@@ -72,6 +141,34 @@ const trackerDefs = <String, TrackerDef>{
   'sex': TrackerDef(
     id: 'sex',
     name: 'sex',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'medication': TrackerDef(
+    id: 'medication',
+    name: 'meds & supps',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'mood': TrackerDef(
+    id: 'mood',
+    name: 'mood',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'note': TrackerDef(
+    id: 'note',
+    name: 'note',
+    unit: '',
+    placeholder: 'tap to log',
+    kind: TrackerKind.category,
+  ),
+  'cervical': TrackerDef(
+    id: 'cervical',
+    name: 'cervical mucus',
     unit: '',
     placeholder: 'tap to log',
     kind: TrackerKind.category,
@@ -105,30 +202,30 @@ enum BleedLevel { none, spot, light, med, heavy }
 
 extension BleedLevelLabel on BleedLevel {
   String get label => switch (this) {
-        BleedLevel.none => 'none',
-        BleedLevel.spot => 'spotting',
-        BleedLevel.light => 'light',
-        BleedLevel.med => 'medium',
-        BleedLevel.heavy => 'heavy',
-      };
+    BleedLevel.none => 'none',
+    BleedLevel.spot => 'spotting',
+    BleedLevel.light => 'light',
+    BleedLevel.med => 'medium',
+    BleedLevel.heavy => 'heavy',
+  };
 
   String get value => switch (this) {
-        BleedLevel.none => 'none',
-        BleedLevel.spot => 'spot',
-        BleedLevel.light => 'light',
-        BleedLevel.med => 'med',
-        BleedLevel.heavy => 'heavy',
-      };
+    BleedLevel.none => 'none',
+    BleedLevel.spot => 'spot',
+    BleedLevel.light => 'light',
+    BleedLevel.med => 'med',
+    BleedLevel.heavy => 'heavy',
+  };
 }
 
 enum Severity { mild, moderate, severe }
 
 extension SeverityLabel on Severity {
   String get label => switch (this) {
-        Severity.mild => 'mild',
-        Severity.moderate => 'moderate',
-        Severity.severe => 'severe',
-      };
+    Severity.mild => 'mild',
+    Severity.moderate => 'moderate',
+    Severity.severe => 'severe',
+  };
 }
 
 class CycleState {
@@ -147,6 +244,18 @@ class CycleState {
   final double bandEnd;
   final double modePos;
   final double todayPos;
+  final String? rangeStartLabel;
+  final String? rangeMidLabel;
+  final String? rangeEndLabel;
+  final int flowLen;
+  final String predictionSource;
+  final String predictionModelVersion;
+  final double? predictedP10LengthDays;
+  final double? predictedP50LengthDays;
+  final double? predictedP90LengthDays;
+  final double? predictedP80WindowDays;
+  final double? predictiveSdDays;
+  final int observationCount;
 
   const CycleState({
     required this.key,
@@ -164,6 +273,18 @@ class CycleState {
     required this.bandEnd,
     required this.modePos,
     required this.todayPos,
+    this.rangeStartLabel,
+    this.rangeMidLabel,
+    this.rangeEndLabel,
+    this.flowLen = 5,
+    this.predictionSource = 'fixture',
+    this.predictionModelVersion = '',
+    this.predictedP10LengthDays,
+    this.predictedP50LengthDays,
+    this.predictedP90LengthDays,
+    this.predictedP80WindowDays,
+    this.predictiveSdDays,
+    this.observationCount = 0,
   });
 }
 

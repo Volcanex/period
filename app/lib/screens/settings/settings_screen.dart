@@ -1,0 +1,632 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../api/tracker_catalog.dart';
+import '../../api/contracts/tracker_pack.dart';
+import '../../theme/tokens.dart';
+import '../../theme/typography.dart';
+import '../shared/top_bar.dart';
+import '../today/widgets/section_box.dart';
+import '../trackers/widgets/tracker_row.dart';
+import 'widgets/segmented.dart';
+import 'widgets/setting_row.dart';
+
+/// Settings tab — local device controls and demo data status.
+class SettingsScreen extends StatefulWidget {
+  final bool darkMode;
+  final int cycleLength;
+  final int flowLength;
+  final int todayTrackerCount;
+  final int loggedDayCount;
+  final int observationCount;
+  final Map<String, bool> packEnabled;
+  final TrackerCatalog catalog;
+  final ValueChanged<bool> onDarkModeChanged;
+  final ValueChanged<int> onCycleLengthChanged;
+  final ValueChanged<int> onFlowLengthChanged;
+  final VoidCallback onRefreshApi;
+  final Map<String, dynamic> Function() exportSnapshot;
+  final Future<void> Function() onResetDemoLogs;
+
+  const SettingsScreen({
+    super.key,
+    required this.darkMode,
+    required this.cycleLength,
+    required this.flowLength,
+    required this.todayTrackerCount,
+    required this.loggedDayCount,
+    required this.observationCount,
+    required this.packEnabled,
+    required this.catalog,
+    required this.onDarkModeChanged,
+    required this.onCycleLengthChanged,
+    required this.onFlowLengthChanged,
+    required this.onRefreshApi,
+    required this.exportSnapshot,
+    required this.onResetDemoLogs,
+  });
+
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  @override
+  Widget build(BuildContext context) {
+    final enabledPacks = widget.catalog.packs
+        .where((pack) => _packOn(pack))
+        .toList(growable: false);
+    final enabledTrackerCount = enabledPacks
+        .expand((pack) => pack.trackerCodes)
+        .toSet()
+        .length;
+
+    return Column(
+      children: [
+        const TopBar(title: 'settings'),
+        Expanded(
+          child: ListView(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+            children: [
+              SectionBox(
+                eyebrow: 'cycle defaults',
+                trailing: const SectionAction(
+                  label: 'local model',
+                  muted: true,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SettingRow(
+                      label: 'typical cycle',
+                      meta:
+                          'used until your bleeding history has enough signal',
+                      trailing: _NumberStepper(
+                        value: widget.cycleLength,
+                        min: 21,
+                        max: 45,
+                        unit: 'd',
+                        onChanged: widget.onCycleLengthChanged,
+                      ),
+                    ),
+                    SettingRow(
+                      label: 'typical period',
+                      meta: 'flow prediction length',
+                      trailing: _NumberStepper(
+                        value: widget.flowLength,
+                        min: 1,
+                        max: 10,
+                        unit: 'd',
+                        onChanged: widget.onFlowLengthChanged,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              SectionBox(
+                eyebrow: 'appearance',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SettingRow(
+                      label: 'theme',
+                      trailing: Segmented(
+                        values: const ['light', 'dark'],
+                        selected: widget.darkMode ? 'dark' : 'light',
+                        onChanged: (v) => widget.onDarkModeChanged(v == 'dark'),
+                      ),
+                      meta: 'saved on this device',
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              SectionBox(
+                eyebrow: 'tracker setup',
+                trailing: SectionAction(
+                  label: '${enabledPacks.length} packs',
+                  muted: true,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TrackerRow(
+                      leading: '·',
+                      name: 'enabled trackers',
+                      meta: '$enabledTrackerCount active',
+                      trailing: Icon(
+                        Icons.check_circle_outline,
+                        size: 16,
+                        color: Tokens.ink,
+                      ),
+                    ),
+                    TrackerRow(
+                      leading: '·',
+                      name: 'trackers on today',
+                      meta: '${widget.todayTrackerCount} quick logs',
+                      trailing: Icon(
+                        Icons.today_outlined,
+                        size: 16,
+                        color: Tokens.ink,
+                      ),
+                    ),
+                    ...enabledPacks
+                        .take(4)
+                        .map(
+                          (pack) => TrackerRow(
+                            leading: '·',
+                            name: pack.displayName.toLowerCase(),
+                            meta: '${pack.trackerCodes.length} trackers',
+                            trailing: const SizedBox(width: 16),
+                          ),
+                        ),
+                    if (enabledPacks.length > 4)
+                      TrackerRow(
+                        leading: '·',
+                        name: 'more enabled packs',
+                        meta: '+${enabledPacks.length - 4}',
+                        trailing: const SizedBox(width: 16),
+                      ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              SectionBox(
+                eyebrow: 'backend',
+                trailing: SectionAction(
+                  label: _apiLabel,
+                  muted: widget.catalog.source == CatalogSource.loading,
+                  onTap: widget.onRefreshApi,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SettingRow(
+                      label: 'tracker catalog',
+                      meta: widget.catalog.provenanceLabel,
+                      trailing: _StatusDot(
+                        live: widget.catalog.source == CatalogSource.server,
+                      ),
+                    ),
+                    SettingRow(
+                      label: 'api endpoint',
+                      meta: 'api.period.gabrielpenman.com',
+                      trailing: GestureDetector(
+                        onTap: widget.onRefreshApi,
+                        child: Text(
+                          'RETRY',
+                          style: Type.mono(
+                            size: 10,
+                            color: Tokens.ink,
+                            letterSpacingEm: 0.08,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              SectionBox(
+                eyebrow: 'data',
+                trailing: const SectionAction(
+                  label: 'local-first',
+                  muted: true,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    TrackerRow(
+                      leading: '·',
+                      name: 'logged days',
+                      meta: '${widget.loggedDayCount}',
+                      trailing: const SizedBox(width: 16),
+                    ),
+                    TrackerRow(
+                      leading: '·',
+                      name: 'observation events',
+                      meta: '${widget.observationCount}',
+                      trailing: const SizedBox(width: 16),
+                    ),
+                    TrackerRow(
+                      leading: '·',
+                      name: 'local snapshot',
+                      meta: 'json',
+                      trailing: const _ExportArrow(),
+                      onTap: () => _showSnapshot(context),
+                    ),
+                    const SizedBox(height: 12),
+                    _PrimaryButton(
+                      label: 'view local snapshot',
+                      onTap: () => _showSnapshot(context),
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      '[ export preview only · nothing leaves device unless you share ]',
+                      textAlign: TextAlign.center,
+                      style: Type.mono(
+                        size: 10,
+                        color: Tokens.graphite2,
+                        letterSpacingEm: 0.08,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              SectionBox(
+                eyebrow: 'privacy',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const SettingRow(
+                      label: 'storage',
+                      meta: 'local browser storage · no account sync',
+                    ),
+                    const SettingRow(
+                      label: 'network',
+                      meta: 'reads tracker catalog only · no health uploads',
+                    ),
+                    SettingRow(
+                      label: 'reset demo logs',
+                      meta: 'clears local observations · keeps setup',
+                      trailing: GestureDetector(
+                        onTap: () => _confirmReset(context),
+                        child: Text(
+                          'RESET',
+                          style: Type.mono(
+                            size: 10,
+                            color: Tokens.oxide,
+                            letterSpacingEm: 0.08,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+
+              SectionBox(
+                eyebrow: 'about',
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: const [
+                    SettingRow(label: 'version', meta: '0.1.0 · web demo'),
+                    SettingRow(
+                      label: 'contracts',
+                      meta: 'tracker catalog · v1 endpoints',
+                    ),
+                    SettingRow(
+                      label: 'medical status',
+                      meta: 'not a diagnostic device',
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 14),
+              Text(
+                '[ period is not a diagnostic device ]',
+                textAlign: TextAlign.center,
+                style: Type.mono(
+                  size: 10,
+                  color: Tokens.graphite2,
+                  letterSpacingEm: 0.08,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  String get _apiLabel => switch (widget.catalog.source) {
+    CatalogSource.server => 'live',
+    CatalogSource.cached => 'cached',
+    CatalogSource.fallback => 'fallback',
+    CatalogSource.loading => 'loading',
+  };
+
+  bool _packOn(TrackerPack pack) =>
+      widget.packEnabled[pack.code] ?? pack.enabledByDefault;
+
+  Future<void> _showSnapshot(BuildContext context) async {
+    final snapshot = const JsonEncoder.withIndent(
+      '  ',
+    ).convert(widget.exportSnapshot());
+    await showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => _SnapshotSheet(snapshot: snapshot),
+    );
+  }
+
+  Future<void> _confirmReset(BuildContext context) async {
+    final confirmed = await showModalBottomSheet<bool>(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => _ResetSheet(onConfirm: widget.onResetDemoLogs),
+    );
+    if (confirmed == true && context.mounted) {
+      _showSnack(context, 'demo logs reset');
+    }
+  }
+
+  void _showSnack(BuildContext context, String msg) {
+    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+      SnackBar(
+        content: Text(msg, style: Type.body(size: 13, color: Tokens.paper)),
+        backgroundColor: Tokens.ink,
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
+}
+
+class _NumberStepper extends StatelessWidget {
+  final int value;
+  final int min;
+  final int max;
+  final String unit;
+  final ValueChanged<int> onChanged;
+
+  const _NumberStepper({
+    required this.value,
+    required this.min,
+    required this.max,
+    required this.unit,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Tokens.base,
+        border: Border.all(color: Tokens.borderSoft),
+        borderRadius: BorderRadius.circular(Tokens.r2),
+      ),
+      padding: const EdgeInsets.all(2),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _StepButton(
+            icon: Icons.remove,
+            onTap: value <= min ? null : () => onChanged(value - 1),
+          ),
+          SizedBox(
+            width: 46,
+            child: Text(
+              '$value$unit',
+              textAlign: TextAlign.center,
+              style: Type.mono(
+                size: 11,
+                color: Tokens.ink,
+                letterSpacingEm: 0.04,
+              ),
+            ),
+          ),
+          _StepButton(
+            icon: Icons.add,
+            onTap: value >= max ? null : () => onChanged(value + 1),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _StepButton extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback? onTap;
+
+  const _StepButton({required this.icon, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: onTap == null ? MouseCursor.defer : SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: SizedBox(
+          width: 28,
+          height: 28,
+          child: Icon(
+            icon,
+            size: 15,
+            color: onTap == null ? Tokens.graphite2 : Tokens.ink,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StatusDot extends StatelessWidget {
+  final bool live;
+
+  const _StatusDot({required this.live});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 12,
+      height: 12,
+      decoration: BoxDecoration(
+        color: live ? Tokens.sky4 : Tokens.oxide,
+        shape: BoxShape.circle,
+        border: Border.all(color: Tokens.borderSoft),
+      ),
+    );
+  }
+}
+
+class _SnapshotSheet extends StatelessWidget {
+  final String snapshot;
+
+  const _SnapshotSheet({required this.snapshot});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: Container(
+        constraints: const BoxConstraints(maxHeight: 620),
+        decoration: BoxDecoration(
+          color: Tokens.bg,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+          border: Border.all(color: Tokens.borderSoft),
+        ),
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              children: [
+                Expanded(child: Text('LOCAL SNAPSHOT', style: Type.eyebrow())),
+                IconButton(
+                  tooltip: 'copy snapshot',
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: snapshot));
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.copy, size: 18, color: Tokens.ink),
+                ),
+                IconButton(
+                  tooltip: 'close',
+                  onPressed: () => Navigator.pop(context),
+                  icon: Icon(Icons.close, size: 18, color: Tokens.ink),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Tokens.base,
+                  border: Border.all(color: Tokens.borderSoft),
+                  borderRadius: BorderRadius.circular(Tokens.r2),
+                ),
+                child: SingleChildScrollView(
+                  child: SelectableText(
+                    snapshot,
+                    style: Type.mono(size: 10, color: Tokens.ink, height: 1.35),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ResetSheet extends StatelessWidget {
+  final Future<void> Function() onConfirm;
+
+  const _ResetSheet({required this.onConfirm});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: false,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Tokens.bg,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+          border: Border.all(color: Tokens.borderSoft),
+        ),
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 18),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text('RESET DEMO LOGS', style: Type.eyebrow()),
+            const SizedBox(height: 12),
+            Text(
+              'This clears local bleeding, mood, tracker, note, and observation data. Theme and enabled tracker packs stay as they are.',
+              style: Type.body(size: 14, color: Tokens.ink, height: 1.35),
+            ),
+            const SizedBox(height: 14),
+            _PrimaryButton(
+              label: 'reset local logs',
+              onTap: () async {
+                await onConfirm();
+                if (context.mounted) Navigator.pop(context, true);
+              },
+            ),
+            const SizedBox(height: 8),
+            GestureDetector(
+              onTap: () => Navigator.pop(context, false),
+              child: Text(
+                'CANCEL',
+                textAlign: TextAlign.center,
+                style: Type.mono(
+                  size: 10,
+                  color: Tokens.graphite2,
+                  letterSpacingEm: 0.08,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ExportArrow extends StatelessWidget {
+  const _ExportArrow();
+
+  @override
+  Widget build(BuildContext context) {
+    return Icon(Icons.ios_share, size: 16, color: Tokens.ink);
+  }
+}
+
+class _PrimaryButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+
+  const _PrimaryButton({required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 44,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Tokens.ink,
+            borderRadius: BorderRadius.circular(Tokens.r2),
+          ),
+          child: Text(
+            label,
+            style: Type.body(
+              size: 14,
+              color: Tokens.paper,
+              weight: Tokens.fwMedium,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

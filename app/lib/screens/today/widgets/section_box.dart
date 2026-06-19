@@ -33,11 +33,7 @@ class SectionBox extends StatelessWidget {
 
     final inner = Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        header,
-        const SizedBox(height: 10),
-        child,
-      ],
+      children: [header, const SizedBox(height: 10), child],
     );
 
     if (bare) return inner;
