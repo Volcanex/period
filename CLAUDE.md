@@ -99,6 +99,10 @@ Layout under `app/lib/`:
 
 Toolchain notes: Flutter 3.41.x stable. `flutter pub get`, `flutter analyze`, `flutter test`, `flutter build web` all run from `app/`. Do not couple Flutter source to anything in `core/` or `tests/`.
 
+### Deploy (web → h)
+
+The live web client is served by nginx from `/var/www/period.gabrielpenman.com` on h at `period.gabrielpenman.com`. To rebuild and deploy from h, run `scripts/deploy_web.sh` — it builds the `app/` web release and rsyncs it into the docroot, stamping `build_info.txt`. The Flutter SDK lives at `/opt/flutter` on h and the docroot is owned by `gabriel`, so no sudo is needed. The backend API (`api.period.gabrielpenman.com`) is a separate systemd service, `period-api`, and is not touched by a web deploy.
+
 ## Flutter Frontend Readiness (Contracts)
 
 The Flutter client should grow toward generated OpenAPI models plus `contract_snapshot/examples/`. The primary on-device graph is `LocalStoreSnapshot`; `LocalDataBundle` is an export/import boundary. Keep calculations and persistence on device. Backend validation is for contract confidence, not runtime ownership. The current `app/lib/data/models.dart` fixtures are placeholders, not the contract surface.
