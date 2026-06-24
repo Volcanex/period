@@ -64,6 +64,44 @@ class ApiClient {
     }
   }
 
+  /// POST a JSON body and return the decoded response. Throws [ApiError] on
+  /// network failure, timeout, non-2xx status, or unparseable body.
+  Future<dynamic> postJson(String path, Map<String, dynamic> body) async {
+    final uri = _uri(path);
+    try {
+      final res = await _http
+          .post(
+            uri,
+            headers: const {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+            },
+            body: jsonEncode(body),
+          )
+          .timeout(timeout);
+      if (res.statusCode < 200 || res.statusCode >= 300) {
+        throw ApiError(
+          message: 'POST $path returned ${res.statusCode}',
+          status: res.statusCode,
+        );
+      }
+      try {
+        return jsonDecode(res.body);
+      } catch (e) {
+        throw ApiError(message: 'POST $path: invalid JSON ($e)');
+      }
+    } on TimeoutException {
+      throw ApiError(
+        message: 'POST $path timed out after ${timeout.inSeconds}s',
+      );
+    } on http.ClientException catch (e) {
+      throw ApiError(message: 'POST $path: ${e.message}');
+    } catch (e) {
+      if (e is ApiError) rethrow;
+      throw ApiError(message: 'POST $path failed: $e');
+    }
+  }
+
   void close() => _http.close();
 }
 

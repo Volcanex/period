@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
 
+import '../../api/contracts/analyzer_results.dart';
 import '../../data/models.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 import '../shared/top_bar.dart';
 import '../today/widgets/section_box.dart';
 import 'widgets/base_stat_card.dart';
+import 'widgets/pack_section.dart';
 
-/// Insights tab — real local model status. Pattern cards stay hidden until
-/// detector output exists; no frontend-only medical hints are surfaced here.
 class InsightsScreen extends StatelessWidget {
   final CycleState cycleState;
   final int loggedDayCount;
   final Map<String, bool> packEnabled;
+  final AnalyzerResults analyzerResults;
   final ValueChanged<String>? onOpenTrackerPack;
   final VoidCallback? onOpenCycleHistory;
+  final VoidCallback? onRefreshAnalyzers;
 
   const InsightsScreen({
     super.key,
     required this.cycleState,
     required this.loggedDayCount,
     required this.packEnabled,
+    required this.analyzerResults,
     this.onOpenTrackerPack,
     this.onOpenCycleHistory,
+    this.onRefreshAnalyzers,
   });
 
   @override
@@ -36,6 +40,7 @@ class InsightsScreen extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
             children: [
+              // ---- cycle model ----
               SectionBox(
                 eyebrow: 'cycle model',
                 bare: true,
@@ -137,6 +142,17 @@ class InsightsScreen extends StatelessWidget {
                   ],
                 ),
               ),
+
+              const SizedBox(height: 22),
+
+              // ---- condition analyzers ----
+              _AnalyzerSection(
+                results: analyzerResults,
+                packEnabled: packEnabled,
+                onOpenTrackerPack: onOpenTrackerPack,
+                onRefresh: onRefreshAnalyzers,
+              ),
+
               const SizedBox(height: 22),
 
               Center(
@@ -157,9 +173,202 @@ class InsightsScreen extends StatelessWidget {
   }
 }
 
+// ---- condition analyzer section ----
+
+class _AnalyzerSection extends StatelessWidget {
+  final AnalyzerResults results;
+  final Map<String, bool> packEnabled;
+  final ValueChanged<String>? onOpenTrackerPack;
+  final VoidCallback? onRefresh;
+
+  const _AnalyzerSection({
+    required this.results,
+    required this.packEnabled,
+    this.onOpenTrackerPack,
+    this.onRefresh,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (results.state == AnalyzerLoadState.idle) {
+      return _AnalyzerPrompt(onRefresh: onRefresh);
+    }
+
+    if (results.state == AnalyzerLoadState.loading) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 32),
+          child: SizedBox(
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(
+              strokeWidth: 1.5,
+              color: Tokens.graphite2,
+            ),
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      children: [
+        if (results.pcos != null)
+          _ConditionCard(
+            eyebrow: 'pcos · feature pattern',
+            packCode: 'pcos_support',
+            eval: results.pcos!,
+            packEnabled: packEnabled['pcos_support'] ?? false,
+            onOpenTrackerPack: onOpenTrackerPack,
+          ),
+        if (results.pmdd != null) ...[
+          const SizedBox(height: 16),
+          _ConditionCard(
+            eyebrow: 'pms · pmdd · pattern',
+            packCode: 'pms_pmdd_support',
+            eval: results.pmdd!,
+            packEnabled: packEnabled['pms_pmdd_support'] ?? false,
+            onOpenTrackerPack: onOpenTrackerPack,
+          ),
+        ],
+        if (results.perimenopause != null) ...[
+          const SizedBox(height: 16),
+          _ConditionCard(
+            eyebrow: 'perimenopause · STRAW+10',
+            packCode: 'perimenopause_support',
+            eval: results.perimenopause!,
+            packEnabled: packEnabled['perimenopause_support'] ?? false,
+            onOpenTrackerPack: onOpenTrackerPack,
+          ),
+        ],
+        if (results.state == AnalyzerLoadState.done) ...[
+          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: GestureDetector(
+                onTap: onRefresh,
+                child: Text(
+                  'refresh ↻',
+                  style: Type.mono(
+                    size: 10,
+                    color: Tokens.graphite2,
+                    letterSpacingEm: 0.04,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _AnalyzerPrompt extends StatelessWidget {
+  final VoidCallback? onRefresh;
+  const _AnalyzerPrompt({this.onRefresh});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Tokens.r2),
+        border: Border.all(color: Tokens.borderSoft, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'condition patterns',
+            style: Type.display(
+              size: 13,
+              weight: Tokens.fwMedium,
+              height: 1.2,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'run the on-device analyzers to check your logs for PCOS feature patterns, PMDD-style symptom clustering, and perimenopause staging.',
+            style: Type.body(size: 13, color: Tokens.graphite2, height: 1.4),
+          ),
+          const SizedBox(height: 12),
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: onRefresh,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Tokens.ink,
+                  borderRadius: BorderRadius.circular(Tokens.r1),
+                ),
+                child: Text(
+                  'analyse now',
+                  style: Type.mono(
+                    size: 12,
+                    color: Tokens.paper,
+                    letterSpacingEm: 0.02,
+                    height: 1.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ConditionCard extends StatelessWidget {
+  final String eyebrow;
+  final String packCode;
+  final AnalyzerEval eval;
+  final bool packEnabled;
+  final ValueChanged<String>? onOpenTrackerPack;
+
+  const _ConditionCard({
+    required this.eyebrow,
+    required this.packCode,
+    required this.eval,
+    required this.packEnabled,
+    this.onOpenTrackerPack,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final stats = eval.stats
+        .map((s) => PackStat(label: s.label, value: s.value, sub: s.sub))
+        .toList();
+
+    String footer = eval.summary;
+    if (eval.suppressors.isNotEmpty) {
+      footer += '\n\nsuppressors: ${eval.suppressors.join(', ')}.';
+    }
+    if (eval.recommendedActions.isNotEmpty) {
+      footer +=
+          '\n\nnext: ${eval.recommendedActions.first.toLowerCase().replaceAll('_', ' ')}.';
+    }
+
+    return PackSection(
+      eyebrow: eyebrow,
+      on: packEnabled,
+      glyph: Icons.analytics_outlined,
+      stats: stats,
+      footer: footer,
+      painSeries: const [],
+      onTurnOn: () => onOpenTrackerPack?.call(packCode),
+    );
+  }
+}
+
+// ---- prediction band ----
+
 class _PredictionBand extends StatelessWidget {
   final CycleState state;
-
   const _PredictionBand({required this.state});
 
   @override
@@ -214,32 +423,34 @@ class _PredictionBand extends StatelessWidget {
   }
 }
 
+// ---- stats ----
+
 List<_BaseStat> _modelStats(CycleState state, int loggedDayCount) => [
-  _BaseStat(
-    label: 'cycle day',
-    value: '${state.cycleDay ?? '—'}',
-    unit: '',
-    range: '${state.cycleLen} day cycle',
-  ),
-  _BaseStat(
-    label: 'typical period',
-    value: '${state.flowLen}',
-    unit: 'days',
-    range: state.avgFlow ?? 'local setting',
-  ),
-  _BaseStat(
-    label: 'observations',
-    value: '${state.observationCount}',
-    unit: '',
-    range: '$loggedDayCount logged days',
-  ),
-  _BaseStat(
-    label: 'prediction',
-    value: state.confidence,
-    unit: '',
-    range: _predictionRange(state),
-  ),
-];
+      _BaseStat(
+        label: 'cycle day',
+        value: '${state.cycleDay ?? '—'}',
+        unit: '',
+        range: '${state.cycleLen} day cycle',
+      ),
+      _BaseStat(
+        label: 'typical period',
+        value: '${state.flowLen}',
+        unit: 'days',
+        range: state.avgFlow ?? 'local setting',
+      ),
+      _BaseStat(
+        label: 'observations',
+        value: '${state.observationCount}',
+        unit: '',
+        range: '$loggedDayCount logged days',
+      ),
+      _BaseStat(
+        label: 'prediction',
+        value: state.confidence,
+        unit: '',
+        range: _predictionRange(state),
+      ),
+    ];
 
 String _predictionRange(CycleState state) {
   final window = state.predictedP80WindowDays;
@@ -252,7 +463,6 @@ class _BaseStat {
   final String value;
   final String unit;
   final String range;
-
   const _BaseStat({
     required this.label,
     required this.value,

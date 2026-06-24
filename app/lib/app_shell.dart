@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'api/analyzer_repository.dart';
 import 'api/tracker_catalog.dart';
 import 'api/contracts/tracker_definition.dart';
 import 'data/clock.dart';
@@ -27,6 +28,7 @@ class AppShell extends StatefulWidget {
 
 class _AppShellState extends State<AppShell> {
   late final LocalPeriodStore store;
+  late final AnalyzerRepository _analyzerRepo;
   AppTab tab = AppTab.today;
 
   // Tweaks that the design's tweaks panel surfaces.
@@ -38,6 +40,7 @@ class _AppShellState extends State<AppShell> {
   void initState() {
     super.initState();
     store = LocalPeriodStore()..addListener(_onStoreChanged);
+    _analyzerRepo = AnalyzerRepository()..addListener(_onAnalyzerChanged);
     unawaited(store.load());
   }
 
@@ -45,12 +48,30 @@ class _AppShellState extends State<AppShell> {
   void dispose() {
     store.removeListener(_onStoreChanged);
     store.dispose();
+    _analyzerRepo.removeListener(_onAnalyzerChanged);
+    _analyzerRepo.dispose();
     super.dispose();
   }
 
   void _onStoreChanged() {
     Tokens.setDark(store.darkMode);
     setState(() {});
+  }
+
+  void _onAnalyzerChanged() => setState(() {});
+
+  void _triggerAnalyzers() {
+    if (!store.loaded || _analyzerRepo.isLoading) return;
+    final observations =
+        store.observations.map((e) => e.toJson()).toList();
+    unawaited(_analyzerRepo.evaluate(observations, 'subject-local-1'));
+  }
+
+  void _onTabChanged(AppTab t) {
+    setState(() => tab = t);
+    if (t == AppTab.insights && !_analyzerRepo.hasResults) {
+      _triggerAnalyzers();
+    }
   }
 
   Widget _screen() {
@@ -122,6 +143,7 @@ class _AppShellState extends State<AppShell> {
         cycleState: cs,
         loggedDayCount: store.loggedDayCount,
         packEnabled: store.packEnabled,
+        analyzerResults: _analyzerRepo.results,
         onOpenTrackerPack: (packCode) {
           store.setPackEnabled(packCode, true);
           setState(() {
@@ -130,6 +152,7 @@ class _AppShellState extends State<AppShell> {
           });
         },
         onOpenCycleHistory: () => setState(() => tab = AppTab.calendar),
+        onRefreshAnalyzers: _triggerAnalyzers,
       ),
       AppTab.trackers => TrackersScreen(
         packEnabled: store.packEnabled,
@@ -170,7 +193,7 @@ class _AppShellState extends State<AppShell> {
               bottom: 0,
               child: AppBottomTabBar(
                 current: tab,
-                onChanged: (t) => setState(() => tab = t),
+                onChanged: _onTabChanged,
               ),
             ),
           ],
