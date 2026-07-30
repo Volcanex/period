@@ -44,7 +44,10 @@ class AppSideNav extends StatelessWidget {
                 bottom: BorderSide(color: Tokens.borderSoft, width: 1),
               ),
             ),
-            child: Text(expanded ? 'SEQUENCE' : 'SEQ', style: Type.eyebrow()),
+            // Full wordmark at both widths: 'Trackers' already fits the rail at
+            // this size, so the name does too, and 'SEQ' reads as a truncation
+            // bug rather than an abbreviation.
+            child: Text('SEQUENCE', style: Type.eyebrow()),
           ),
           const SizedBox(height: 8),
           for (final tab in AppTab.values)
