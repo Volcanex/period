@@ -56,7 +56,21 @@ class OnboardingScaffold extends StatelessWidget {
             ),
           ],
           const SizedBox(height: 22),
-          Expanded(child: SingleChildScrollView(child: child)),
+          // Centred when the content is shorter than the space, scrolling when
+          // it isn't — otherwise short steps leave a large gap above the
+          // buttons on a tall phone.
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: Center(child: child),
+                ),
+              ),
+            ),
+          ),
           const SizedBox(height: 16),
           actions,
         ],
