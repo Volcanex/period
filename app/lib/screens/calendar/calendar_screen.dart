@@ -908,6 +908,10 @@ class _Legend extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // With no anchor the grid has no phase tints at all, so a key to them
+    // would explain colours that aren't on screen.
+    if (!CalendarScreen.hasCycleAnchor) return const SizedBox.shrink();
+
     final entries = <_LegendEntry>[
       const _LegendEntry(
         'menstrual',

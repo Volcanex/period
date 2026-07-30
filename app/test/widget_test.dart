@@ -420,6 +420,13 @@ void main() {
     expect(find.text('no cycle data yet'), findsOneWidget);
     expect(find.text('EST. WINDOW'), findsNothing);
     expect(find.textContaining('cycle day'), findsNothing);
+
+    // The calendar must not tint phases or key colours it isn't showing.
+    await tester.tap(find.text('calendar'));
+    await tester.pumpAndSettle();
+    expect(find.text('no cycle data yet'), findsOneWidget);
+    expect(find.text('PHASES'), findsNothing);
+    expect(find.text('predicted'), findsNothing);
   });
 
   test('logging a bleeding day recovers from an unknown anchor', () async {
