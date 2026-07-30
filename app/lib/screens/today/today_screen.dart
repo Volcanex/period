@@ -186,28 +186,30 @@ class TodayScreen extends StatelessWidget {
     final bottomGap = Layout.of(context) == Breakpoint.compact ? 96.0 : 24.0;
     return Column(
       children: [
-        TopBar(
-          title: 'Today',
-          contentMaxWidth: Layout.wideMax,
-          trailing: [
-            _TopIconButton(
-              icon: Icons.dark_mode_outlined,
-              onTap: onToggleDarkMode,
-            ),
-            _TopIconButton(
-              icon: Icons.settings_outlined,
-              onTap: onOpenSettings,
-            ),
-          ],
+        LayoutBuilder(
+          builder: (context, constraints) => TopBar(
+            title: 'Today',
+            contentMaxWidth: Layout.pageMax(constraints.maxWidth),
+            trailing: [
+              _TopIconButton(
+                icon: Icons.dark_mode_outlined,
+                onTap: onToggleDarkMode,
+              ),
+              _TopIconButton(
+                icon: Icons.settings_outlined,
+                onTap: onOpenSettings,
+              ),
+            ],
+          ),
         ),
         Expanded(
           child: Container(
             color: Tokens.base,
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final twoColumn = constraints.maxWidth >= Layout.twoColumnMin;
+                final twoColumn = Layout.twoColumn(constraints.maxWidth);
                 return ContentPane(
-                  maxWidth: twoColumn ? Layout.wideMax : Layout.readableMax,
+                  maxWidth: Layout.pageMax(constraints.maxWidth),
                   child: ListView(
                     padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
                     children: [

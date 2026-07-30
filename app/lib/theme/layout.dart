@@ -31,11 +31,24 @@ class Layout {
   /// Two columns only once each half still clears a readable measure.
   static const double twoColumnMin = 900;
 
+  /// Width of a page's content column for a given available width. The top bar
+  /// and the body under it must both use this, or the title sits at a different
+  /// left edge from the content it labels.
+  static bool twoColumn(double width) => width >= twoColumnMin;
+  static double pageMax(double width) =>
+      twoColumn(width) ? wideMax : readableMax;
+
   /// Month grids: 7 cells of 56 plus six 4px gaps. Cells stop growing here so
   /// a desktop window gets a calendar rather than a wall of squares.
   static const double gridCellMax = 56;
   static const double gridGap = 4;
   static const double monthGridMax = gridCellMax * 7 + gridGap * 6;
+
+  /// The calendar page is as wide as its grid plus the page gutters. Giving it
+  /// a wider column would centre the grid inside it while the overview and the
+  /// legend stayed left-aligned, so the month would sit visibly right of
+  /// everything else on the page.
+  static const double calendarMax = monthGridMax + 32;
 
   /// Setup reads as a single statement, so it keeps a narrow column at every
   /// size rather than stretching.

@@ -35,13 +35,18 @@ class InsightsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TopBar(title: 'Insights', contentMaxWidth: Layout.wideMax),
+        LayoutBuilder(
+          builder: (context, constraints) => TopBar(
+            title: 'Insights',
+            contentMaxWidth: Layout.pageMax(constraints.maxWidth),
+          ),
+        ),
         Expanded(
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final twoColumn = constraints.maxWidth >= Layout.twoColumnMin;
+              final twoColumn = Layout.twoColumn(constraints.maxWidth);
               return ContentPane(
-                maxWidth: twoColumn ? Layout.wideMax : Layout.readableMax,
+                maxWidth: Layout.pageMax(constraints.maxWidth),
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
                   children: [

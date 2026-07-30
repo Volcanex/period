@@ -131,42 +131,29 @@ class _CalendarScreenState extends State<CalendarScreen> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const TopBar(title: 'Calendar'),
+        const TopBar(title: 'Calendar', contentMaxWidth: Layout.calendarMax),
         Expanded(
           child: Container(
             color: Tokens.base,
             child: ContentPane(
+              maxWidth: Layout.calendarMax,
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
                 children: [
                   const _CycleOverview(),
                   const SizedBox(height: 18),
-                  // Header and grid share one cap so the columns stay aligned
-                  // and the cells stop growing on a desktop window.
-                  Center(
-                    child: ConstrainedBox(
-                      constraints: const BoxConstraints(
-                        maxWidth: Layout.monthGridMax,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          MonthNav(
-                            month: _visibleMonth,
-                            onBack: () => _stepMonth(-1),
-                            onForward: () => _stepMonth(1),
-                          ),
-                          const SizedBox(height: 14),
-                          const WeekdayHeader(),
-                          const SizedBox(height: 6),
-                          _MonthGrid(
-                            monthAnchor: _visibleMonth,
-                            logFor: widget.logFor,
-                            onTapDay: _openDay,
-                          ),
-                        ],
-                      ),
-                    ),
+                  MonthNav(
+                    month: _visibleMonth,
+                    onBack: () => _stepMonth(-1),
+                    onForward: () => _stepMonth(1),
+                  ),
+                  const SizedBox(height: 14),
+                  const WeekdayHeader(),
+                  const SizedBox(height: 6),
+                  _MonthGrid(
+                    monthAnchor: _visibleMonth,
+                    logFor: widget.logFor,
+                    onTapDay: _openDay,
                   ),
                   const SizedBox(height: 18),
                   const _Legend(),
