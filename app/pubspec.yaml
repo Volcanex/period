@@ -33,6 +33,11 @@ flutter:
   #   Space Grotesk:   https://github.com/floriankarsten/space-grotesk (OFL-1.1)
   #   JetBrains Mono:  https://github.com/JetBrains/JetBrainsMono (OFL-1.1)
   fonts:
+    # Phosphor, regular weight, subset to just the glyphs the app draws.
+    # Regenerate with `scripts/subset_icon_font.py`. See lib/theme/icons.dart.
+    - family: Phosphor
+      fonts:
+        - asset: assets/fonts/PhosphorSubset.ttf
     - family: Inter
       fonts:
         - asset: assets/fonts/InterVariable.ttf

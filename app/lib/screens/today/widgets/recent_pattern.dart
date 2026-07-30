@@ -42,10 +42,18 @@ class _NoPattern extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // With no anchor there is no prior in play, because nothing is being
+    // predicted — a different situation from "predicting, but from the
+    // population rather than from you".
+    final message = switch (state) {
+      _ when state.cycleDay == null =>
+        'no cycle data yet. log a period start and patterns appear here.',
+      _ when state.cycleCount <= 1 =>
+        'using the population prior until you log at least 2 period starts.',
+      _ => 'not enough data yet. log a few cycles before any averages appear.',
+    };
     return Text(
-      state.cycleCount <= 1
-          ? 'using the population prior until you log at least 2 period starts.'
-          : 'not enough data yet. log a few cycles before any averages appear.',
+      message,
       style: Type.body(size: 13, color: Tokens.graphite2, height: 1.45),
     );
   }

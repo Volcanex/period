@@ -21,3 +21,6 @@ docker-compose.override.yml
 
 # Claude Code local session data
 .claude/
+
+# Cached upstream icon font, re-downloaded by scripts/subset_icon_font.py
+/build/

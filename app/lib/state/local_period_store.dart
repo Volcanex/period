@@ -132,7 +132,14 @@ class DayLog {
 
 class LocalPeriodStore extends ChangeNotifier {
   bool _loaded = false;
-  late DateTime _cycleAnchor;
+
+  /// Null means we genuinely do not know when the last period started — a
+  /// fresh install, or someone who skipped that question during setup. It is
+  /// deliberately nullable rather than defaulted: a placeholder date is
+  /// indistinguishable from a real one at every call site, and inventing a
+  /// cycle day is the exact bug this type is here to prevent.
+  DateTime? _cycleAnchor;
+  bool _setupComplete = false;
   int _cycleLen = Clock.cycleLen;
   int _flowLen = Clock.flowLen;
   int _ovPeak = Clock.ovPeak;
@@ -143,7 +150,9 @@ class LocalPeriodStore extends ChangeNotifier {
   int _idCounter = 0;
 
   bool get loaded => _loaded;
-  DateTime get cycleAnchor => _cycleAnchor;
+  DateTime? get cycleAnchor => _cycleAnchor;
+  bool get hasCycleAnchor => _cycleAnchor != null;
+  bool get setupComplete => _setupComplete;
   int get cycleLen => _cycleLen;
   int get flowLen => _flowLen;
   int get ovPeak => _ovPeak;
@@ -158,6 +167,7 @@ class LocalPeriodStore extends ChangeNotifier {
   Future<void> load() async {
     _cycleAnchor = Clock.cycleAnchor;
     final prefs = await SharedPreferences.getInstance();
+
     String? raw;
     try {
       raw = prefs.getString(_storeKey);
@@ -173,8 +183,17 @@ class LocalPeriodStore extends ChangeNotifier {
     if (raw != null) {
       try {
         final json = (jsonDecode(raw) as Map).cast<String, dynamic>();
-        _cycleAnchor =
-            _parseDate(json['cycleAnchor'] as String?) ?? _cycleAnchor;
+        // Anything we can decode belongs to someone who has already used the
+        // app, including installs that predate this key — they must not be
+        // sent back through setup. The field default is false, so only an
+        // absent or unreadable blob counts as a first run.
+        _setupComplete = json['setupComplete'] as bool? ?? true;
+        if (json['hasCycleAnchor'] == false) {
+          _cycleAnchor = null;
+        } else {
+          _cycleAnchor =
+              _parseDate(json['cycleAnchor'] as String?) ?? _cycleAnchor;
+        }
         _cycleLen = json['cycleLen'] as int? ?? _cycleLen;
         _flowLen = json['flowLen'] as int? ?? _flowLen;
         _ovPeak = json['ovPeak'] as int? ?? _ovPeak;
@@ -202,9 +221,12 @@ class LocalPeriodStore extends ChangeNotifier {
   }
 
   CycleState cycleStateFor(DateTime date) {
+    final anchor = _cycleAnchor;
+    if (anchor == null) return _unknownCycleState();
+
     final cycleDay = cycleDayFor(date);
     final prediction = _predictionFor(date);
-    var nextAnchor = _cycleAnchor.add(
+    var nextAnchor = anchor.add(
       Duration(days: prediction.p50LengthDays.round()),
     );
     while (!nextAnchor.isAfter(date)) {
@@ -212,10 +234,10 @@ class LocalPeriodStore extends ChangeNotifier {
         Duration(days: prediction.p50LengthDays.round()),
       );
     }
-    final windowStart = _cycleAnchor.add(
+    final windowStart = anchor.add(
       Duration(days: prediction.p10LengthDays.round()),
     );
-    final windowEnd = _cycleAnchor.add(
+    final windowEnd = anchor.add(
       Duration(days: prediction.p90LengthDays.round()),
     );
     final rangeStart = Clock.today;
@@ -261,12 +283,46 @@ class LocalPeriodStore extends ChangeNotifier {
     );
   }
 
-  int cycleDayFor(DateTime date) {
-    final diff = _dateOnly(date).difference(_cycleAnchor).inDays;
+  /// Null when there is no known anchor — the caller must show "unknown"
+  /// rather than a number.
+  int? cycleDayFor(DateTime date) {
+    final anchor = _cycleAnchor;
+    if (anchor == null) return null;
+    final diff = _dateOnly(date).difference(anchor).inDays;
     final m = diff % _cycleLen;
     final mod = m < 0 ? m + _cycleLen : m;
     return mod + 1;
   }
+
+  /// What we can honestly say with no anchor: the settings the user chose,
+  /// and nothing about where they are in a cycle or when the next one starts.
+  ///
+  /// `cycleCount: 0` distinguishes this from "one cycle logged, still leaning
+  /// on the population prior", which is a different message on Today.
+  CycleState _unknownCycleState() => CycleState(
+    key: 'local-unknown',
+    eyebrow: 'cycle day',
+    cycleDay: null,
+    cycleLen: _cycleLen,
+    nextStart: null,
+    nextEnd: null,
+    nextMode: null,
+    confidence: 'starter',
+    avg: null,
+    avgFlow: null,
+    cycleCount: 0,
+    bandStart: 0,
+    bandEnd: 0,
+    modePos: 0,
+    todayPos: 0,
+    rangeStartLabel: null,
+    rangeMidLabel: null,
+    rangeEndLabel: null,
+    flowLen: _flowLen,
+    predictionSource: 'none',
+    predictionModelVersion: '',
+    observationCount: observationCount,
+  );
 
   void setBleeding(DateTime date, BleedLevel level) {
     final key = _dateKey(date);
@@ -376,21 +432,59 @@ class LocalPeriodStore extends ChangeNotifier {
   }
 
   void setCycleLength(int days) {
-    _cycleLen = days.clamp(21, 45);
-    _ovPeak = (_cycleLen / 2).round().clamp(10, _cycleLen - 8);
+    _applyCycleLength(days);
     _changed();
   }
 
   void setFlowLength(int days) {
-    _flowLen = days.clamp(1, 10);
+    _applyFlowLength(days);
     _changed();
+  }
+
+  void _applyCycleLength(int days) {
+    _cycleLen = days.clamp(21, 45);
+    _ovPeak = (_cycleLen / 2).round().clamp(10, _cycleLen - 8);
+  }
+
+  void _applyFlowLength(int days) => _flowLen = days.clamp(1, 10);
+
+  /// Records what first-run setup collected, in a single write.
+  ///
+  /// [lastPeriodStart] null means the user said they did not know. The anchor
+  /// then stays unknown and nothing about a cycle day or a next period is
+  /// invented — logging any bleeding day later recovers it automatically via
+  /// [_recalculateCycleModel].
+  ///
+  /// [cycleLength] null means "not sure": the existing default stands rather
+  /// than a guess being recorded as something the user told us.
+  ///
+  /// No bleeding log is written for [lastPeriodStart]. Doing so would invent a
+  /// flow level nobody entered and file it as user-entered evidence.
+  Future<void> completeSetup({
+    DateTime? lastPeriodStart,
+    int? cycleLength,
+  }) async {
+    if (cycleLength != null) _applyCycleLength(cycleLength);
+    _cycleAnchor = lastPeriodStart == null
+        ? null
+        : _dateOnly(lastPeriodStart);
+    _setupComplete = true;
+    // Real logged starts outrank a self-reported date. Must run after the
+    // anchor assignment or it would be clobbered.
+    _recalculateCycleModel();
+    _syncClock();
+    notifyListeners();
+    await _persist();
   }
 
   Future<void> resetDemoLogs() async {
     _logs = {};
     _observationIds = {};
     _idCounter = 0;
-    _cycleAnchor = Clock.cycleAnchor;
+    // Not Clock.cycleAnchor — that would re-fabricate the demo anchor. With
+    // the logs gone we no longer know when the last period started, and
+    // setup itself is deliberately kept (see the settings copy).
+    _cycleAnchor = null;
     _cycleLen = Clock.cycleLen;
     _flowLen = Clock.flowLen;
     _ovPeak = Clock.ovPeak;
@@ -401,7 +495,7 @@ class LocalPeriodStore extends ChangeNotifier {
     'schema': 'period.local_snapshot.v1',
     'exportedAt': DateTime.now().toUtc().toIso8601String(),
     'cycle': {
-      'anchor': _dateKey(_cycleAnchor),
+      'anchor': _cycleAnchor == null ? null : _dateKey(_cycleAnchor!),
       'lengthDays': _cycleLen,
       'flowLengthDays': _flowLen,
       'ovulationPeakDay': _ovPeak,
@@ -436,6 +530,7 @@ class LocalPeriodStore extends ChangeNotifier {
   void _syncClock() {
     Clock.overrideCycleConfig(
       anchor: _cycleAnchor,
+      anchorKnown: _cycleAnchor != null,
       cycleLen: _cycleLen,
       flowLen: _flowLen,
       ovPeak: _ovPeak,
@@ -448,7 +543,11 @@ class LocalPeriodStore extends ChangeNotifier {
   }
 
   Map<String, dynamic> _toJson() => {
-    'cycleAnchor': _dateKey(_cycleAnchor),
+    'setupComplete': _setupComplete,
+    // Written explicitly rather than inferred from the key being absent:
+    // older blobs have no cycleAnchor and still expect the legacy fallback.
+    'hasCycleAnchor': _cycleAnchor != null,
+    if (_cycleAnchor != null) 'cycleAnchor': _dateKey(_cycleAnchor!),
     'cycleLen': _cycleLen,
     'flowLen': _flowLen,
     'ovPeak': _ovPeak,

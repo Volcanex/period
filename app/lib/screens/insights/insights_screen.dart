@@ -84,7 +84,9 @@ class InsightsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 10),
                           Text(
-                            '${cycleState.nextStart} – ${cycleState.nextEnd}',
+                            cycleState.nextStart == null
+                                ? '—'
+                                : '${cycleState.nextStart} – ${cycleState.nextEnd}',
                             style: Type.display(
                               size: 24,
                               weight: Tokens.fwMedium,
@@ -93,15 +95,21 @@ class InsightsScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            'most likely start ${cycleState.nextMode}. this estimate updates from bleeding logs on this device.',
+                            cycleState.nextStart == null
+                                ? 'log a period start, or add your last start date, and an estimate appears here.'
+                                : 'most likely start ${cycleState.nextMode}. this estimate updates from bleeding logs on this device.',
                             style: Type.body(
                               size: 14,
                               color: Tokens.graphite2,
                               height: 1.35,
                             ),
                           ),
-                          const SizedBox(height: 12),
-                          _PredictionBand(state: cycleState),
+                          // A band with no prediction behind it collapses to a
+                          // degenerate bar labelled "null" — drop it entirely.
+                          if (cycleState.nextStart != null) ...[
+                            const SizedBox(height: 12),
+                            _PredictionBand(state: cycleState),
+                          ],
                           if (cycleState.observationCount == 0) ...[
                             const SizedBox(height: 12),
                             Text(

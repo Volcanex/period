@@ -7,6 +7,7 @@ import '../../api/tracker_catalog.dart';
 import '../../api/contracts/tracker_pack.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
+import '../shared/number_stepper.dart';
 import '../shared/top_bar.dart';
 import '../today/widgets/section_box.dart';
 import '../trackers/widgets/tracker_row.dart';
@@ -81,7 +82,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       label: 'typical cycle',
                       meta:
                           'used until your bleeding history has enough signal',
-                      trailing: _NumberStepper(
+                      trailing: NumberStepper(
                         value: widget.cycleLength,
                         min: 21,
                         max: 45,
@@ -92,7 +93,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     SettingRow(
                       label: 'typical period',
                       meta: 'flow prediction length',
-                      trailing: _NumberStepper(
+                      trailing: NumberStepper(
                         value: widget.flowLength,
                         min: 1,
                         max: 10,
@@ -355,85 +356,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         backgroundColor: Tokens.ink,
         behavior: SnackBarBehavior.floating,
         duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-}
-
-class _NumberStepper extends StatelessWidget {
-  final int value;
-  final int min;
-  final int max;
-  final String unit;
-  final ValueChanged<int> onChanged;
-
-  const _NumberStepper({
-    required this.value,
-    required this.min,
-    required this.max,
-    required this.unit,
-    required this.onChanged,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Tokens.base,
-        border: Border.all(color: Tokens.borderSoft),
-        borderRadius: BorderRadius.circular(Tokens.r2),
-      ),
-      padding: const EdgeInsets.all(2),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _StepButton(
-            icon: Icons.remove,
-            onTap: value <= min ? null : () => onChanged(value - 1),
-          ),
-          SizedBox(
-            width: 46,
-            child: Text(
-              '$value$unit',
-              textAlign: TextAlign.center,
-              style: Type.mono(
-                size: 11,
-                color: Tokens.ink,
-                letterSpacingEm: 0.04,
-              ),
-            ),
-          ),
-          _StepButton(
-            icon: Icons.add,
-            onTap: value >= max ? null : () => onChanged(value + 1),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _StepButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback? onTap;
-
-  const _StepButton({required this.icon, this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: onTap == null ? MouseCursor.defer : SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onTap,
-        child: SizedBox(
-          width: 28,
-          height: 28,
-          child: Icon(
-            icon,
-            size: 15,
-            color: onTap == null ? Tokens.graphite2 : Tokens.ink,
-          ),
-        ),
       ),
     );
   }

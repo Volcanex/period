@@ -68,7 +68,7 @@ FHIR means Fast Healthcare Interoperability Resources in this project: a future 
 | `core/tracking/AGENTS.md` | Atlas Tracking Bridge |
 | `tests/AGENTS.md` | Tests |
 
-_Auto-compiled 2026-07-30 08:49 UTC - 9 doc(s) found._
+_Auto-compiled 2026-07-30 09:50 UTC - 9 doc(s) found._
 <!-- DOCS:END -->
 
 ## Before Every Commit
@@ -92,12 +92,45 @@ Consequences of that posture:
 - **Cycle model** — `app/lib/model/cycle_model.dart` (`period-hierarchical-skip-v1`) already runs entirely on device.
 - **Condition analyzers** — PMDD/PCOS/perimenopause still exist only as the Python reference implementation in `core/analyzers/`. The client reports `AnalyzerLoadState.unported` and says so in the insights tab. Porting them to Dart is the outstanding work; verify any port against the fixtures in `tests/fixtures/` so the two implementations cannot drift.
 
+### First-run setup and the unknown-cycle rule
+
+`lib/screens/onboarding/` is a four-step flow (privacy, last period start,
+cycle length, tour) gated on `LocalPeriodStore.setupComplete` in
+`app_shell.dart`'s `build()`. It replaces the shell rather than covering it, so
+the tab bar is never built during setup.
+
+**The rule it exists to enforce: the app must never invent a cycle.** Both data
+questions are skippable, and skipping must produce an honest "we don't know"
+state, not a plausible-looking guess.
+
+- `LocalPeriodStore._cycleAnchor` is nullable. `cycleDayFor` and
+  `cycleStateFor` return null / `_unknownCycleState()` when it is unset, and
+  every screen already has an unknown branch. Logging any bleeding day recovers
+  the anchor automatically through `_recalculateCycleModel`.
+- `Clock.cycleAnchor` still falls back to `today - 3` so grid arithmetic has
+  something to subtract. **That value is fabricated and must never reach the
+  screen** — gate on `Clock.hasCycleAnchor` or use `cycleAnchorOrNull`. This is
+  the one place the original bug can be reintroduced.
+- `completeSetup` writes no bleeding log for the entered date. Inventing a flow
+  level would file a guess as user-entered evidence, which the evidence-ledger
+  rule above forbids.
+- Persistence uses two explicit keys, `setupComplete` and `hasCycleAnchor`.
+  `load()` defaults `setupComplete` to **true** for any blob it can decode, so
+  existing installs are never sent back through setup, while the field default
+  of false means a missing or corrupt blob is a first run.
+
+Widget tests that boot `PeriodApp` must call `seedStore()` or they land in
+setup instead of the shell.
+
 Layout under `app/lib/`:
 
 - `theme/tokens.dart` — direct port of the design's `colors_and_type.css` variables (palette, sky scale, phase tints, type scale, spacing, radii, motion).
 - `theme/typography.dart` — three font families (Space Grotesk display, Inter body, JetBrains Mono) loaded via `google_fonts` for now; bake to assets when perf demands.
 - `data/models.dart` — local fixtures: tracker defs, symptoms list, moods, bleed levels, cycle states, phase classification. They will be replaced by `LocalStoreSnapshot`-derived shapes from `contract_snapshot/`.
 - `api/` — historical name; now the on-device catalog/analyzer repositories and their result contracts. No HTTP lives here.
+- `theme/icons.dart` — Phosphor icons as `const IconData` against a subset font built by `scripts/subset_icon_font.py`. Adding an icon means adding it to that script's `ICONS` map and re-running it, or the code point renders blank. Do **not** add `phosphor_flutter`: it exposes icons as instance getters rather than const, which defeats `--tree-shake-icons` and ships ~2.6 MB of unused weights. The subset is under 3 KB.
+- `screens/onboarding/` — first-run setup (see above).
+- `screens/shared/` — top bar, tab bar, `NumberStepper`, `WeekdayHeader`.
 - `state/` — app-level state and cross-tab wiring.
 - `model/` — client-side model types.
 - `screens/today/` — the Today screen, its widgets, and bottom sheets (including generic tracker sheets).

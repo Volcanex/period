@@ -6,9 +6,11 @@ import '../../api/contracts/tracker_definition.dart';
 import '../../data/clock.dart';
 import '../../data/models.dart';
 import '../../state/local_period_store.dart';
+import '../../theme/curves.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 import '../shared/top_bar.dart';
+import '../shared/weekday_header.dart';
 import '../today/widgets/mini_ring.dart';
 import 'sheets/day_sheet.dart';
 import 'widgets/dashed_border_box.dart';
@@ -63,6 +65,7 @@ class CalendarScreen extends StatefulWidget {
   // rather than being pinned to a 28-day reference.
   static DateTime get today => Clock.today;
   static DateTime get cycleAnchor => Clock.cycleAnchor;
+  static bool get hasCycleAnchor => Clock.hasCycleAnchor;
   static int get cycleLen => Clock.cycleLen;
   static int get flowLen => Clock.flowLen;
   static int get ovPeak => Clock.ovPeak;
@@ -89,7 +92,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     });
   }
 
-  Future<void> _openDay(DateTime date, _Phase phase, _Kind kind) async {
+  Future<void> _openDay(DateTime date, _Phase? phase, _Kind kind) async {
     final today = CalendarScreen.today;
     final dateOnly = DateTime(date.year, date.month, date.day);
     final todayOnly = DateTime(today.year, today.month, today.day);
@@ -146,7 +149,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
               children: [
                 const _CycleOverview(),
                 const SizedBox(height: 18),
-                const _WeekdayHeader(),
+                const WeekdayHeader(),
                 const SizedBox(height: 6),
                 _MonthGrid(
                   monthAnchor: _visibleMonth,
@@ -185,7 +188,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return '${names[m]} $y';
   }
 
-  static String _phaseLabel(_Phase p) => switch (p) {
+  static String _phaseLabel(_Phase? p) => switch (p) {
+    null => '',
     _Phase.menstrual => 'menstrual',
     _Phase.follicular => 'follicular',
     _Phase.ovulation => 'ovulation',
@@ -206,14 +210,17 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
 // ---- pure phase math, exposed so DaySheet + grid agree ----
 
-int _cycleDayFor(DateTime d) {
+/// Null when no period start is known — there is no cycle to be on a day of.
+int? _cycleDayFor(DateTime d) {
+  if (!CalendarScreen.hasCycleAnchor) return null;
   final diff = d.difference(CalendarScreen.cycleAnchor).inDays;
   final m = diff % CalendarScreen.cycleLen;
   final mod = m < 0 ? m + CalendarScreen.cycleLen : m;
   return mod + 1; // 1-based
 }
 
-_Phase _phaseFor(int cycleDay) {
+_Phase? _phaseFor(int? cycleDay) {
+  if (cycleDay == null) return null;
   if (cycleDay <= CalendarScreen.flowLen) return _Phase.menstrual;
   if (cycleDay >= CalendarScreen.ovStart && cycleDay <= CalendarScreen.ovEnd) {
     return _Phase.ovulation;
@@ -315,6 +322,8 @@ class _CycleOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cd = _cycleDayFor(CalendarScreen.today);
+    if (cd == null) return const _CycleOverviewUnknown();
+
     final phase = _phaseFor(cd);
     final phaseStr = _CalendarScreenState._phaseLabel(phase);
     return Padding(
@@ -349,7 +358,7 @@ class _CycleOverview extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: 'day $cd · ovulation est. ',
+                        text: 'day $cd \u00b7 ovulation est. ',
                         style: Type.mono(
                           size: 11,
                           color: Tokens.graphite2,
@@ -378,29 +387,36 @@ class _CycleOverview extends StatelessWidget {
   }
 }
 
-class _WeekdayHeader extends StatelessWidget {
-  const _WeekdayHeader();
+/// No period start is known, so there is no ring, no phase and no ovulation
+/// estimate to draw. Says so rather than showing a cycle that was made up.
+class _CycleOverviewUnknown extends StatelessWidget {
+  const _CycleOverviewUnknown();
 
   @override
   Widget build(BuildContext context) {
-    const days = ['m', 't', 'w', 't', 'f', 's', 's'];
-    return Row(
-      children: [
-        for (final d in days)
-          Expanded(
-            child: Center(
-              child: Text(
-                d.toUpperCase(),
-                style: Type.mono(
-                  size: 10,
-                  color: Tokens.graphite2,
-                  letterSpacingEm: 0.06,
-                  height: 1.0,
-                ),
-              ),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(2, 4, 2, 4),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('THIS CYCLE', style: Type.eyebrow()),
+          const SizedBox(height: 4),
+          Text(
+            'no cycle data yet',
+            style: Type.display(
+              size: 18,
+              weight: Tokens.fwMedium,
+              height: 1.15,
+              letterSpacingEm: -0.01,
             ),
           ),
-      ],
+          const SizedBox(height: 4),
+          Text(
+            'tap a day you bled to start the model.',
+            style: Type.body(size: 13, color: Tokens.graphite2, height: 1.4),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -431,7 +447,7 @@ class _Cell {
 class _MonthGrid extends StatelessWidget {
   final DateTime monthAnchor; // first day of the visible month
   final DayLog Function(DateTime date) logFor;
-  final void Function(DateTime, _Phase, _Kind) onTapDay;
+  final void Function(DateTime, _Phase?, _Kind) onTapDay;
 
   const _MonthGrid({
     required this.monthAnchor,
@@ -463,7 +479,12 @@ class _MonthGrid extends StatelessWidget {
       final isFuture = date.isAfter(CalendarScreen.today);
       _Kind kind = _Kind.none;
       if (log.hasFlow) {
+        // A real logged day. Always shown, anchor or not.
         kind = _Kind.flowPast;
+      } else if (cd == null) {
+        // Nothing is predicted without an anchor, so no dashed estimate days
+        // and no ovulation marker — only what was actually logged.
+        kind = _Kind.none;
       } else if (cd <= CalendarScreen.flowLen && isFuture) {
         kind = _Kind.flowPredicted;
       } else if (phase == _Phase.ovulation && cd == CalendarScreen.ovPeak) {
@@ -540,7 +561,7 @@ class _MonthGrid extends StatelessWidget {
                   fg: _fgFor(c),
                   onTap: c.muted || c.date == null
                       ? null
-                      : () => onTapDay(c.date!, c.phase!, c.kind),
+                      : () => onTapDay(c.date!, c.phase, c.kind),
                 ),
               ),
           ],
@@ -820,7 +841,7 @@ class _TodayMotion {
   factory _TodayMotion.at(double t) {
     const liftEnd = 0.34;
     if (t <= liftEnd) {
-      final p = _easeOutBack(t / liftEnd);
+      final p = AppCurves.easeOutBack(t / liftEnd);
       return _TodayMotion(
         y: -8.5 * p,
         scale: 1 + 0.05 * p,
@@ -840,7 +861,7 @@ class _TodayMotion {
       );
     }
 
-    final p = _easeOutCubic((t - liftEnd) / (1 - liftEnd));
+    final p = AppCurves.easeOutCubic((t - liftEnd) / (1 - liftEnd));
     return _TodayMotion(
       y: -8.5 + 8.5 * p,
       scale: 1.05 - 0.05 * p,
@@ -860,19 +881,6 @@ class _TodayMotion {
     );
   }
 
-  static double _easeOutCubic(double x) {
-    final clamped = x.clamp(0.0, 1.0);
-    final inv = 1 - clamped;
-    return 1 - inv * inv * inv;
-  }
-
-  static double _easeOutBack(double x) {
-    final clamped = x.clamp(0.0, 1.0);
-    const c1 = 1.70158;
-    const c3 = c1 + 1;
-    final p = clamped - 1;
-    return 1 + c3 * p * p * p + c1 * p * p;
-  }
 }
 
 Color _todayGlowFor(_Cell c) {
@@ -925,12 +933,15 @@ class _Legend extends StatelessWidget {
         Tokens.phaseLutealDeep,
         false,
       ),
-      const _LegendEntry(
-        'predicted',
-        Colors.transparent,
-        Tokens.phaseMenstrual,
-        true,
-      ),
+      // Nothing on the grid is predicted without an anchor, so the key for it
+      // would point at something that isn't there.
+      if (CalendarScreen.hasCycleAnchor)
+        const _LegendEntry(
+          'predicted',
+          Colors.transparent,
+          Tokens.phaseMenstrual,
+          true,
+        ),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -21,7 +21,8 @@ class DaySheet extends StatefulWidget {
   final DateTime date;
   final String phaseLabel;
   final String kindLabel;
-  final int cycleDay;
+  /// Null when no period start is known — the cycle-day line is hidden.
+  final int? cycleDay;
   final DayLog log;
   final List<TrackerDefinition> activeDefinitions;
   final bool isToday;
@@ -109,22 +110,26 @@ class _DaySheetState extends State<DaySheet> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        '${widget.phaseLabel} phase',
+                        widget.phaseLabel.isEmpty
+                            ? 'day log'
+                            : '${widget.phaseLabel} phase',
                         style: Type.display(
                           size: 16,
                           weight: Tokens.fwMedium,
                           height: 1.1,
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'cycle day ${widget.cycleDay}',
-                        style: Type.mono(
-                          size: 11,
-                          color: Tokens.graphite2,
-                          letterSpacingEm: 0.04,
+                      if (widget.cycleDay != null) ...[
+                        const SizedBox(height: 4),
+                        Text(
+                          'cycle day ${widget.cycleDay}',
+                          style: Type.mono(
+                            size: 11,
+                            color: Tokens.graphite2,
+                            letterSpacingEm: 0.04,
+                          ),
                         ),
-                      ),
+                      ],
                     ],
                   ),
                 ),

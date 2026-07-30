@@ -9,6 +9,7 @@ import 'data/clock.dart';
 import 'data/models.dart';
 import 'screens/calendar/calendar_screen.dart';
 import 'screens/insights/insights_screen.dart';
+import 'screens/onboarding/onboarding_flow.dart';
 import 'screens/settings/settings_screen.dart';
 import 'screens/shared/tab_bar.dart';
 import 'screens/today/today_screen.dart';
@@ -65,6 +66,16 @@ class _AppShellState extends State<AppShell> {
     final observations =
         store.observations.map((e) => e.toJson()).toList();
     unawaited(_analyzerRepo.evaluate(observations, 'subject-local-1'));
+  }
+
+  void _completeSetup({DateTime? lastPeriodStart, int? cycleLength}) {
+    unawaited(
+      store.completeSetup(
+        lastPeriodStart: lastPeriodStart,
+        cycleLength: cycleLength,
+      ),
+    );
+    setState(() => tab = AppTab.today);
   }
 
   void _onTabChanged(AppTab t) {
@@ -184,20 +195,24 @@ class _AppShellState extends State<AppShell> {
     return Container(
       color: Tokens.base,
       child: SafeArea(
-        child: Stack(
-          children: [
-            Positioned.fill(bottom: 64, child: _screen()),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: AppBottomTabBar(
-                current: tab,
-                onChanged: _onTabChanged,
+        // Setup replaces the shell rather than covering it, so the tab bar is
+        // never built and cannot be reached behind it.
+        child: store.loaded && !store.setupComplete
+            ? OnboardingFlow(onComplete: _completeSetup)
+            : Stack(
+                children: [
+                  Positioned.fill(bottom: 64, child: _screen()),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: AppBottomTabBar(
+                      current: tab,
+                      onChanged: _onTabChanged,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

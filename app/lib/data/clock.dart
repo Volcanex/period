@@ -42,18 +42,39 @@ class Clock {
     _cycleAnchorOverride = d == null ? null : DateTime(d.year, d.month, d.day);
   }
 
+  /// Assignment, not merge — every field is replaced, so a caller passing
+  /// only `cycleLen:` also resets the anchor and the known-flag.
   static void overrideCycleConfig({
     DateTime? anchor,
+    bool anchorKnown = true,
     int? cycleLen,
     int? flowLen,
     int? ovPeak,
   }) {
     overrideCycleAnchor(anchor);
+    _cycleAnchorKnown = anchorKnown;
     _cycleLenOverride = cycleLen;
     _flowLenOverride = flowLen;
     _ovPeakOverride = ovPeak;
   }
 
+  static bool _cycleAnchorKnown = true;
+
+  /// False when nobody has told us when the last period started. Anything
+  /// user-visible — a cycle day, a phase tint, a prediction — must check this
+  /// first.
+  static bool get hasCycleAnchor => _cycleAnchorKnown;
+
+  /// The anchor, or null when it is genuinely unknown. Prefer this over
+  /// [cycleAnchor] anywhere the result reaches the screen.
+  static DateTime? get cycleAnchorOrNull =>
+      _cycleAnchorKnown ? cycleAnchor : null;
+
+  /// WARNING: this falls back to `today - 3` when nothing has been set, which
+  /// is a fabricated date kept only so grid arithmetic has something to
+  /// subtract. It is not a real anchor and must never reach the screen —
+  /// gate on [hasCycleAnchor], or use [cycleAnchorOrNull]. Showing this value
+  /// is the bug onboarding exists to fix.
   static DateTime get cycleAnchor =>
       _cycleAnchorOverride ?? today.subtract(const Duration(days: 3));
 

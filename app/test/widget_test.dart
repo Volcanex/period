@@ -11,14 +11,38 @@ import 'package:period_app/screens/calendar/sheets/day_sheet.dart';
 import 'package:period_app/state/local_period_store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+/// SharedPreferences writes under a `flutter.` prefix. Kept in one place so a
+/// prefix change can't silently turn every seeded test into a first run.
+const _storeKey = 'flutter.period.local_store.v1';
+
+/// Seed a store blob. Any decodable blob counts as an existing user, so this
+/// is also what keeps first-run setup out of the way of the shell tests.
+void seedStore([String json = '{"setupComplete":true}']) =>
+    SharedPreferences.setMockInitialValues({_storeKey: json});
+
+void resetClock() => Clock.overrideCycleConfig(
+  anchor: null,
+  anchorKnown: true,
+  cycleLen: null,
+  flowLen: null,
+  ovPeak: null,
+);
+
 void main() {
+  // Clock is global static state; without this a test that leaves an unknown
+  // anchor behind changes what unrelated later tests see.
+  setUp(resetClock);
+  tearDown(() {
+    Clock.overrideNow(null);
+    resetClock();
+  });
   testWidgets('Today screen renders with date and bleeding card', (
     tester,
   ) async {
     // Pin the clock so the date assertion is stable across test runs.
     Clock.overrideNow(DateTime(2026, 5, 4));
-    SharedPreferences.setMockInitialValues({});
-    addTearDown(() => Clock.overrideNow(null));
+    seedStore();
 
     await tester.pumpWidget(const PeriodApp());
     await tester.pump();
@@ -33,8 +57,7 @@ void main() {
     tester,
   ) async {
     Clock.overrideNow(DateTime(2026, 5, 5));
-    SharedPreferences.setMockInitialValues({});
-    addTearDown(() => Clock.overrideNow(null));
+    seedStore();
 
     await tester.pumpWidget(const PeriodApp());
     await tester.pump();
@@ -109,8 +132,7 @@ void main() {
     addTearDown(tester.view.reset);
 
     Clock.overrideNow(DateTime(2026, 5, 5));
-    SharedPreferences.setMockInitialValues({});
-    addTearDown(() => Clock.overrideNow(null));
+    seedStore();
 
     await tester.pumpWidget(const PeriodApp());
     await tester.pump();
@@ -137,8 +159,7 @@ void main() {
 
   testWidgets('Today edit and gear route to real tabs', (tester) async {
     Clock.overrideNow(DateTime(2026, 5, 5));
-    SharedPreferences.setMockInitialValues({});
-    addTearDown(() => Clock.overrideNow(null));
+    seedStore();
 
     await tester.pumpWidget(const PeriodApp());
     await tester.pump();
@@ -157,8 +178,7 @@ void main() {
 
   test('local store derives cycle from logged bleeding starts', () async {
     Clock.overrideNow(DateTime(2026, 5, 4));
-    SharedPreferences.setMockInitialValues({});
-    addTearDown(() => Clock.overrideNow(null));
+    seedStore();
 
     final store = LocalPeriodStore();
     await store.load();
@@ -272,26 +292,7 @@ void main() {
     // Regression: phase math was hardcoded to a 28-day cycle, so late-cycle
     // days on a long cycle were mislabelled "menstrual" and flow-tinted.
     Clock.overrideNow(DateTime(2026, 5, 5));
-    // Earlier store tests leave a cycle-config override on the static Clock;
-    // clear it so the anchor derives from today (may 2), not leaked state.
-    Clock.overrideCycleConfig(
-      anchor: null,
-      cycleLen: null,
-      flowLen: null,
-      ovPeak: null,
-    );
-    SharedPreferences.setMockInitialValues({
-      'flutter.period.local_store.v1': '{"cycleLen":45,"flowLen":4}',
-    });
-    addTearDown(() {
-      Clock.overrideNow(null);
-      Clock.overrideCycleConfig(
-        anchor: null,
-        cycleLen: null,
-        flowLen: null,
-        ovPeak: null,
-      );
-    });
+    seedStore('{"setupComplete":true,"cycleLen":45,"flowLen":4}');
 
     await tester.pumpWidget(const PeriodApp());
     await tester.pump();
@@ -313,8 +314,7 @@ void main() {
   test('symptom note persists with its symptom and clears with it', () async {
     // Regression: the symptom sheet's note field was silently discarded.
     Clock.overrideNow(DateTime(2026, 5, 4));
-    SharedPreferences.setMockInitialValues({});
-    addTearDown(() => Clock.overrideNow(null));
+    seedStore();
 
     final store = LocalPeriodStore();
     await store.load();
@@ -332,5 +332,191 @@ void main() {
     // Clearing the symptom clears its note too — no orphaned notes.
     store.setSymptom(day, 'cramps', null);
     expect(store.logFor(day).symptomNotes.containsKey('cramps'), isFalse);
+  });
+
+  // ---- first-run setup ----
+
+  testWidgets('first run shows setup instead of the tab shell', (tester) async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    SharedPreferences.setMockInitialValues({});
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.text('your data stays here.'), findsOneWidget);
+    expect(find.text('bleeding'), findsNothing);
+    expect(find.text('calendar'), findsNothing);
+  });
+
+  testWidgets('a returning user never sees setup', (tester) async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    seedStore();
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.text('your data stays here.'), findsNothing);
+    expect(find.text('bleeding'), findsOneWidget);
+  });
+
+  test('completeSetup stores the date and survives a reload', () async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    SharedPreferences.setMockInitialValues({});
+
+    final first = LocalPeriodStore();
+    await first.load();
+    expect(first.setupComplete, isFalse);
+
+    await first.completeSetup(
+      lastPeriodStart: DateTime(2026, 5, 1),
+      cycleLength: 32,
+    );
+
+    final second = LocalPeriodStore();
+    await second.load();
+    expect(second.setupComplete, isTrue);
+    expect(second.cycleAnchor, DateTime(2026, 5, 1));
+    expect(second.cycleLen, 32);
+    expect(second.cycleDayFor(DateTime(2026, 5, 5)), 5);
+  });
+
+  test('skipping the date leaves the cycle genuinely unknown', () async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    SharedPreferences.setMockInitialValues({});
+
+    final store = LocalPeriodStore();
+    await store.load();
+    await store.completeSetup(lastPeriodStart: null, cycleLength: null);
+
+    expect(store.hasCycleAnchor, isFalse);
+    expect(store.cycleAnchor, isNull);
+    expect(store.cycleDayFor(DateTime(2026, 5, 5)), isNull);
+
+    final state = store.cycleStateFor(DateTime(2026, 5, 5));
+    expect(state.cycleDay, isNull);
+    expect(state.nextStart, isNull);
+    expect(state.nextMode, isNull);
+    expect(state.avg, isNull);
+
+    // And it stays unknown across a restart rather than quietly reverting to
+    // the demo anchor.
+    final reloaded = LocalPeriodStore();
+    await reloaded.load();
+    expect(reloaded.hasCycleAnchor, isFalse);
+  });
+
+  testWidgets('skipping the date shows no fabricated cycle day', (
+    tester,
+  ) async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    seedStore('{"setupComplete":true,"hasCycleAnchor":false}');
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.text('no cycle data yet'), findsOneWidget);
+    expect(find.text('EST. WINDOW'), findsNothing);
+    expect(find.textContaining('cycle day'), findsNothing);
+  });
+
+  test('logging a bleeding day recovers from an unknown anchor', () async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    seedStore('{"setupComplete":true,"hasCycleAnchor":false}');
+
+    final store = LocalPeriodStore();
+    await store.load();
+    expect(store.hasCycleAnchor, isFalse);
+
+    store.setBleeding(DateTime(2026, 5, 3), BleedLevel.med);
+
+    expect(store.cycleAnchor, DateTime(2026, 5, 3));
+    expect(store.cycleDayFor(DateTime(2026, 5, 5)), 3);
+  });
+
+  test('a blob without the flag is treated as an existing user', () async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    seedStore('{"cycleLen":30}');
+
+    final store = LocalPeriodStore();
+    await store.load();
+
+    expect(store.setupComplete, isTrue);
+    expect(store.cycleLen, 30);
+    // Legacy blobs keep the old fallback anchor rather than going unknown.
+    expect(store.hasCycleAnchor, isTrue);
+  });
+
+  test('a self-reported cycle length survives one logged start', () async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    SharedPreferences.setMockInitialValues({});
+
+    final store = LocalPeriodStore();
+    await store.load();
+    await store.completeSetup(cycleLength: 33);
+
+    store.setBleeding(DateTime(2026, 5, 2), BleedLevel.med);
+
+    // One start gives no interval to fit, so the user's number stands.
+    expect(store.cycleLen, 33);
+  });
+
+  test('resetting logs keeps setup but clears the anchor', () async {
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    SharedPreferences.setMockInitialValues({});
+
+    final store = LocalPeriodStore();
+    await store.load();
+    await store.completeSetup(lastPeriodStart: DateTime(2026, 5, 1));
+    await store.resetDemoLogs();
+
+    expect(store.setupComplete, isTrue);
+    expect(store.hasCycleAnchor, isFalse);
+  });
+
+  testWidgets('walking setup end to end lands on Today with a real cycle', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(430, 3000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
+    Clock.overrideNow(DateTime(2026, 5, 20));
+    SharedPreferences.setMockInitialValues({});
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 800));
+
+    await tester.tap(find.text('start'));
+    await tester.pumpAndSettle();
+
+    // Pick may 14, six days back.
+    await tester.tap(find.text('14'));
+    await tester.pumpAndSettle();
+    expect(find.text('thu, may 14'), findsOneWidget);
+    expect(find.text('6 DAYS AGO'), findsOneWidget);
+
+    await tester.tap(find.text('continue'));
+    await tester.pumpAndSettle();
+    expect(find.text('how long is your usual cycle?'), findsOneWidget);
+
+    await tester.tap(find.text('continue'));
+    await tester.pumpAndSettle();
+    expect(find.text('four tabs.'), findsOneWidget);
+
+    for (var i = 0; i < 3; i++) {
+      await tester.tap(find.text('next'));
+      await tester.pumpAndSettle();
+    }
+    await tester.tap(find.text('done'));
+    await tester.pumpAndSettle();
+
+    // The shell, with a prediction derived from the date just entered.
+    expect(find.text('wed, may 20'), findsOneWidget);
+    expect(find.text('EST. WINDOW'), findsOneWidget);
+    expect(find.text('no cycle data yet'), findsNothing);
   });
 }
