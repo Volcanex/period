@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sequence — a period tracker that keeps your data on your device</title>
+<meta name="description" content="An open source period and cycle tracker. Everything you log stays on your device. No account, no server, free.">
+<link rel="icon" href="/app/favicon.png">
+<style>
+  /* Served from the app's own bundle — same origin, no CDN, nothing to phone home. */
+  @font-face { font-family: Inter; src: url(/app/assets/assets/fonts/InterVariable.ttf); font-weight: 400 700; font-display: swap; }
+  @font-face { font-family: Grotesk; src: url(/app/assets/assets/fonts/SpaceGrotesk-Variable.ttf); font-weight: 400 700; font-display: swap; }
+  @font-face { font-family: Mono; src: url(/app/assets/assets/fonts/JetBrainsMono-Variable.ttf); font-weight: 400 600; font-display: swap; }
+
+  :root {
+    --base: #F2F5F8;
+    --bg: #FFFFFF;
+    --ink: #0E0E10;
+    --graphite: #4A4A50;
+    --border: rgba(42,42,46,0.4);
+    --oxide: #7B2233;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --base: #0E0E13; --bg: #171820; --ink: #F4F1EA;
+      --graphite: #C5C2BE; --border: rgba(197,194,190,0.32);
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--base); color: var(--ink);
+    font-family: Inter, system-ui, sans-serif; line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+  h1, h2 { font-family: Grotesk, Inter, sans-serif; font-weight: 500; letter-spacing: -0.02em; line-height: 1.15; }
+  h1 { font-size: clamp(30px, 6vw, 42px); margin: 0 0 14px; }
+  h2 { font-size: 19px; margin: 0 0 12px; }
+  p { margin: 0 0 14px; }
+  .eyebrow, .stamp, .meta {
+    font-family: Mono, ui-monospace, monospace; font-size: 11px;
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--graphite);
+  }
+
+  header { border-bottom: 1px solid var(--border); }
+  header .wrap { display: flex; align-items: center; height: 52px; }
+
+  .hero { padding: 56px 0 40px; }
+  .lede { font-size: 17px; color: var(--graphite); max-width: 52ch; }
+
+  .actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 12px; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 4px;
+    text-decoration: none; font-size: 15px; border: 1px solid var(--ink);
+    color: var(--ink); background: transparent;
+  }
+  .btn.primary { background: var(--ink); color: var(--bg); }
+  .btn:hover { opacity: 0.85; }
+
+  section { padding: 30px 0; border-top: 1px solid var(--border); }
+  ul { margin: 0; padding: 0; list-style: none; }
+  li { padding: 9px 0; border-bottom: 1px solid var(--border); }
+  li:last-child { border-bottom: 0; }
+  li b { font-weight: 500; }
+  li span { color: var(--graphite); }
+
+  .dl {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .dl a { color: var(--ink); }
+  .pending { color: var(--graphite); }
+
+  .note {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 4px;
+    padding: 14px 16px; font-size: 14px; color: var(--graphite);
+  }
+  footer { padding: 30px 0 60px; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<header><div class="wrap"><span class="eyebrow">Sequence</span></div></header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <h1>Your cycle data stays on your device.</h1>
+    <p class="lede">
+      Sequence is a period and cycle tracker. Everything you log is written to
+      the device you logged it on, and nowhere else. There is no account, no
+      sync, and no server holding your records.
+    </p>
+    <div class="actions">
+      <a class="btn primary" href="/app/">Open the web version</a>
+      <a class="btn" href="#downloads">Download</a>
+    </div>
+    <p class="stamp">On-device · No account · No cloud · Free</p>
+  </div>
+
+  <section>
+    <h2>What it does</h2>
+    <ul>
+      <li><b>Logs a day at a time</b> — <span>bleeding, mood, symptoms with severity, notes, and whichever other trackers you switch on.</span></li>
+      <li><b>Predicts the next period</b> — <span>from the starts you have logged, as a window rather than a single confident date.</span></li>
+      <li><b>Says when it doesn't know</b> — <span>a new install has no cycle data, so it shows none. It won't invent a cycle day to fill the space.</span></li>
+      <li><b>Shows patterns, not diagnoses</b> — <span>insights are drawn from your own logs and are not a medical opinion.</span></li>
+    </ul>
+  </section>
+
+  <section id="downloads">
+    <h2>Download</h2>
+    <ul>
+      <li class="dl">
+        <span><b>Linux</b> · x64</span>
+        <a href="/downloads/sequence-linux-x64.tar.gz">sequence-linux-x64.tar.gz</a>
+      </li>
+      <li class="dl"><span><b>macOS</b></span> <span class="pending">Not built yet</span></li>
+      <li class="dl"><span><b>Windows</b></span> <span class="pending">Not built yet</span></li>
+      <li class="dl"><span><b>Android</b> · <b>iOS</b></span> <span class="pending">Not built yet</span></li>
+    </ul>
+    <p class="meta" style="margin-top:14px">
+      Extract and run ./sequence from inside the bundle
+    </p>
+    <p style="margin-top:16px" class="note">
+      Only the Linux build exists so far. The others are not published because
+      they have not been built and tested, not because they are coming shortly —
+      each needs a machine of that kind to build on. The web version runs the
+      same code on any device in the meantime.
+    </p>
+  </section>
+
+  <section>
+    <h2>The web version</h2>
+    <p>
+      <a href="/app/">period.gabrielpenman.com/app</a> is the full app, not a
+      preview. It stores your logs in your browser on this device, using the
+      same storage any site gets. Clearing your browser data clears it, and it
+      does not follow you to another browser or another machine.
+    </p>
+    <p class="note">
+      It is also the test instance, so it changes without warning. For anything
+      you want to keep, use a desktop build.
+    </p>
+  </section>
+
+  <section>
+    <h2>Free and open source</h2>
+    <p>
+      Sequence is free. There is nothing to buy, no subscription, and no paid
+      tier holding features back. The source will be published so that the
+      claim on this page — that nothing leaves your device — is something you
+      can check rather than take on trust.
+    </p>
+  </section>
+
+  <footer>
+    <p class="meta">Sequence · Not a medical device · Not contraception</p>
+  </footer>
+
+</div>
+</body>
+</html>
