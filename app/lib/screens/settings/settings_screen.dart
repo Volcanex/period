@@ -26,7 +26,6 @@ class SettingsScreen extends StatefulWidget {
   final ValueChanged<bool> onDarkModeChanged;
   final ValueChanged<int> onCycleLengthChanged;
   final ValueChanged<int> onFlowLengthChanged;
-  final VoidCallback onRefreshApi;
   final Map<String, dynamic> Function() exportSnapshot;
   final Future<void> Function() onResetDemoLogs;
 
@@ -43,7 +42,6 @@ class SettingsScreen extends StatefulWidget {
     required this.onDarkModeChanged,
     required this.onCycleLengthChanged,
     required this.onFlowLengthChanged,
-    required this.onRefreshApi,
     required this.exportSnapshot,
     required this.onResetDemoLogs,
   });
@@ -178,11 +176,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               const SizedBox(height: 12),
 
               SectionBox(
-                eyebrow: 'backend',
+                eyebrow: 'catalog',
                 trailing: SectionAction(
                   label: _apiLabel,
                   muted: widget.catalog.source == CatalogSource.loading,
-                  onTap: widget.onRefreshApi,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -191,23 +188,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       label: 'tracker catalog',
                       meta: widget.catalog.provenanceLabel,
                       trailing: _StatusDot(
-                        live: widget.catalog.source == CatalogSource.server,
+                        live: widget.catalog.source == CatalogSource.bundled,
                       ),
                     ),
-                    SettingRow(
-                      label: 'api endpoint',
-                      meta: 'api.period.gabrielpenman.com',
-                      trailing: GestureDetector(
-                        onTap: widget.onRefreshApi,
-                        child: Text(
-                          'RETRY',
-                          style: Type.mono(
-                            size: 10,
-                            color: Tokens.ink,
-                            letterSpacingEm: 0.08,
-                          ),
-                        ),
-                      ),
+                    const SettingRow(
+                      label: 'network',
+                      meta: 'never — no account, no server',
                     ),
                   ],
                 ),
@@ -331,9 +317,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   String get _apiLabel => switch (widget.catalog.source) {
-    CatalogSource.server => 'live',
-    CatalogSource.cached => 'cached',
-    CatalogSource.fallback => 'fallback',
+    CatalogSource.bundled => 'on device',
+    CatalogSource.error => 'unavailable',
     CatalogSource.loading => 'loading',
   };
 

@@ -105,9 +105,10 @@ class _AppShellState extends State<AppShell> {
         bleeding: todayLog.bleeding,
         onBleedingChanged: (b) => store.setBleeding(today, b),
         symptoms: todayLog.symptoms,
+        symptomNotes: todayLog.symptomNotes,
         symptomLabels: _todaySymptomLabels(activeDayDefinitions),
-        onSymptomChanged: (symptom, sev) =>
-            store.setSymptom(today, symptom, sev),
+        onSymptomChanged: (symptom, sev, note) =>
+            store.setSymptom(today, symptom, sev, note),
         mood: todayLog.mood,
         onMoodChanged: (m) => store.setMood(today, m),
         numericValues: todayLog.numericValues,
@@ -171,7 +172,6 @@ class _AppShellState extends State<AppShell> {
         onDarkModeChanged: store.setDarkMode,
         onCycleLengthChanged: store.setCycleLength,
         onFlowLengthChanged: store.setFlowLength,
-        onRefreshApi: () => ApiScope.read(context).refresh(),
         exportSnapshot: store.exportSnapshot,
         onResetDemoLogs: store.resetDemoLogs,
       ),

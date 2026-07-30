@@ -1,0 +1,243 @@
+[
+  {
+    "clinical_note": "General tracking only; not diagnosis or treatment guidance.",
+    "code": "base_symptoms",
+    "description": "Universal symptom and cycle logging used across Period.",
+    "display_name": "Base symptoms",
+    "enabled_by_default": true,
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "tracker_codes": [
+      "period_bleeding",
+      "spotting",
+      "cramps",
+      "pelvic_pain",
+      "mood",
+      "energy",
+      "fatigue",
+      "sleep_hours",
+      "cervical_mucus",
+      "sex",
+      "medication",
+      "basal_body_temperature",
+      "weight",
+      "note"
+    ]
+  },
+  {
+    "clinical_note": "Context trackers help users record relevant changes for themselves or clinicians.",
+    "code": "reproductive_context",
+    "description": "Optional context that can explain cycle changes without becoming diagnostic logic.",
+    "display_name": "Reproductive context",
+    "enabled_by_default": false,
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "tracker_codes": [
+      "contraception_use",
+      "pregnancy_test",
+      "ovulation_test",
+      "postpartum_status",
+      "lactation_status"
+    ]
+  },
+  {
+    "clinical_note": "This pack supports symptom, cycle, and metabolic-context logging for clinician conversations and does not infer or diagnose PCOS.",
+    "code": "pcos_support",
+    "description": "Optional PCOS-oriented symptom and metabolic-context set layered on universal observation events.",
+    "display_name": "PCOS support",
+    "enabled_by_default": false,
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "tracker_codes": [
+      "cycle_regularity",
+      "cycle_irregularity_note",
+      "acne_severity",
+      "hair_growth",
+      "hair_thinning",
+      "acanthosis_nigricans",
+      "weight",
+      "insulin_metabolic_note",
+      "glucose_lab_note",
+      "lipid_note",
+      "mood",
+      "sleep_hours",
+      "period_bleeding",
+      "cramps",
+      "medication",
+      "note"
+    ]
+  },
+  {
+    "clinical_note": "This pack supports symptom logging and does not infer or diagnose endometriosis.",
+    "code": "endometriosis_support",
+    "description": "Pain, bleeding, bowel, bladder, fatigue, and sex-pain logging for endometriosis-oriented conversations.",
+    "display_name": "Endometriosis support",
+    "enabled_by_default": false,
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "tracker_codes": [
+      "period_bleeding",
+      "spotting",
+      "cramps",
+      "pelvic_pain",
+      "pain_with_sex",
+      "bowel_symptoms",
+      "bladder_symptoms",
+      "fatigue",
+      "medication",
+      "note"
+    ]
+  },
+  {
+    "clinical_note": "This pack supports prospective DRSP-style pattern logging and backend PMDD evaluation; it does not by itself establish diagnosis.",
+    "code": "pms_pmdd_support",
+    "description": "DRSP-aligned daily symptom and impairment tracking for prospective PMDD and PMS pattern evaluation.",
+    "display_name": "PMS and PMDD support",
+    "enabled_by_default": false,
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "Prospective PMDD classification should require DRSP-style daily ratings, symptom content thresholds, cyclicity, postmenstrual clearance, impairment, and at least two symptomatic cycles.",
+        "confidence": 0.86,
+        "review_status": "draft",
+        "source": "Eisenlohr-Moul et al. 2017 C-PASS",
+        "version": "2026.05.08"
+      }
+    ],
+    "tracker_codes": [
+      "drsp_depressed_mood",
+      "drsp_hopelessness",
+      "drsp_worthlessness_guilt",
+      "drsp_anxiety_tension",
+      "drsp_mood_swings",
+      "drsp_rejection_sensitivity",
+      "drsp_anger_irritability",
+      "drsp_interpersonal_conflict",
+      "drsp_less_interest",
+      "drsp_difficulty_concentrating",
+      "drsp_lethargy",
+      "drsp_appetite_overeating",
+      "drsp_food_cravings",
+      "drsp_hypersomnia",
+      "drsp_insomnia",
+      "drsp_overwhelmed",
+      "drsp_out_of_control",
+      "drsp_breast_tenderness",
+      "drsp_bloating_weight_gain",
+      "drsp_headache",
+      "drsp_joint_muscle_pain",
+      "drsp_productivity_impairment",
+      "drsp_social_impairment",
+      "drsp_relationship_impairment",
+      "period_bleeding",
+      "psychotropic_medication_change",
+      "pregnancy_test",
+      "postpartum_status",
+      "lactation_status",
+      "note"
+    ]
+  },
+  {
+    "clinical_note": "This pack supports symptom logging and does not infer or diagnose perimenopause.",
+    "code": "perimenopause_support",
+    "description": "Cycle variability, vasomotor, sleep, mood, and dryness tracking for midlife transition context.",
+    "display_name": "Perimenopause support",
+    "enabled_by_default": false,
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "tracker_codes": [
+      "cycle_pattern_change",
+      "period_bleeding",
+      "hot_flashes",
+      "night_sweats",
+      "vaginal_dryness",
+      "sleep_hours",
+      "mood",
+      "energy",
+      "fatigue",
+      "note"
+    ]
+  },
+  {
+    "clinical_note": "This pack records contraception context only; it does not provide contraceptive efficacy or safety advice.",
+    "code": "contraception_support",
+    "description": "Contraception method, start/stop, missed use, bleeding, and context logging.",
+    "display_name": "Contraception support",
+    "enabled_by_default": false,
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "tracker_codes": [
+      "contraception_use",
+      "contraception_start",
+      "contraception_stop",
+      "missed_contraception",
+      "period_bleeding",
+      "spotting",
+      "pregnancy_test",
+      "medication",
+      "note"
+    ]
+  }
+]

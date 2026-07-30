@@ -11,9 +11,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  # Lean HTTP client for talking to the Period FastAPI backend. Web, iOS, and
-  # Android targets are all supported by the same package — no platform glue.
-  http: ^1.2.0
   shared_preferences: ^2.5.5
 
 dev_dependencies:
@@ -23,6 +20,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  # Canonical tracker catalog, shipped with the app so it works with no
+  # network at all. Regenerate with `scripts/export_catalog.py` after
+  # changing `core/tracking/registry.py`.
+  assets:
+    - assets/catalog/
 
   # Bundled fonts — variable TTFs per family, all weights resolve from the
   # same file via the wght axis. Sourced from each font's canonical repo:

@@ -78,7 +78,7 @@ void main() {
             ],
             isToday: false,
             onBleedingChanged: (_) {},
-            onSymptomChanged: (_, _) {},
+            onSymptomChanged: (_, _, _) {},
             onMoodChanged: (_) {},
             onNumericChanged: (_, _) {},
             onEnumChanged: (_, _) {},
@@ -102,6 +102,12 @@ void main() {
   });
 
   testWidgets('Enabled packs put canonical trackers on Today', (tester) async {
+    // Tall viewport so the whole Today column builds — the tracker grid sits
+    // below the fold at the default 800x600 test surface.
+    tester.view.physicalSize = const Size(430, 3000);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+
     Clock.overrideNow(DateTime(2026, 5, 5));
     SharedPreferences.setMockInitialValues({});
     addTearDown(() => Clock.overrideNow(null));
@@ -110,18 +116,23 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
+    // `base_symptoms` ships enabled, so its day-grain trackers should be on
+    // Today straight from the bundled catalog with nothing toggled. These
+    // tiles only exist if the asset catalog decoded and the pack resolved.
+    expect(find.text('TRACKERS'), findsWidgets);
+    for (final label in ['SPOTTING', 'SLEEP', 'WEIGHT', 'SEX']) {
+      expect(find.text(label), findsWidgets, reason: '$label missing on Today');
+    }
+
+    // Turning the pack off should clear them again.
     await tester.tap(find.text('trackers'));
     await tester.pumpAndSettle();
-    expect(find.text('sleep'), findsWidgets);
-
-    await tester.ensureVisible(find.text('sleep').last);
-    await tester.pumpAndSettle();
-    await tester.tap(find.text('sleep').last);
+    await tester.tap(find.text('on TODAY').first);
     await tester.pumpAndSettle();
     await tester.tap(find.text('today'));
     await tester.pumpAndSettle();
 
-    expect(find.text('SLEEP'), findsWidgets);
+    expect(find.text('SLEEP'), findsNothing);
   });
 
   testWidgets('Today edit and gear route to real tabs', (tester) async {
@@ -253,5 +264,73 @@ void main() {
     expect(state.skipProbabilities.last, greaterThan(0.80));
     expect(state.adjustedLengths.last, lessThan(35));
     expect(state.posteriorMeanDays, lessThan(31));
+  });
+
+  testWidgets('Calendar phase scales with cycle length, not a fixed 28 days', (
+    tester,
+  ) async {
+    // Regression: phase math was hardcoded to a 28-day cycle, so late-cycle
+    // days on a long cycle were mislabelled "menstrual" and flow-tinted.
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    // Earlier store tests leave a cycle-config override on the static Clock;
+    // clear it so the anchor derives from today (may 2), not leaked state.
+    Clock.overrideCycleConfig(
+      anchor: null,
+      cycleLen: null,
+      flowLen: null,
+      ovPeak: null,
+    );
+    SharedPreferences.setMockInitialValues({
+      'flutter.period.local_store.v1': '{"cycleLen":45,"flowLen":4}',
+    });
+    addTearDown(() {
+      Clock.overrideNow(null);
+      Clock.overrideCycleConfig(
+        anchor: null,
+        cycleLen: null,
+        flowLen: null,
+        ovPeak: null,
+      );
+    });
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    await tester.tap(find.text('calendar'));
+    await tester.pumpAndSettle();
+    // anchor = may 2 (today may 5 is cycle day 4); may 31 is cycle day 30,
+    // which on a 45-day cycle is luteal — not the menstrual it used to claim.
+    await tester.tap(find.text('31').first);
+    await tester.pumpAndSettle();
+
+    // Pre-fix this day reported "menstrual phase" (cd 30 fell in the hardcoded
+    // late-luteal-into-flow window of a 28-day model); it must now be luteal.
+    expect(find.text('cycle day 30'), findsOneWidget);
+    expect(find.text('luteal phase'), findsOneWidget);
+  });
+
+  test('symptom note persists with its symptom and clears with it', () async {
+    // Regression: the symptom sheet's note field was silently discarded.
+    Clock.overrideNow(DateTime(2026, 5, 4));
+    SharedPreferences.setMockInitialValues({});
+    addTearDown(() => Clock.overrideNow(null));
+
+    final store = LocalPeriodStore();
+    await store.load();
+    final day = DateTime(2026, 5, 4);
+
+    store.setSymptom(day, 'cramps', Severity.moderate, 'left side, woke at 3am');
+    expect(store.logFor(day).symptomNotes['cramps'], 'left side, woke at 3am');
+
+    // The note must round-trip the contract-shaped observation export.
+    final crampObs = store.observations.firstWhere(
+      (o) => o.trackerCode == 'cramps',
+    );
+    expect(crampObs.note, 'left side, woke at 3am');
+
+    // Clearing the symptom clears its note too — no orphaned notes.
+    store.setSymptom(day, 'cramps', null);
+    expect(store.logFor(day).symptomNotes.containsKey('cramps'), isFalse);
   });
 }

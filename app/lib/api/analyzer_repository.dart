@@ -1,18 +1,19 @@
 import 'package:flutter/foundation.dart';
 
-import 'api_client.dart';
 import 'contracts/analyzer_results.dart';
 
-/// Runs all three condition analyzers against the local observation history.
+/// Holds the condition-analyzer results (PMDD, PCOS, perimenopause).
 ///
-/// Call [evaluate] when the user opens the insights tab. Results are cached
-/// for the session — no automatic background refresh. Falls back gracefully
-/// if any individual analyzer fails (the others still surface).
+/// These analyzers currently exist only as the Python reference implementation
+/// in `core/analyzers/`. The client is offline-only — it will not call a server
+/// to run them — so until they are ported to Dart there is nothing to evaluate
+/// on device and [evaluate] resolves to [AnalyzerLoadState.unported].
+///
+/// The parsers and result contracts in `contracts/analyzer_results.dart` are
+/// kept intact: the port fills in [evaluate], and everything downstream of it
+/// already knows how to render real results.
 class AnalyzerRepository extends ChangeNotifier {
-  final ApiClient _client;
   AnalyzerResults _results = const AnalyzerResults.idle();
-
-  AnalyzerRepository({ApiClient? client}) : _client = client ?? ApiClient();
 
   AnalyzerResults get results => _results;
 
@@ -23,43 +24,7 @@ class AnalyzerRepository extends ChangeNotifier {
     List<Map<String, dynamic>> observations,
     String subjectId,
   ) async {
-    if (isLoading) return;
-    _results = const AnalyzerResults.loading();
+    _results = const AnalyzerResults.unported();
     notifyListeners();
-
-    final body = {'subject_id': subjectId, 'observations': observations};
-
-    // Run all three in parallel. Each is individually guarded so one failure
-    // doesn't block the other two.
-    final futures = await Future.wait([
-      _safePost('/api/v1/analyzers/pcos/evaluate', body),
-      _safePost('/api/v1/analyzers/pmdd/evaluate', body),
-      _safePost('/api/v1/analyzers/perimenopause/evaluate', body),
-    ]);
-
-    final pcosJson = futures[0];
-    final pmddJson = futures[1];
-    final periJson = futures[2];
-
-    _results = AnalyzerResults(
-      pcos: pcosJson != null ? parsePcos(pcosJson) : null,
-      pmdd: pmddJson != null ? parsePmdd(pmddJson) : null,
-      perimenopause: periJson != null ? parsePerimenopause(periJson) : null,
-      state: AnalyzerLoadState.done,
-    );
-    notifyListeners();
-  }
-
-  Future<Map<String, dynamic>?> _safePost(
-    String path,
-    Map<String, dynamic> body,
-  ) async {
-    try {
-      final result = await _client.postJson(path, body);
-      return (result as Map).cast<String, dynamic>();
-    } catch (e) {
-      debugPrint('AnalyzerRepository: $path failed: $e');
-      return null;
-    }
   }
 }

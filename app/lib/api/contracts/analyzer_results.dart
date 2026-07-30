@@ -31,7 +31,11 @@ class AnalyzerEval {
   bool get isInsufficient => status == 'insufficient_data';
 }
 
-enum AnalyzerLoadState { idle, loading, done, error }
+/// `unported` is the offline-only interim state: the condition analyzers still
+/// live in the Python reference implementation and have not been ported to
+/// Dart yet, so there is nothing to run on device. It is deliberately distinct
+/// from `error` — nothing has failed.
+enum AnalyzerLoadState { idle, loading, done, error, unported }
 
 @immutable
 class AnalyzerResults {
@@ -61,6 +65,13 @@ class AnalyzerResults {
         pmdd = null,
         perimenopause = null,
         state = AnalyzerLoadState.loading,
+        error = null;
+
+  const AnalyzerResults.unported()
+      : pcos = null,
+        pmdd = null,
+        perimenopause = null,
+        state = AnalyzerLoadState.unported,
         error = null;
 }
 

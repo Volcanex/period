@@ -194,7 +194,21 @@ class _AnalyzerSection extends StatelessWidget {
       return _AnalyzerPrompt(onRefresh: onRefresh);
     }
 
-    if (results.state == AnalyzerLoadState.loading) {
+    if (results.state == AnalyzerLoadState.error) {
+      return _AnalyzerError(onRetry: onRefresh);
+    }
+
+    if (results.state == AnalyzerLoadState.unported) {
+      return const _AnalyzerUnported();
+    }
+
+    final hasAnyCard = results.pcos != null ||
+        results.pmdd != null ||
+        results.perimenopause != null;
+
+    // Only block on a spinner while nothing has come back yet. Once any
+    // analyzer has landed we render its card and let the rest fill in.
+    if (results.state == AnalyzerLoadState.loading && !hasAnyCard) {
       return Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 32),
@@ -240,6 +254,20 @@ class _AnalyzerSection extends StatelessWidget {
             onOpenTrackerPack: onOpenTrackerPack,
           ),
         ],
+        if (results.state == AnalyzerLoadState.loading) ...[
+          const SizedBox(height: 12),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              'analysing…',
+              style: Type.mono(
+                size: 10,
+                color: Tokens.graphite2,
+                letterSpacingEm: 0.04,
+              ),
+            ),
+          ),
+        ],
         if (results.state == AnalyzerLoadState.done) ...[
           const SizedBox(height: 12),
           Align(
@@ -261,6 +289,106 @@ class _AnalyzerSection extends StatelessWidget {
           ),
         ],
       ],
+    );
+  }
+}
+
+/// Shown while the condition analyzers still live only in the Python
+/// reference implementation. Not an error and not a retry — there is nothing
+/// on device to run yet, and saying so plainly beats an empty section.
+class _AnalyzerUnported extends StatelessWidget {
+  const _AnalyzerUnported();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Tokens.r2),
+        border: Border.all(color: Tokens.borderSoft, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'condition patterns',
+            style: Type.display(
+              size: 13,
+              weight: Tokens.fwMedium,
+              height: 1.2,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'pmdd, pcos and perimenopause pattern analysis runs entirely on '
+            'your device — it is still being built. your logs are already '
+            'being kept for it.',
+            style: Type.body(size: 13, color: Tokens.graphite2, height: 1.4),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Shown when every analyzer call failed — an explicit error with a retry,
+/// distinct from the idle "analyse now" prompt and from a legitimate empty
+/// result, so the user knows the network failed rather than that nothing
+/// was found.
+class _AnalyzerError extends StatelessWidget {
+  final VoidCallback? onRetry;
+  const _AnalyzerError({this.onRetry});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(Tokens.r2),
+        border: Border.all(color: Tokens.borderSoft, width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'condition patterns',
+            style: Type.display(
+              size: 13,
+              weight: Tokens.fwMedium,
+              height: 1.2,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            "couldn't reach the on-device analyzers. check your connection and try again.",
+            style: Type.body(size: 13, color: Tokens.graphite2, height: 1.4),
+          ),
+          const SizedBox(height: 12),
+          MouseRegion(
+            cursor: SystemMouseCursors.click,
+            child: GestureDetector(
+              onTap: onRetry,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: Tokens.ink,
+                  borderRadius: BorderRadius.circular(Tokens.r1),
+                ),
+                child: Text(
+                  'try again',
+                  style: Type.mono(
+                    size: 12,
+                    color: Tokens.paper,
+                    letterSpacingEm: 0.02,
+                    height: 1.0,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -349,8 +477,12 @@ class _ConditionCard extends StatelessWidget {
       footer += '\n\nsuppressors: ${eval.suppressors.join(', ')}.';
     }
     if (eval.recommendedActions.isNotEmpty) {
-      footer +=
-          '\n\nnext: ${eval.recommendedActions.first.toLowerCase().replaceAll('_', ' ')}.';
+      final action =
+          eval.recommendedActions.first.toLowerCase().replaceAll('_', ' ').trim();
+      // The backend action may already be a full sentence ending in a period;
+      // don't append a second one.
+      final period = action.endsWith('.') ? '' : '.';
+      footer += '\n\nnext: $action$period';
     }
 
     return PackSection(

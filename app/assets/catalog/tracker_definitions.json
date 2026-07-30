@@ -1,0 +1,2552 @@
+[
+  {
+    "allowed_values": [
+      "none",
+      "spotting",
+      "light",
+      "medium",
+      "heavy"
+    ],
+    "calendar_layer": "bleeding",
+    "calendar_priority": 95,
+    "code": "period_bleeding",
+    "display_name": "Period bleeding",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": {
+      "code": "menstrual-bleeding",
+      "resource": "Observation"
+    },
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "spotting",
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "bleeding",
+    "calendar_priority": 85,
+    "code": "spotting",
+    "display_name": "Spotting",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "type": "boolean"
+    },
+    "value_type": "boolean",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "cramps",
+    "display_name": "Cramps",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "pelvic_pain",
+    "display_name": "Pelvic pain",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "pain_with_sex",
+    "display_name": "Pain with sex",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "constipation",
+      "diarrhea",
+      "painful",
+      "other"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "bowel_symptoms",
+    "display_name": "Bowel symptoms",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "constipation",
+        "diarrhea",
+        "painful",
+        "other"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "frequency",
+      "urgency",
+      "pain",
+      "other"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "bladder_symptoms",
+    "display_name": "Bladder symptoms",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "frequency",
+        "urgency",
+        "pain",
+        "other"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "fatigue",
+    "display_name": "Fatigue",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "migraine",
+    "display_name": "Migraine or headache",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "breast_tenderness",
+    "display_name": "Breast tenderness",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "bloating",
+    "display_name": "Bloating",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "low",
+      "neutral",
+      "good",
+      "anxious",
+      "irritable"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "mood",
+    "display_name": "Mood",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "low",
+        "neutral",
+        "good",
+        "anxious",
+        "irritable"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "anxiety_severity",
+    "display_name": "Anxiety severity",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "depression_severity",
+    "display_name": "Depression severity",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "irritability",
+    "display_name": "Irritability",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "mood_lability",
+    "display_name": "Mood swings or rejection sensitivity",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "hopelessness",
+    "display_name": "Hopelessness, guilt, or worthlessness",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 45,
+    "code": "productivity_impairment",
+    "display_name": "Productivity or home impairment",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 45,
+    "code": "social_impairment",
+    "display_name": "Social activity impairment",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 45,
+    "code": "relationship_impairment",
+    "display_name": "Relationship friction or conflict",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "low",
+      "normal",
+      "high"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "energy",
+    "display_name": "Energy",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "low",
+        "normal",
+        "high"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 30,
+    "code": "sleep_hours",
+    "display_name": "Sleep hours",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "hours",
+    "validation_schema": {
+      "maximum": 24,
+      "minimum": 0,
+      "type": "number"
+    },
+    "value_type": "decimal",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "dry",
+      "sticky",
+      "creamy",
+      "watery",
+      "egg_white"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "cervical_mucus",
+    "display_name": "Cervical mucus",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "dry",
+        "sticky",
+        "creamy",
+        "watery",
+        "egg_white"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "sex",
+    "display_name": "Sex",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "type": "boolean"
+    },
+    "value_type": "boolean",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "medication",
+    "display_name": "Medication or supplement",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "maxLength": 160,
+      "type": "string"
+    },
+    "value_type": "string",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "temperature",
+    "calendar_priority": 65,
+    "code": "basal_body_temperature",
+    "display_name": "Basal body temperature",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": {
+      "code": "body-temperature",
+      "resource": "Observation"
+    },
+    "health_connect_mapping": {
+      "record_type": "BodyTemperatureRecord"
+    },
+    "healthkit_mapping": {
+      "quantity_type": "bodyTemperature"
+    },
+    "temporal_grain": "day",
+    "unit": "celsius",
+    "validation_schema": {
+      "maximum": 45,
+      "minimum": 30,
+      "type": "number"
+    },
+    "value_type": "decimal",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 25,
+    "code": "weight",
+    "display_name": "Weight",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "kg",
+    "validation_schema": {
+      "maximum": 400,
+      "minimum": 20,
+      "type": "number"
+    },
+    "value_type": "decimal",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 10,
+    "code": "note",
+    "display_name": "Note",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "maxLength": 1000,
+      "type": "string"
+    },
+    "value_type": "string",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "pill",
+      "iud",
+      "implant",
+      "injection",
+      "patch",
+      "ring",
+      "barrier",
+      "other"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "contraception_use",
+    "display_name": "Contraception use",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "pill",
+        "iud",
+        "implant",
+        "injection",
+        "patch",
+        "ring",
+        "barrier",
+        "other"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 70,
+    "code": "contraception_start",
+    "display_name": "Contraception start",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "format": "date",
+      "type": "string"
+    },
+    "value_type": "date",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 70,
+    "code": "contraception_stop",
+    "display_name": "Contraception stop",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "format": "date",
+      "type": "string"
+    },
+    "value_type": "date",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 75,
+    "code": "missed_contraception",
+    "display_name": "Missed contraception",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "type": "boolean"
+    },
+    "value_type": "boolean",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "negative",
+      "positive",
+      "invalid"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "pregnancy_test",
+    "display_name": "Pregnancy test",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "negative",
+        "positive",
+        "invalid"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "negative",
+      "positive",
+      "peak",
+      "invalid"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "ovulation_test",
+    "display_name": "Ovulation test",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "negative",
+        "positive",
+        "peak",
+        "invalid"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "postpartum_status",
+    "display_name": "Postpartum status",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "type": "boolean"
+    },
+    "value_type": "boolean",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "lactation_status",
+    "display_name": "Lactation status",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "type": "boolean"
+    },
+    "value_type": "boolean",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 60,
+    "code": "psychotropic_medication_change",
+    "display_name": "Psychotropic medication change",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "type": "boolean"
+    },
+    "value_type": "boolean",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_depressed_mood",
+    "display_name": "DRSP depressed, sad, down, or blue",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_hopelessness",
+    "display_name": "DRSP hopeless",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_worthlessness_guilt",
+    "display_name": "DRSP worthless or guilty",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_anxiety_tension",
+    "display_name": "DRSP anxious, keyed up, or on edge",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_mood_swings",
+    "display_name": "DRSP mood swings",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_rejection_sensitivity",
+    "display_name": "DRSP sensitive to rejection or easily hurt",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_anger_irritability",
+    "display_name": "DRSP angry or irritable",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_interpersonal_conflict",
+    "display_name": "DRSP conflicts or problems with people",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_less_interest",
+    "display_name": "DRSP less interest in usual activities",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_difficulty_concentrating",
+    "display_name": "DRSP difficulty concentrating",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_lethargy",
+    "display_name": "DRSP lethargic, tired, or low energy",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_appetite_overeating",
+    "display_name": "DRSP increased appetite or overeating",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_food_cravings",
+    "display_name": "DRSP specific food cravings",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_hypersomnia",
+    "display_name": "DRSP slept more or hard to get up",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_insomnia",
+    "display_name": "DRSP trouble getting to sleep or staying asleep",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_overwhelmed",
+    "display_name": "DRSP overwhelmed, couldn't cope",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_out_of_control",
+    "display_name": "DRSP out of control",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_breast_tenderness",
+    "display_name": "DRSP breast tenderness",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_bloating_weight_gain",
+    "display_name": "DRSP bloating or weight gain",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_headache",
+    "display_name": "DRSP headache",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "drsp_joint_muscle_pain",
+    "display_name": "DRSP joint or muscle pain",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 45,
+    "code": "drsp_productivity_impairment",
+    "display_name": "DRSP less productivity at work, school, home, or routine",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 45,
+    "code": "drsp_social_impairment",
+    "display_name": "DRSP interference with hobbies or social activities",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "symptom",
+    "calendar_priority": 45,
+    "code": "drsp_relationship_impairment",
+    "display_name": "DRSP interference with relationships",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PMDD-oriented daily tracking should use validated daily severity items and impairment ratings rather than retrospective summaries.",
+        "confidence": 0.83,
+        "review_status": "draft",
+        "source": "Endicott et al. 2006 DRSP reliability and validity",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": "drsp_1_6",
+    "validation_schema": {
+      "maximum": 6,
+      "minimum": 1,
+      "type": "integer"
+    },
+    "value_type": "integer",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "hot_flashes",
+    "display_name": "Hot flashes",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "night_sweats",
+    "display_name": "Night sweats",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "vaginal_dryness",
+    "display_name": "Vaginal dryness",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "yes",
+      "no",
+      "unknown"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "cycle_pattern_change",
+    "display_name": "Cycle pattern change",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "yes",
+        "no",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "regular",
+      "variable",
+      "infrequent",
+      "absent",
+      "unknown"
+    ],
+    "calendar_layer": "context",
+    "calendar_priority": 55,
+    "code": "cycle_regularity",
+    "display_name": "Cycle regularity",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "regular",
+        "variable",
+        "infrequent",
+        "absent",
+        "unknown"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "acne_severity",
+    "display_name": "Acne severity",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "hair_growth",
+    "display_name": "Unwanted hair growth",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "calendar_layer": "symptom",
+    "calendar_priority": 50,
+    "code": "hair_thinning",
+    "display_name": "Scalp hair thinning or loss",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "enum": [
+        "none",
+        "mild",
+        "moderate",
+        "severe"
+      ],
+      "type": "string"
+    },
+    "value_type": "enum",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 40,
+    "code": "acanthosis_nigricans",
+    "display_name": "Acanthosis nigricans observed",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "type": "boolean"
+    },
+    "value_type": "boolean",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 35,
+    "code": "cycle_irregularity_note",
+    "display_name": "Cycle irregularity note",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "maxLength": 500,
+      "type": "string"
+    },
+    "value_type": "string",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 35,
+    "code": "insulin_metabolic_note",
+    "display_name": "Insulin or metabolic note",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "maxLength": 500,
+      "type": "string"
+    },
+    "value_type": "string",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 35,
+    "code": "glucose_lab_note",
+    "display_name": "Glucose or HbA1c note",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "maxLength": 500,
+      "type": "string"
+    },
+    "value_type": "string",
+    "version": "2026.05.08"
+  },
+  {
+    "allowed_values": null,
+    "calendar_layer": "context",
+    "calendar_priority": 35,
+    "code": "lipid_note",
+    "display_name": "Lipid panel note",
+    "evidence": [
+      {
+        "assumption": "Trackers support symptom recording and clinician conversations, not diagnosis.",
+        "confidence": 0.45,
+        "review_status": "draft",
+        "source": "Period Atlas v1 tracker taxonomy",
+        "version": "2026.05.08"
+      },
+      {
+        "assumption": "PCOS tracking should emphasize menstrual irregularity, hyperandrogenic features, metabolic context, and uncertainty without implying diagnosis.",
+        "confidence": 0.71,
+        "review_status": "draft",
+        "source": "2023 International Evidence-based Guideline for the Assessment and Management of PCOS",
+        "version": "2026.05.08"
+      }
+    ],
+    "fhir_mapping": null,
+    "health_connect_mapping": null,
+    "healthkit_mapping": null,
+    "temporal_grain": "day",
+    "unit": null,
+    "validation_schema": {
+      "maxLength": 500,
+      "type": "string"
+    },
+    "value_type": "string",
+    "version": "2026.05.08"
+  }
+]

@@ -68,7 +68,7 @@ FHIR means Fast Healthcare Interoperability Resources in this project: a future 
 | `core/tracking/AGENTS.md` | Atlas Tracking Bridge |
 | `tests/AGENTS.md` | Tests |
 
-_Auto-compiled 2026-06-08 12:13 UTC - 9 doc(s) found._
+_Auto-compiled 2026-07-30 08:49 UTC - 9 doc(s) found._
 <!-- DOCS:END -->
 
 ## Before Every Commit
@@ -82,14 +82,22 @@ _Auto-compiled 2026-06-08 12:13 UTC - 9 doc(s) found._
 
 ## Flutter Client (`app/`)
 
-The Flutter client lives in `app/`. It implements the **Today** screen from the Sequence design handoff plus calendar, insights, settings, and tracker-management sections, with a live API layer and app-level state. Real cycle/store wiring against `LocalStoreSnapshot` continues to firm up. Targets: web (primary, served at `period.gabrielpenman.com`), iOS, Android.
+The Flutter client lives in `app/`. It implements the **Today** screen from the Sequence design handoff plus calendar, insights, settings, and tracker-management sections. Targets: web, iOS, Android, macOS, Windows, Linux.
+
+**The client is offline-only and makes no network calls of any kind.** There is no HTTP dependency and no API client; the `http` package is deliberately absent from `pubspec.yaml`. Anything the client needs is either computed on device or shipped in the asset bundle. Do not reintroduce a network call without changing this section first — "local-first" here means "no server exists", not "server optional".
+
+Consequences of that posture:
+
+- **Tracker catalog** — bundled at `app/assets/catalog/{tracker_definitions,tracker_packs}.json`, generated from the Python registry by `scripts/export_catalog.py`. Re-run it after editing `core/tracking/registry.py`, or the bundled catalog silently drifts from the backend contract.
+- **Cycle model** — `app/lib/model/cycle_model.dart` (`period-hierarchical-skip-v1`) already runs entirely on device.
+- **Condition analyzers** — PMDD/PCOS/perimenopause still exist only as the Python reference implementation in `core/analyzers/`. The client reports `AnalyzerLoadState.unported` and says so in the insights tab. Porting them to Dart is the outstanding work; verify any port against the fixtures in `tests/fixtures/` so the two implementations cannot drift.
 
 Layout under `app/lib/`:
 
 - `theme/tokens.dart` — direct port of the design's `colors_and_type.css` variables (palette, sky scale, phase tints, type scale, spacing, radii, motion).
 - `theme/typography.dart` — three font families (Space Grotesk display, Inter body, JetBrains Mono) loaded via `google_fonts` for now; bake to assets when perf demands.
 - `data/models.dart` — local fixtures: tracker defs, symptoms list, moods, bleed levels, cycle states, phase classification. They will be replaced by `LocalStoreSnapshot`-derived shapes from `contract_snapshot/`.
-- `api/` — backend API client against the FastAPI endpoints.
+- `api/` — historical name; now the on-device catalog/analyzer repositories and their result contracts. No HTTP lives here.
 - `state/` — app-level state and cross-tab wiring.
 - `model/` — client-side model types.
 - `screens/today/` — the Today screen, its widgets, and bottom sheets (including generic tracker sheets).
@@ -97,11 +105,13 @@ Layout under `app/lib/`:
 - `screens/shared/` — top bar, bottom tab bar, shared scaffolds.
 - `app_shell.dart` — tab navigation and cross-tab state.
 
-Toolchain notes: Flutter 3.41.x stable. `flutter pub get`, `flutter analyze`, `flutter test`, `flutter build web` all run from `app/`. Do not couple Flutter source to anything in `core/` or `tests/`.
+Toolchain notes: Flutter 3.44.x stable, SDK at `/opt/flutter` on h. `flutter pub get`, `flutter analyze`, `flutter test`, `flutter build web`, `flutter build linux` all run from `app/`. Do not couple Flutter source to anything in `core/` or `tests/`.
 
-### Deploy (web → h)
+Only web and Linux can be built on h. macOS builds need a Mac with Xcode, Windows builds need Windows with Visual Studio, and Android needs an SDK that is not installed here — those targets are scaffolded and compile-clean but unverified on this host.
 
-The live web client is served by nginx from `/var/www/period.gabrielpenman.com` on h at `period.gabrielpenman.com`. To rebuild and deploy from h, run `scripts/deploy_web.sh` — it builds the `app/` web release and rsyncs it into the docroot, stamping `build_info.txt`. The Flutter SDK lives at `/opt/flutter` on h and the docroot is owned by `gabriel`, so no sudo is needed. The backend API (`api.period.gabrielpenman.com`) is a separate systemd service, `period-api`, and is not touched by a web deploy.
+**Asset-loading gotcha:** `TrackerCatalogRepository` reads its JSON with `AssetBundle.load` + an inline `utf8.decode`, *not* `loadString`. `loadString` hands any payload over ~50KB to a background isolate via `compute`, and `tracker_definitions.json` is ~70KB. That isolate never completes under widget tests' fake async, so the catalog comes back empty and every catalog-derived screen renders blank while the tests still look like ordinary assertion failures. Keep the inline decode.
+
+Widget tests that assert on the Today tracker grid need a tall viewport (`tester.view.physicalSize`); the grid sits below the fold at the default 800x600 test surface and off-screen widgets are never built.
 
 ## Flutter Frontend Readiness (Contracts)
 

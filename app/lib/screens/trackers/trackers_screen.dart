@@ -610,10 +610,8 @@ List<TrackerPack> _fixturePacks() => [
   ),
 ];
 
-/// Tiny status pill showing where the catalog came from. Live = green dot,
-/// fallback = amber dot. Tap to refresh. Hidden after success in non-debug
-/// builds would be cleaner — for now we keep it always visible because it's
-/// useful when the API is being prodded.
+/// Tiny status pill showing that the catalog is on-device. Amber only if the
+/// bundled asset failed to decode, which is a packaging fault worth seeing.
 class _CatalogProvenance extends StatelessWidget {
   final TrackerCatalog catalog;
   const _CatalogProvenance({required this.catalog});
@@ -621,9 +619,8 @@ class _CatalogProvenance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dotColor = switch (catalog.source) {
-      CatalogSource.server => const Color(0xFF3B8C5F), // green-ish
-      CatalogSource.cached => Tokens.ember,
-      CatalogSource.fallback => Tokens.oxide,
+      CatalogSource.bundled => const Color(0xFF3B8C5F), // green-ish
+      CatalogSource.error => Tokens.oxide,
       CatalogSource.loading => Tokens.graphite2,
     };
     return GestureDetector(
