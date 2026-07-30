@@ -11,11 +11,13 @@ import 'screens/calendar/calendar_screen.dart';
 import 'screens/insights/insights_screen.dart';
 import 'screens/onboarding/onboarding_flow.dart';
 import 'screens/settings/settings_screen.dart';
+import 'screens/shared/side_nav.dart';
 import 'screens/shared/tab_bar.dart';
 import 'screens/today/today_screen.dart';
 import 'screens/trackers/trackers_screen.dart';
 import 'state/api_scope.dart';
 import 'state/local_period_store.dart';
+import 'theme/layout.dart';
 import 'theme/tokens.dart';
 
 /// Holds the cross-tab state (mirrors `App` in `main.jsx`) and routes between
@@ -63,8 +65,7 @@ class _AppShellState extends State<AppShell> {
 
   void _triggerAnalyzers() {
     if (!store.loaded || _analyzerRepo.isLoading) return;
-    final observations =
-        store.observations.map((e) => e.toJson()).toList();
+    final observations = store.observations.map((e) => e.toJson()).toList();
     unawaited(_analyzerRepo.evaluate(observations, 'subject-local-1'));
   }
 
@@ -192,6 +193,7 @@ class _AppShellState extends State<AppShell> {
   @override
   Widget build(BuildContext context) {
     if (store.loaded) Tokens.setDark(store.darkMode);
+    final breakpoint = Layout.of(context);
     return Container(
       color: Tokens.base,
       child: SafeArea(
@@ -199,7 +201,8 @@ class _AppShellState extends State<AppShell> {
         // never built and cannot be reached behind it.
         child: store.loaded && !store.setupComplete
             ? OnboardingFlow(onComplete: _completeSetup)
-            : Stack(
+            : breakpoint == Breakpoint.compact
+            ? Stack(
                 children: [
                   Positioned.fill(bottom: 64, child: _screen()),
                   Positioned(
@@ -211,6 +214,16 @@ class _AppShellState extends State<AppShell> {
                       onChanged: _onTabChanged,
                     ),
                   ),
+                ],
+              )
+            : Row(
+                children: [
+                  AppSideNav(
+                    current: tab,
+                    onChanged: _onTabChanged,
+                    expanded: breakpoint == Breakpoint.expanded,
+                  ),
+                  Expanded(child: _screen()),
                 ],
               ),
       ),

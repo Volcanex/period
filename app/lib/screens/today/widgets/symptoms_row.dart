@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../data/models.dart';
+import '../../../theme/text_case.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
 
@@ -67,7 +68,7 @@ class _SymChip extends StatelessWidget {
               _SevDot(severity: severity, set: set),
               const SizedBox(width: 6),
               Text(
-                label,
+                displayCase(label),
                 style: Type.mono(
                   size: 11,
                   color: textColor,
@@ -150,7 +151,7 @@ class _MoreChip extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 5),
             child: Text(
-              '+ more',
+              '+ More',
               style: Type.mono(
                 size: 11,
                 color: Tokens.graphite2,

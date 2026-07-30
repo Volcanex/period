@@ -52,9 +52,9 @@ class TrackerCatalog {
 
   /// Short, mono-friendly provenance label for the trackers screen header.
   String get provenanceLabel => switch (source) {
-    CatalogSource.bundled => 'on device · ${definitions.length} trackers',
-    CatalogSource.error => 'catalog unavailable',
-    CatalogSource.loading => 'loading…',
+    CatalogSource.bundled => 'On device · ${definitions.length} trackers',
+    CatalogSource.error => 'Catalog unavailable',
+    CatalogSource.loading => 'Loading…',
   };
 }
 

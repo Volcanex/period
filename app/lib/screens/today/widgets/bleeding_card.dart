@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../data/models.dart';
+import '../../../theme/text_case.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
 
@@ -32,7 +33,7 @@ class BleedingCard extends StatelessWidget {
                   const _DropGlyph(color: Tokens.oxide, size: 10),
                   const SizedBox(width: 8),
                   Text(
-                    'bleeding',
+                    'Bleeding',
                     style: Type.display(
                       size: 15,
                       weight: Tokens.fwMedium,
@@ -137,7 +138,7 @@ class _Step extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                level.label,
+                displayCase(level.label),
                 style: Type.mono(
                   size: 9.5,
                   color: color,

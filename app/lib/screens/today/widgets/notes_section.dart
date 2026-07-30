@@ -60,7 +60,7 @@ class _NotesSectionState extends State<NotesSection> {
           isDense: true,
           contentPadding: EdgeInsets.zero,
           border: InputBorder.none,
-          hintText: 'anything to note. stays on this device.',
+          hintText: 'Anything to note. Stays on this device.',
           hintStyle: Type.body(size: 14, color: Tokens.graphite2, height: 1.55),
         ),
       ),

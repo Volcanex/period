@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../theme/text_case.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
 
@@ -46,7 +47,7 @@ class Segmented extends StatelessWidget {
                     borderRadius: BorderRadius.circular(Tokens.r1),
                   ),
                   child: Text(
-                    v,
+                    displayCase(v),
                     style: Type.mono(
                       size: 11,
                       color: v == selected ? Tokens.paper : Tokens.graphite2,

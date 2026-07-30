@@ -7,11 +7,11 @@ enum AppTab { today, calendar, insights, trackers, settings }
 
 extension AppTabLabel on AppTab {
   String get label => switch (this) {
-    AppTab.today => 'today',
-    AppTab.calendar => 'calendar',
-    AppTab.insights => 'insights',
-    AppTab.trackers => 'trackers',
-    AppTab.settings => 'settings',
+    AppTab.today => 'Today',
+    AppTab.calendar => 'Calendar',
+    AppTab.insights => 'Insights',
+    AppTab.trackers => 'Trackers',
+    AppTab.settings => 'Settings',
   };
 
   // Visual approximations of the design's Phosphor icons in Material's

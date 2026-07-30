@@ -8,9 +8,12 @@ import 'package:period_app/data/models.dart';
 import 'package:period_app/main.dart';
 import 'package:period_app/model/cycle_model.dart';
 import 'package:period_app/screens/calendar/sheets/day_sheet.dart';
+import 'package:period_app/screens/shared/side_nav.dart';
+import 'package:period_app/screens/shared/tab_bar.dart';
+import 'package:period_app/screens/today/today_screen.dart';
 import 'package:period_app/state/local_period_store.dart';
+import 'package:period_app/theme/layout.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 /// SharedPreferences writes under a `flutter.` prefix. Kept in one place so a
 /// prefix change can't silently turn every seeded test into a first run.
@@ -48,9 +51,9 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('today'), findsWidgets);
-    expect(find.text('bleeding'), findsOneWidget);
-    expect(find.text('mon, may 4'), findsOneWidget);
+    expect(find.text('Today'), findsWidgets);
+    expect(find.text('Bleeding'), findsOneWidget);
+    expect(find.text('Mon, May 4'), findsOneWidget);
   });
 
   testWidgets('Calendar past day opens editable local log sheet', (
@@ -63,13 +66,13 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    await tester.tap(find.text('calendar'));
+    await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('4').first);
     await tester.pumpAndSettle();
 
     expect(find.text('DAY LOG'), findsOneWidget);
-    expect(find.text('bleeding'), findsOneWidget);
+    expect(find.text('Bleeding'), findsOneWidget);
     expect(find.text('MOOD'), findsOneWidget);
   });
 
@@ -115,10 +118,10 @@ void main() {
       ),
     );
 
-    await tester.tap(find.text('sex'));
+    await tester.tap(find.text('Sex'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('yes'));
-    await tester.tap(find.text('save'));
+    await tester.tap(find.text('Yes'));
+    await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
     expect(sexLogged, isTrue);
@@ -147,11 +150,11 @@ void main() {
     }
 
     // Turning the pack off should clear them again.
-    await tester.tap(find.text('trackers'));
+    await tester.tap(find.text('Trackers'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('on TODAY').first);
+    await tester.tap(find.text('On TODAY').first);
     await tester.pumpAndSettle();
-    await tester.tap(find.text('today'));
+    await tester.tap(find.text('Today'));
     await tester.pumpAndSettle();
 
     expect(find.text('SLEEP'), findsNothing);
@@ -169,7 +172,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('TRACKER PACKS'), findsOneWidget);
 
-    await tester.tap(find.text('today'));
+    await tester.tap(find.text('Today'));
     await tester.pumpAndSettle();
     await tester.tap(find.byIcon(Icons.settings_outlined).first);
     await tester.pumpAndSettle();
@@ -298,7 +301,7 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    await tester.tap(find.text('calendar'));
+    await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();
     // anchor = may 2 (today may 5 is cycle day 4); may 31 is cycle day 30,
     // which on a 45-day cycle is luteal — not the menstrual it used to claim.
@@ -307,8 +310,8 @@ void main() {
 
     // Pre-fix this day reported "menstrual phase" (cd 30 fell in the hardcoded
     // late-luteal-into-flow window of a 28-day model); it must now be luteal.
-    expect(find.text('cycle day 30'), findsOneWidget);
-    expect(find.text('luteal phase'), findsOneWidget);
+    expect(find.text('Cycle day 30'), findsOneWidget);
+    expect(find.text('Luteal phase'), findsOneWidget);
   });
 
   test('symptom note persists with its symptom and clears with it', () async {
@@ -320,7 +323,12 @@ void main() {
     await store.load();
     final day = DateTime(2026, 5, 4);
 
-    store.setSymptom(day, 'cramps', Severity.moderate, 'left side, woke at 3am');
+    store.setSymptom(
+      day,
+      'cramps',
+      Severity.moderate,
+      'left side, woke at 3am',
+    );
     expect(store.logFor(day).symptomNotes['cramps'], 'left side, woke at 3am');
 
     // The note must round-trip the contract-shaped observation export.
@@ -344,9 +352,9 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('your data stays here.'), findsOneWidget);
-    expect(find.text('bleeding'), findsNothing);
-    expect(find.text('calendar'), findsNothing);
+    expect(find.text('Your data stays here.'), findsOneWidget);
+    expect(find.text('Bleeding'), findsNothing);
+    expect(find.text('Calendar'), findsNothing);
   });
 
   testWidgets('a returning user never sees setup', (tester) async {
@@ -357,8 +365,8 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('your data stays here.'), findsNothing);
-    expect(find.text('bleeding'), findsOneWidget);
+    expect(find.text('Your data stays here.'), findsNothing);
+    expect(find.text('Bleeding'), findsOneWidget);
   });
 
   test('completeSetup stores the date and survives a reload', () async {
@@ -417,16 +425,16 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 500));
 
-    expect(find.text('no cycle data yet'), findsOneWidget);
+    expect(find.text('No cycle data yet'), findsOneWidget);
     expect(find.text('EST. WINDOW'), findsNothing);
-    expect(find.textContaining('cycle day'), findsNothing);
+    expect(find.textContaining('Cycle day'), findsNothing);
 
     // The calendar must not tint phases or key colours it isn't showing.
-    await tester.tap(find.text('calendar'));
+    await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();
-    expect(find.text('no cycle data yet'), findsOneWidget);
+    expect(find.text('No cycle data yet'), findsOneWidget);
     expect(find.text('PHASES'), findsNothing);
-    expect(find.text('predicted'), findsNothing);
+    expect(find.text('Predicted'), findsNothing);
   });
 
   test('logging a bleeding day recovers from an unknown anchor', () async {
@@ -497,33 +505,108 @@ void main() {
     await tester.pump();
     await tester.pump(const Duration(milliseconds: 800));
 
-    await tester.tap(find.text('start'));
+    await tester.tap(find.text('Start'));
     await tester.pumpAndSettle();
 
     // Pick may 14, six days back.
     await tester.tap(find.text('14'));
     await tester.pumpAndSettle();
-    expect(find.text('thu, may 14'), findsOneWidget);
+    expect(find.text('Thu, May 14'), findsOneWidget);
     expect(find.text('6 DAYS AGO'), findsOneWidget);
 
-    await tester.tap(find.text('continue'));
+    await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
-    expect(find.text('how long is your usual cycle?'), findsOneWidget);
+    expect(find.text('How long is your usual cycle?'), findsOneWidget);
 
-    await tester.tap(find.text('continue'));
+    await tester.tap(find.text('Continue'));
     await tester.pumpAndSettle();
-    expect(find.text('four tabs.'), findsOneWidget);
+    expect(find.text('Four tabs.'), findsOneWidget);
 
     for (var i = 0; i < 3; i++) {
-      await tester.tap(find.text('next'));
+      await tester.tap(find.text('Next'));
       await tester.pumpAndSettle();
     }
-    await tester.tap(find.text('done'));
+    await tester.tap(find.text('Done'));
     await tester.pumpAndSettle();
 
     // The shell, with a prediction derived from the date just entered.
-    expect(find.text('wed, may 20'), findsOneWidget);
+    expect(find.text('Wed, May 20'), findsOneWidget);
     expect(find.text('EST. WINDOW'), findsOneWidget);
-    expect(find.text('no cycle data yet'), findsNothing);
+    expect(find.text('No cycle data yet'), findsNothing);
+  });
+
+  // ---- responsive shell ----
+
+  /// Pins the surface so a test states which size class it means, rather than
+  /// inheriting the 800x600 default and landing in whichever class that is.
+  void setViewport(WidgetTester tester, double width, double height) {
+    tester.view.physicalSize = Size(width, height);
+    tester.view.devicePixelRatio = 1.0;
+    addTearDown(tester.view.reset);
+  }
+
+  testWidgets('a phone width keeps the bottom tab bar', (tester) async {
+    setViewport(tester, 430, 900);
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    seedStore();
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.byType(AppBottomTabBar), findsOneWidget);
+    expect(find.byType(AppSideNav), findsNothing);
+  });
+
+  testWidgets('a tablet width moves navigation to the rail', (tester) async {
+    setViewport(tester, 900, 1200);
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    seedStore();
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.byType(AppBottomTabBar), findsNothing);
+    final nav = tester.widget<AppSideNav>(find.byType(AppSideNav));
+    expect(nav.expanded, isFalse, reason: 'medium gets the narrow rail');
+  });
+
+  testWidgets('a desktop width uses the expanded sidebar', (tester) async {
+    setViewport(tester, 1440, 1000);
+    Clock.overrideNow(DateTime(2026, 5, 5));
+    seedStore();
+
+    await tester.pumpWidget(const PeriodApp());
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.byType(AppBottomTabBar), findsNothing);
+    final nav = tester.widget<AppSideNav>(find.byType(AppSideNav));
+    expect(nav.expanded, isTrue);
+
+    // The point of dropping the phone frame: the screen uses the whole window
+    // beside the sidebar instead of a 430px strip.
+    expect(tester.getSize(find.byType(TodayScreen)).width, greaterThan(1000));
+
+    // Every tab has to survive a desktop width — an overflow anywhere in the
+    // wide layouts fails this.
+    for (final label in ['Calendar', 'Insights', 'Trackers', 'Settings']) {
+      await tester.tap(
+        find.descendant(
+          of: find.byType(AppSideNav),
+          matching: find.text(label),
+        ),
+      );
+      await tester.pumpAndSettle();
+    }
+  });
+
+  test('breakpoints map widths to size classes', () {
+    expect(Layout.forWidth(430), Breakpoint.compact);
+    expect(Layout.forWidth(699), Breakpoint.compact);
+    expect(Layout.forWidth(700), Breakpoint.medium);
+    expect(Layout.forWidth(1099), Breakpoint.medium);
+    expect(Layout.forWidth(1100), Breakpoint.expanded);
   });
 }

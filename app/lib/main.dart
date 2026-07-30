@@ -45,7 +45,7 @@ class _PeriodAppState extends State<PeriodApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'period',
+      title: 'Sequence',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.light(
@@ -60,33 +60,7 @@ class _PeriodAppState extends State<PeriodApp> {
       ),
       home: ApiScope(
         repository: _catalog,
-        child: _MobileWebFrame(
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: const AppShell(),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _MobileWebFrame extends StatelessWidget {
-  final Widget child;
-
-  const _MobileWebFrame({required this.child});
-
-  static const double maxPhoneWidth = 430;
-
-  @override
-  Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Tokens.ink,
-      child: Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(maxWidth: maxPhoneWidth),
-          child: ClipRect(child: child),
-        ),
+        child: Scaffold(backgroundColor: Tokens.base, body: const AppShell()),
       ),
     );
   }

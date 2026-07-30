@@ -1,17 +1,21 @@
-# period_app
+# Sequence
 
-A new Flutter project.
+Flutter client for Sequence, a cycle tracker. Everything runs on the device:
+there is no server, no account, and nothing is uploaded. Logs live in local
+storage and the cycle model is computed on device.
 
-## Getting Started
+The Dart package is still named `period_app` and the local storage keys still
+use the `period.` prefix — renaming either would orphan existing users' data.
 
-This project is a starting point for a Flutter application.
+## Running
 
-A few resources to get you started if this is your first Flutter project:
+```
+flutter run     # debug build
+flutter test    # widget + store tests
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Tracker catalog
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+`assets/catalog/` is generated from the Python registry by
+`scripts/export_catalog.py`. Regenerate it after changing the registry rather
+than editing the JSON by hand.

@@ -76,7 +76,7 @@ class _SymptomSheetState extends State<SymptomSheet> {
                 isDense: true,
                 contentPadding: EdgeInsets.zero,
                 border: InputBorder.none,
-                hintText: 'add context…',
+                hintText: 'Add context…',
                 hintStyle: Type.body(
                   size: 14,
                   color: Tokens.graphite2,
@@ -87,7 +87,7 @@ class _SymptomSheetState extends State<SymptomSheet> {
           ),
           const SizedBox(height: 14),
           SheetPrimaryButton(
-            label: 'save',
+            label: 'Save',
             onPressed: () {
               widget.onSet(sev, note);
               Navigator.of(context).pop();
@@ -107,10 +107,10 @@ class _SeverityRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cells = <_SevCell>[
-      _SevCell(null, 'none', const []),
-      _SevCell(Severity.mild, 'mild', const [4]),
-      _SevCell(Severity.moderate, 'moderate', const [4, 7]),
-      _SevCell(Severity.severe, 'severe', const [4, 7, 10]),
+      _SevCell(null, 'None', const []),
+      _SevCell(Severity.mild, 'Mild', const [4]),
+      _SevCell(Severity.moderate, 'Moderate', const [4, 7]),
+      _SevCell(Severity.severe, 'Severe', const [4, 7, 10]),
     ];
     return Row(
       children: [

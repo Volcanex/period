@@ -100,7 +100,7 @@ class _NumericSheetState extends State<NumericSheet> {
           ),
           const SizedBox(height: 14),
           SheetPrimaryButton(
-            label: 'save',
+            label: 'Save',
             onPressed: () {
               widget.onSet(val);
               Navigator.of(context).pop();

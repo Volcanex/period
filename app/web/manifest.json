@@ -1,11 +1,11 @@
 {
-    "name": "Period",
-    "short_name": "Period",
+    "name": "Sequence",
+    "short_name": "Sequence",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#F2F5F8",
     "theme_color": "#F2F5F8",
-    "description": "Local-first cycle tracking for bleeding, symptoms, and patterns.",
+    "description": "Sequence is a local-first cycle tracker for bleeding, symptoms, and patterns.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -8,21 +8,21 @@ import '../widgets/onboarding_date_grid.dart';
 
 const _monthNames = [
   '',
-  'jan',
-  'feb',
-  'mar',
-  'apr',
-  'may',
-  'jun',
-  'jul',
-  'aug',
-  'sep',
-  'oct',
-  'nov',
-  'dec',
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
-const _dayNames = ['', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const _dayNames = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 class LastPeriodStep extends StatelessWidget {
   final DateTime today;
@@ -44,16 +44,16 @@ class LastPeriodStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return OnboardingScaffold(
       eyebrow: 'step 2 / 4',
-      title: 'when did your last period start?',
-      body: 'pick the first day you bled. a rough guess is fine.',
+      title: 'When did your last period start?',
+      body: 'Pick the first day you bled. A rough guess is fine.',
       actions: Column(
         children: [
           OnboardingPrimaryButton(
-            label: 'continue',
+            label: 'Continue',
             enabled: selected != null,
             onPressed: onNext,
           ),
-          OnboardingTextLink(label: "i don't know", onTap: onSkip),
+          OnboardingTextLink(label: "I don't know", onTap: onSkip),
         ],
       ),
       child: Column(

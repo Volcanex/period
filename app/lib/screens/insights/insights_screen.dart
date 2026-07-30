@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../api/contracts/analyzer_results.dart';
 import '../../data/models.dart';
+import '../../theme/layout.dart';
+import '../../theme/text_case.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 import '../shared/top_bar.dart';
@@ -31,152 +33,175 @@ class InsightsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stats = _modelStats(cycleState, loggedDayCount);
-
     return Column(
       children: [
-        const TopBar(title: 'insights'),
+        const TopBar(title: 'Insights', contentMaxWidth: Layout.wideMax),
         Expanded(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-            children: [
-              // ---- cycle model ----
-              SectionBox(
-                eyebrow: 'cycle model',
-                bare: true,
-                trailing: SectionAction(
-                  label: cycleState.predictionSource,
-                  muted: true,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final twoColumn = constraints.maxWidth >= Layout.twoColumnMin;
+              return ContentPane(
+                maxWidth: twoColumn ? Layout.wideMax : Layout.readableMax,
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(14),
-                      decoration: BoxDecoration(
-                        color: Tokens.bg,
-                        borderRadius: BorderRadius.circular(Tokens.r2),
-                        border: Border.all(color: Tokens.borderSoft, width: 1),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                    if (twoColumn)
+                      // The model reads as the subject and the analyzers as the
+                      // commentary, so the split is 3:2 rather than even.
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  'next flow estimate',
-                                  style: Type.display(
-                                    size: 14,
-                                    weight: Tokens.fwMedium,
-                                    height: 1.2,
-                                  ),
-                                ),
-                              ),
-                              Text(
-                                cycleState.confidence.toUpperCase(),
-                                style: Type.eyebrow(size: 9),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            cycleState.nextStart == null
-                                ? '—'
-                                : '${cycleState.nextStart} – ${cycleState.nextEnd}',
-                            style: Type.display(
-                              size: 24,
-                              weight: Tokens.fwMedium,
-                              height: 1.0,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            cycleState.nextStart == null
-                                ? 'log a period start, or add your last start date, and an estimate appears here.'
-                                : 'most likely start ${cycleState.nextMode}. this estimate updates from bleeding logs on this device.',
-                            style: Type.body(
-                              size: 14,
-                              color: Tokens.graphite2,
-                              height: 1.35,
-                            ),
-                          ),
-                          // A band with no prediction behind it collapses to a
-                          // degenerate bar labelled "null" — drop it entirely.
-                          if (cycleState.nextStart != null) ...[
-                            const SizedBox(height: 12),
-                            _PredictionBand(state: cycleState),
-                          ],
-                          if (cycleState.observationCount == 0) ...[
-                            const SizedBox(height: 12),
-                            Text(
-                              'log bleeding days to move from the starter prior into your own cycle history.',
-                              style: Type.body(
-                                size: 13,
-                                color: Tokens.graphite2,
-                                height: 1.35,
-                              ),
-                            ),
-                          ],
+                          Expanded(flex: 3, child: _cycleModel()),
+                          const SizedBox(width: 22),
+                          Expanded(flex: 2, child: _analyzers()),
                         ],
+                      )
+                    else ...[
+                      _cycleModel(),
+                      const SizedBox(height: 22),
+                      _analyzers(),
+                    ],
+
+                    const SizedBox(height: 22),
+
+                    Center(
+                      child: Text(
+                        '[ Patterns, not diagnoses ]',
+                        style: Type.mono(
+                          size: 10,
+                          color: Tokens.graphite2,
+                          letterSpacingEm: 0.08,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        const gap = 8.0;
-                        final w = (constraints.maxWidth - gap) / 2;
-                        return Wrap(
-                          spacing: gap,
-                          runSpacing: gap,
-                          children: [
-                            for (final s in stats)
-                              SizedBox(
-                                width: w,
-                                child: BaseStatCard(
-                                  label: s.label,
-                                  value: s.value,
-                                  unit: s.unit,
-                                  range: s.range,
-                                ),
-                              ),
-                          ],
-                        );
-                      },
                     ),
                   ],
                 ),
-              ),
-
-              const SizedBox(height: 22),
-
-              // ---- condition analyzers ----
-              _AnalyzerSection(
-                results: analyzerResults,
-                packEnabled: packEnabled,
-                onOpenTrackerPack: onOpenTrackerPack,
-                onRefresh: onRefreshAnalyzers,
-              ),
-
-              const SizedBox(height: 22),
-
-              Center(
-                child: Text(
-                  '[ patterns, not diagnoses ]',
-                  style: Type.mono(
-                    size: 10,
-                    color: Tokens.graphite2,
-                    letterSpacingEm: 0.08,
-                  ),
-                ),
-              ),
-            ],
+              );
+            },
           ),
         ),
       ],
+    );
+  }
+
+  Widget _analyzers() => _AnalyzerSection(
+    results: analyzerResults,
+    packEnabled: packEnabled,
+    onOpenTrackerPack: onOpenTrackerPack,
+    onRefresh: onRefreshAnalyzers,
+  );
+
+  Widget _cycleModel() {
+    final stats = _modelStats(cycleState, loggedDayCount);
+
+    return SectionBox(
+      eyebrow: 'cycle model',
+      bare: true,
+      trailing: SectionAction(label: cycleState.predictionSource, muted: true),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: Tokens.bg,
+              borderRadius: BorderRadius.circular(Tokens.r2),
+              border: Border.all(color: Tokens.borderSoft, width: 1),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'Next flow estimate',
+                        style: Type.display(
+                          size: 14,
+                          weight: Tokens.fwMedium,
+                          height: 1.2,
+                        ),
+                      ),
+                    ),
+                    Text(
+                      cycleState.confidence.toUpperCase(),
+                      style: Type.eyebrow(size: 9),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  cycleState.nextStart == null
+                      ? '—'
+                      : '${cycleState.nextStart} – ${cycleState.nextEnd}',
+                  style: Type.display(
+                    size: 24,
+                    weight: Tokens.fwMedium,
+                    height: 1.0,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  cycleState.nextStart == null
+                      ? 'Log a period start, or add your last start date, and an estimate appears here.'
+                      : 'Most likely start ${cycleState.nextMode}. This estimate updates from bleeding logs on this device.',
+                  style: Type.body(
+                    size: 14,
+                    color: Tokens.graphite2,
+                    height: 1.35,
+                  ),
+                ),
+                // A band with no prediction behind it collapses to a
+                // degenerate bar labelled "null" — drop it entirely.
+                if (cycleState.nextStart != null) ...[
+                  const SizedBox(height: 12),
+                  _PredictionBand(state: cycleState),
+                ],
+                if (cycleState.observationCount == 0) ...[
+                  const SizedBox(height: 12),
+                  Text(
+                    'Log bleeding days to move from the starter prior into your own cycle history.',
+                    style: Type.body(
+                      size: 13,
+                      color: Tokens.graphite2,
+                      height: 1.35,
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              const gap = 8.0;
+              // Four across once each card still fits its range line;
+              // two across on a phone.
+              final cols = constraints.maxWidth >= 560 ? 4 : 2;
+              final w = (constraints.maxWidth - gap * (cols - 1)) / cols;
+              return Wrap(
+                spacing: gap,
+                runSpacing: gap,
+                children: [
+                  for (final s in stats)
+                    SizedBox(
+                      width: w,
+                      child: BaseStatCard(
+                        label: s.label,
+                        value: s.value,
+                        unit: s.unit,
+                        range: s.range,
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
@@ -210,7 +235,8 @@ class _AnalyzerSection extends StatelessWidget {
       return const _AnalyzerUnported();
     }
 
-    final hasAnyCard = results.pcos != null ||
+    final hasAnyCard =
+        results.pcos != null ||
         results.pmdd != null ||
         results.perimenopause != null;
 
@@ -267,7 +293,7 @@ class _AnalyzerSection extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Text(
-              'analysing…',
+              'Analysing…',
               style: Type.mono(
                 size: 10,
                 color: Tokens.graphite2,
@@ -285,7 +311,7 @@ class _AnalyzerSection extends StatelessWidget {
               child: GestureDetector(
                 onTap: onRefresh,
                 child: Text(
-                  'refresh ↻',
+                  'Refresh ↻',
                   style: Type.mono(
                     size: 10,
                     color: Tokens.graphite2,
@@ -319,17 +345,13 @@ class _AnalyzerUnported extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'condition patterns',
-            style: Type.display(
-              size: 13,
-              weight: Tokens.fwMedium,
-              height: 1.2,
-            ),
+            'Condition patterns',
+            style: Type.display(size: 13, weight: Tokens.fwMedium, height: 1.2),
           ),
           const SizedBox(height: 6),
           Text(
-            'pmdd, pcos and perimenopause pattern analysis runs entirely on '
-            'your device — it is still being built. your logs are already '
+            'PMDD, PCOS and perimenopause pattern analysis runs entirely on '
+            'your device — it is still being built. Your logs are already '
             'being kept for it.',
             style: Type.body(size: 13, color: Tokens.graphite2, height: 1.4),
           ),
@@ -359,16 +381,12 @@ class _AnalyzerError extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'condition patterns',
-            style: Type.display(
-              size: 13,
-              weight: Tokens.fwMedium,
-              height: 1.2,
-            ),
+            'Condition patterns',
+            style: Type.display(size: 13, weight: Tokens.fwMedium, height: 1.2),
           ),
           const SizedBox(height: 6),
           Text(
-            "couldn't reach the on-device analyzers. check your connection and try again.",
+            "Couldn't reach the on-device analyzers. Check your connection and try again.",
             style: Type.body(size: 13, color: Tokens.graphite2, height: 1.4),
           ),
           const SizedBox(height: 12),
@@ -377,14 +395,16 @@ class _AnalyzerError extends StatelessWidget {
             child: GestureDetector(
               onTap: onRetry,
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: Tokens.ink,
                   borderRadius: BorderRadius.circular(Tokens.r1),
                 ),
                 child: Text(
-                  'try again',
+                  'Try again',
                   style: Type.mono(
                     size: 12,
                     color: Tokens.paper,
@@ -417,16 +437,12 @@ class _AnalyzerPrompt extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'condition patterns',
-            style: Type.display(
-              size: 13,
-              weight: Tokens.fwMedium,
-              height: 1.2,
-            ),
+            'Condition patterns',
+            style: Type.display(size: 13, weight: Tokens.fwMedium, height: 1.2),
           ),
           const SizedBox(height: 6),
           Text(
-            'run the on-device analyzers to check your logs for PCOS feature patterns, PMDD-style symptom clustering, and perimenopause staging.',
+            'Run the on-device analyzers to check your logs for PCOS feature patterns, PMDD-style symptom clustering, and perimenopause staging.',
             style: Type.body(size: 13, color: Tokens.graphite2, height: 1.4),
           ),
           const SizedBox(height: 12),
@@ -435,14 +451,16 @@ class _AnalyzerPrompt extends StatelessWidget {
             child: GestureDetector(
               onTap: onRefresh,
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: Tokens.ink,
                   borderRadius: BorderRadius.circular(Tokens.r1),
                 ),
                 child: Text(
-                  'analyse now',
+                  'Analyse now',
                   style: Type.mono(
                     size: 12,
                     color: Tokens.paper,
@@ -482,15 +500,17 @@ class _ConditionCard extends StatelessWidget {
 
     String footer = eval.summary;
     if (eval.suppressors.isNotEmpty) {
-      footer += '\n\nsuppressors: ${eval.suppressors.join(', ')}.';
+      footer += '\n\nSuppressors: ${eval.suppressors.join(', ')}.';
     }
     if (eval.recommendedActions.isNotEmpty) {
-      final action =
-          eval.recommendedActions.first.toLowerCase().replaceAll('_', ' ').trim();
+      final action = eval.recommendedActions.first
+          .toLowerCase()
+          .replaceAll('_', ' ')
+          .trim();
       // The backend action may already be a full sentence ending in a period;
       // don't append a second one.
       final period = action.endsWith('.') ? '' : '.';
-      footer += '\n\nnext: $action$period';
+      footer += '\n\nNext: $action$period';
     }
 
     return PackSection(
@@ -566,31 +586,31 @@ class _PredictionBand extends StatelessWidget {
 // ---- stats ----
 
 List<_BaseStat> _modelStats(CycleState state, int loggedDayCount) => [
-      _BaseStat(
-        label: 'cycle day',
-        value: '${state.cycleDay ?? '—'}',
-        unit: '',
-        range: '${state.cycleLen} day cycle',
-      ),
-      _BaseStat(
-        label: 'typical period',
-        value: '${state.flowLen}',
-        unit: 'days',
-        range: state.avgFlow ?? 'local setting',
-      ),
-      _BaseStat(
-        label: 'observations',
-        value: '${state.observationCount}',
-        unit: '',
-        range: '$loggedDayCount logged days',
-      ),
-      _BaseStat(
-        label: 'prediction',
-        value: state.confidence,
-        unit: '',
-        range: _predictionRange(state),
-      ),
-    ];
+  _BaseStat(
+    label: 'cycle day',
+    value: '${state.cycleDay ?? '—'}',
+    unit: '',
+    range: '${state.cycleLen} day cycle',
+  ),
+  _BaseStat(
+    label: 'typical period',
+    value: '${state.flowLen}',
+    unit: 'days',
+    range: state.avgFlow ?? 'Local setting',
+  ),
+  _BaseStat(
+    label: 'observations',
+    value: '${state.observationCount}',
+    unit: '',
+    range: '$loggedDayCount logged days',
+  ),
+  _BaseStat(
+    label: 'prediction',
+    value: displayCase(state.confidence),
+    unit: '',
+    range: _predictionRange(state),
+  ),
+];
 
 String _predictionRange(CycleState state) {
   final window = state.predictedP80WindowDays;

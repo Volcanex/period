@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../../api/tracker_catalog.dart';
 import '../../api/contracts/tracker_pack.dart';
+import '../../theme/layout.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 import '../shared/number_stepper.dart';
@@ -64,253 +65,256 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Column(
       children: [
-        const TopBar(title: 'settings'),
+        const TopBar(title: 'Settings'),
         Expanded(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-            children: [
-              SectionBox(
-                eyebrow: 'cycle defaults',
-                trailing: const SectionAction(
-                  label: 'local model',
-                  muted: true,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SettingRow(
-                      label: 'typical cycle',
-                      meta:
-                          'used until your bleeding history has enough signal',
-                      trailing: NumberStepper(
-                        value: widget.cycleLength,
-                        min: 21,
-                        max: 45,
-                        unit: 'd',
-                        onChanged: widget.onCycleLengthChanged,
-                      ),
-                    ),
-                    SettingRow(
-                      label: 'typical period',
-                      meta: 'flow prediction length',
-                      trailing: NumberStepper(
-                        value: widget.flowLength,
-                        min: 1,
-                        max: 10,
-                        unit: 'd',
-                        onChanged: widget.onFlowLengthChanged,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              SectionBox(
-                eyebrow: 'appearance',
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SettingRow(
-                      label: 'theme',
-                      trailing: Segmented(
-                        values: const ['light', 'dark'],
-                        selected: widget.darkMode ? 'dark' : 'light',
-                        onChanged: (v) => widget.onDarkModeChanged(v == 'dark'),
-                      ),
-                      meta: 'saved on this device',
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              SectionBox(
-                eyebrow: 'tracker setup',
-                trailing: SectionAction(
-                  label: '${enabledPacks.length} packs',
-                  muted: true,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TrackerRow(
-                      leading: '·',
-                      name: 'enabled trackers',
-                      meta: '$enabledTrackerCount active',
-                      trailing: Icon(
-                        Icons.check_circle_outline,
-                        size: 16,
-                        color: Tokens.ink,
-                      ),
-                    ),
-                    TrackerRow(
-                      leading: '·',
-                      name: 'trackers on today',
-                      meta: '${widget.todayTrackerCount} quick logs',
-                      trailing: Icon(
-                        Icons.today_outlined,
-                        size: 16,
-                        color: Tokens.ink,
-                      ),
-                    ),
-                    ...enabledPacks
-                        .take(4)
-                        .map(
-                          (pack) => TrackerRow(
-                            leading: '·',
-                            name: pack.displayName.toLowerCase(),
-                            meta: '${pack.trackerCodes.length} trackers',
-                            trailing: const SizedBox(width: 16),
-                          ),
+          child: ContentPane(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+              children: [
+                SectionBox(
+                  eyebrow: 'cycle defaults',
+                  trailing: const SectionAction(
+                    label: 'local model',
+                    muted: true,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SettingRow(
+                        label: 'Typical cycle',
+                        meta:
+                            'Used until your bleeding history has enough signal',
+                        trailing: NumberStepper(
+                          value: widget.cycleLength,
+                          min: 21,
+                          max: 45,
+                          unit: 'd',
+                          onChanged: widget.onCycleLengthChanged,
                         ),
-                    if (enabledPacks.length > 4)
+                      ),
+                      SettingRow(
+                        label: 'Typical period',
+                        meta: 'Flow prediction length',
+                        trailing: NumberStepper(
+                          value: widget.flowLength,
+                          min: 1,
+                          max: 10,
+                          unit: 'd',
+                          onChanged: widget.onFlowLengthChanged,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                SectionBox(
+                  eyebrow: 'appearance',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SettingRow(
+                        label: 'Theme',
+                        trailing: Segmented(
+                          values: const ['light', 'dark'],
+                          selected: widget.darkMode ? 'dark' : 'light',
+                          onChanged: (v) =>
+                              widget.onDarkModeChanged(v == 'dark'),
+                        ),
+                        meta: 'Saved on this device',
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                SectionBox(
+                  eyebrow: 'tracker setup',
+                  trailing: SectionAction(
+                    label: '${enabledPacks.length} packs',
+                    muted: true,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
                       TrackerRow(
                         leading: '·',
-                        name: 'more enabled packs',
-                        meta: '+${enabledPacks.length - 4}',
+                        name: 'Enabled trackers',
+                        meta: '$enabledTrackerCount active',
+                        trailing: Icon(
+                          Icons.check_circle_outline,
+                          size: 16,
+                          color: Tokens.ink,
+                        ),
+                      ),
+                      TrackerRow(
+                        leading: '·',
+                        name: 'Trackers on Today',
+                        meta: '${widget.todayTrackerCount} quick logs',
+                        trailing: Icon(
+                          Icons.today_outlined,
+                          size: 16,
+                          color: Tokens.ink,
+                        ),
+                      ),
+                      ...enabledPacks
+                          .take(4)
+                          .map(
+                            (pack) => TrackerRow(
+                              leading: '·',
+                              name: pack.displayName,
+                              meta: '${pack.trackerCodes.length} trackers',
+                              trailing: const SizedBox(width: 16),
+                            ),
+                          ),
+                      if (enabledPacks.length > 4)
+                        TrackerRow(
+                          leading: '·',
+                          name: 'More enabled packs',
+                          meta: '+${enabledPacks.length - 4}',
+                          trailing: const SizedBox(width: 16),
+                        ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                SectionBox(
+                  eyebrow: 'catalog',
+                  trailing: SectionAction(
+                    label: _apiLabel,
+                    muted: widget.catalog.source == CatalogSource.loading,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SettingRow(
+                        label: 'Tracker catalog',
+                        meta: widget.catalog.provenanceLabel,
+                        trailing: _StatusDot(
+                          live: widget.catalog.source == CatalogSource.bundled,
+                        ),
+                      ),
+                      const SettingRow(
+                        label: 'Network',
+                        meta: 'Never — no account, no server',
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                SectionBox(
+                  eyebrow: 'data',
+                  trailing: const SectionAction(
+                    label: 'local-first',
+                    muted: true,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      TrackerRow(
+                        leading: '·',
+                        name: 'Logged days',
+                        meta: '${widget.loggedDayCount}',
                         trailing: const SizedBox(width: 16),
                       ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              SectionBox(
-                eyebrow: 'catalog',
-                trailing: SectionAction(
-                  label: _apiLabel,
-                  muted: widget.catalog.source == CatalogSource.loading,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SettingRow(
-                      label: 'tracker catalog',
-                      meta: widget.catalog.provenanceLabel,
-                      trailing: _StatusDot(
-                        live: widget.catalog.source == CatalogSource.bundled,
+                      TrackerRow(
+                        leading: '·',
+                        name: 'Observation events',
+                        meta: '${widget.observationCount}',
+                        trailing: const SizedBox(width: 16),
                       ),
-                    ),
-                    const SettingRow(
-                      label: 'network',
-                      meta: 'never — no account, no server',
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 12),
-
-              SectionBox(
-                eyebrow: 'data',
-                trailing: const SectionAction(
-                  label: 'local-first',
-                  muted: true,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    TrackerRow(
-                      leading: '·',
-                      name: 'logged days',
-                      meta: '${widget.loggedDayCount}',
-                      trailing: const SizedBox(width: 16),
-                    ),
-                    TrackerRow(
-                      leading: '·',
-                      name: 'observation events',
-                      meta: '${widget.observationCount}',
-                      trailing: const SizedBox(width: 16),
-                    ),
-                    TrackerRow(
-                      leading: '·',
-                      name: 'local snapshot',
-                      meta: 'json',
-                      trailing: const _ExportArrow(),
-                      onTap: () => _showSnapshot(context),
-                    ),
-                    const SizedBox(height: 12),
-                    _PrimaryButton(
-                      label: 'view local snapshot',
-                      onTap: () => _showSnapshot(context),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      '[ export preview only · nothing leaves device unless you share ]',
-                      textAlign: TextAlign.center,
-                      style: Type.mono(
-                        size: 10,
-                        color: Tokens.graphite2,
-                        letterSpacingEm: 0.08,
+                      TrackerRow(
+                        leading: '·',
+                        name: 'Local snapshot',
+                        meta: 'JSON',
+                        trailing: const _ExportArrow(),
+                        onTap: () => _showSnapshot(context),
                       ),
-                    ),
-                  ],
+                      const SizedBox(height: 12),
+                      _PrimaryButton(
+                        label: 'View local snapshot',
+                        onTap: () => _showSnapshot(context),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        '[ export preview only · nothing leaves device unless you share ]',
+                        textAlign: TextAlign.center,
+                        style: Type.mono(
+                          size: 10,
+                          color: Tokens.graphite2,
+                          letterSpacingEm: 0.08,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
+                const SizedBox(height: 12),
 
-              SectionBox(
-                eyebrow: 'privacy',
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    const SettingRow(
-                      label: 'storage',
-                      meta: 'local browser storage · no account sync',
-                    ),
-                    const SettingRow(
-                      label: 'network',
-                      meta: 'reads tracker catalog only · no health uploads',
-                    ),
-                    SettingRow(
-                      label: 'reset demo logs',
-                      meta: 'clears local observations · keeps setup',
-                      trailing: GestureDetector(
-                        onTap: () => _confirmReset(context),
-                        child: Text(
-                          'RESET',
-                          style: Type.mono(
-                            size: 10,
-                            color: Tokens.oxide,
-                            letterSpacingEm: 0.08,
+                SectionBox(
+                  eyebrow: 'privacy',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SettingRow(
+                        label: 'Storage',
+                        meta: 'Local browser storage · no account sync',
+                      ),
+                      const SettingRow(
+                        label: 'Network',
+                        meta: 'Reads tracker catalog only · no health uploads',
+                      ),
+                      SettingRow(
+                        label: 'Reset demo logs',
+                        meta: 'Clears local observations · keeps setup',
+                        trailing: GestureDetector(
+                          onTap: () => _confirmReset(context),
+                          child: Text(
+                            'RESET',
+                            style: Type.mono(
+                              size: 10,
+                              color: Tokens.oxide,
+                              letterSpacingEm: 0.08,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
+                const SizedBox(height: 12),
 
-              SectionBox(
-                eyebrow: 'about',
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: const [
-                    SettingRow(label: 'version', meta: '0.1.0 · web demo'),
-                    SettingRow(
-                      label: 'contracts',
-                      meta: 'tracker catalog · v1 endpoints',
-                    ),
-                    SettingRow(
-                      label: 'medical status',
-                      meta: 'not a diagnostic device',
-                    ),
-                  ],
+                SectionBox(
+                  eyebrow: 'about',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: const [
+                      SettingRow(label: 'Version', meta: '0.1.0 · web demo'),
+                      SettingRow(
+                        label: 'Contracts',
+                        meta: 'Tracker catalog · v1 endpoints',
+                      ),
+                      SettingRow(
+                        label: 'Medical status',
+                        meta: 'Not a diagnostic device',
+                      ),
+                    ],
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: 14),
-              Text(
-                '[ period is not a diagnostic device ]',
-                textAlign: TextAlign.center,
-                style: Type.mono(
-                  size: 10,
-                  color: Tokens.graphite2,
-                  letterSpacingEm: 0.08,
+                const SizedBox(height: 14),
+                Text(
+                  '[ Sequence is not a diagnostic device ]',
+                  textAlign: TextAlign.center,
+                  style: Type.mono(
+                    size: 10,
+                    color: Tokens.graphite2,
+                    letterSpacingEm: 0.08,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -345,7 +349,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
       builder: (context) => _ResetSheet(onConfirm: widget.onResetDemoLogs),
     );
     if (confirmed == true && context.mounted) {
-      _showSnack(context, 'demo logs reset');
+      _showSnack(context, 'Demo logs reset');
     }
   }
 
@@ -404,7 +408,7 @@ class _SnapshotSheet extends StatelessWidget {
               children: [
                 Expanded(child: Text('LOCAL SNAPSHOT', style: Type.eyebrow())),
                 IconButton(
-                  tooltip: 'copy snapshot',
+                  tooltip: 'Copy snapshot',
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: snapshot));
                     Navigator.pop(context);
@@ -412,7 +416,7 @@ class _SnapshotSheet extends StatelessWidget {
                   icon: Icon(Icons.copy, size: 18, color: Tokens.ink),
                 ),
                 IconButton(
-                  tooltip: 'close',
+                  tooltip: 'Close',
                   onPressed: () => Navigator.pop(context),
                   icon: Icon(Icons.close, size: 18, color: Tokens.ink),
                 ),
@@ -470,7 +474,7 @@ class _ResetSheet extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             _PrimaryButton(
-              label: 'reset local logs',
+              label: 'Reset local logs',
               onTap: () async {
                 await onConfirm();
                 if (context.mounted) Navigator.pop(context, true);

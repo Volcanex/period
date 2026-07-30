@@ -5,6 +5,7 @@ import '../../api/contracts/tracker_definition.dart';
 import '../../api/contracts/tracker_pack.dart';
 import '../../data/models.dart';
 import '../../state/api_scope.dart';
+import '../../theme/layout.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 import '../shared/top_bar.dart';
@@ -53,7 +54,7 @@ class _TrackersScreenState extends State<TrackersScreen> {
     return Column(
       children: [
         TopBar(
-          title: 'trackers',
+          title: 'Trackers',
           trailing: [
             _TopIconButton(
               icon: _searchOpen ? Icons.close : Icons.search,
@@ -62,103 +63,105 @@ class _TrackersScreenState extends State<TrackersScreen> {
           ],
         ),
         Expanded(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
-            children: [
-              if (_searchOpen) ...[
-                _TrackerSearchField(
-                  controller: _searchController,
-                  onChanged: (value) => setState(() => _query = value),
+          child: ContentPane(
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+              children: [
+                if (_searchOpen) ...[
+                  _TrackerSearchField(
+                    controller: _searchController,
+                    onChanged: (value) => setState(() => _query = value),
+                  ),
+                  const SizedBox(height: 12),
+                ],
+
+                // tracker packs
+                SectionBox(
+                  eyebrow: 'tracker packs',
+                  trailing: const SectionAction(
+                    label: 'does not diagnose',
+                    muted: true,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (packs.isEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            'No packs match this search.',
+                            style: Type.body(size: 13, color: Tokens.graphite2),
+                          ),
+                        )
+                      else
+                        for (final pack in packs)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: TrackerPackCard(
+                              name: pack.displayName,
+                              desc: pack.description,
+                              adds: _packAdds(pack, allDefinitions),
+                              enabledCount: _enabledCount(pack, allDefinitions),
+                              on: _packOn(pack),
+                              highlighted: widget.focusPackCode == pack.code,
+                              subdued: _packStatus(pack).subdued,
+                              statusLabel: _packStatus(pack).label,
+                              onToggle: () => widget.onSetPackEnabled(
+                                pack.code,
+                                !_packOn(pack),
+                              ),
+                              onOpen: () =>
+                                  _openPackSheet(context, pack, allDefinitions),
+                            ),
+                          ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 12),
-              ],
 
-              // tracker packs
-              SectionBox(
-                eyebrow: 'tracker packs',
-                trailing: const SectionAction(
-                  label: 'does not diagnose',
-                  muted: true,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (packs.isEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                          'no packs match this search.',
-                          style: Type.body(size: 13, color: Tokens.graphite2),
-                        ),
-                      )
-                    else
-                      for (final pack in packs)
+                SectionBox(
+                  eyebrow: 'trackers on today',
+                  trailing: SectionAction(
+                    label: '${definitions.length} on',
+                    muted: true,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      if (definitions.isEmpty)
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: TrackerPackCard(
-                            name: pack.displayName,
-                            desc: pack.description,
-                            adds: _packAdds(pack, allDefinitions),
-                            enabledCount: _enabledCount(pack, allDefinitions),
-                            on: _packOn(pack),
-                            highlighted: widget.focusPackCode == pack.code,
-                            subdued: _packStatus(pack).subdued,
-                            statusLabel: _packStatus(pack).label,
-                            onToggle: () => widget.onSetPackEnabled(
-                              pack.code,
-                              !_packOn(pack),
-                            ),
-                            onOpen: () =>
-                                _openPackSheet(context, pack, allDefinitions),
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Text(
+                            'No trackers match this search.',
+                            style: Type.body(size: 13, color: Tokens.graphite2),
                           ),
-                        ),
-                  ],
+                        )
+                      else
+                        for (final def in definitions)
+                          TrackerRow(
+                            leading: '',
+                            name: def.displayName,
+                            meta: _kindLabel(def),
+                            trailing: const _RowStateLabel('on today'),
+                          ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
 
-              SectionBox(
-                eyebrow: 'trackers on today',
-                trailing: SectionAction(
-                  label: '${definitions.length} on',
-                  muted: true,
+                const SizedBox(height: 14),
+                Text(
+                  '[ turn packs on to add Today trackers · observations stay local ]',
+                  textAlign: TextAlign.center,
+                  style: Type.mono(
+                    size: 10,
+                    color: Tokens.graphite2,
+                    letterSpacingEm: 0.08,
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    if (definitions.isEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: Text(
-                          'no trackers match this search.',
-                          style: Type.body(size: 13, color: Tokens.graphite2),
-                        ),
-                      )
-                    else
-                      for (final def in definitions)
-                        TrackerRow(
-                          leading: '',
-                          name: def.displayName.toLowerCase(),
-                          meta: _kindLabel(def),
-                          trailing: const _RowStateLabel('on today'),
-                        ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 14),
-              Text(
-                '[ turn packs on to add Today trackers · observations stay local ]',
-                textAlign: TextAlign.center,
-                style: Type.mono(
-                  size: 10,
-                  color: Tokens.graphite2,
-                  letterSpacingEm: 0.08,
-                ),
-              ),
-              const SizedBox(height: 6),
-              _CatalogProvenance(catalog: catalog),
-            ],
+                const SizedBox(height: 6),
+                _CatalogProvenance(catalog: catalog),
+              ],
+            ),
           ),
         ),
       ],
@@ -250,7 +253,7 @@ class _TrackersScreenState extends State<TrackersScreen> {
     final byCode = {for (final d in definitions) d.code: d};
     return [
       for (final code in pack.trackerCodes.take(5))
-        (byCode[code]?.displayName ?? code).toLowerCase(),
+        byCode[code]?.displayName ?? code,
     ];
   }
 
@@ -317,7 +320,7 @@ class _PackDetailSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SheetScaffold(
-      title: pack.displayName.toLowerCase(),
+      title: pack.displayName,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -348,13 +351,13 @@ class _PackDetailSheet extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: _PackMetric(label: 'state', value: on ? 'on' : 'off'),
+                child: _PackMetric(label: 'state', value: on ? 'On' : 'Off'),
               ),
             ],
           ),
           const SizedBox(height: 14),
           SheetPrimaryButton(
-            label: on ? 'turn pack off' : 'turn pack on',
+            label: on ? 'Turn pack off' : 'Turn pack on',
             onPressed: () {
               onTogglePack();
               Navigator.of(context).pop();
@@ -374,7 +377,7 @@ class _PackDetailSheet extends StatelessWidget {
                 for (final def in definitions)
                   TrackerRow(
                     leading: '',
-                    name: def.displayName.toLowerCase(),
+                    name: def.displayName,
                     meta: _sheetKindLabel(def),
                     trailing: _RowStateLabel(on ? 'on today' : 'in pack'),
                   ),
@@ -561,7 +564,7 @@ class _TrackerSearchField extends StatelessWidget {
               cursorColor: Tokens.ink,
               style: Type.body(size: 14, color: Tokens.ink),
               decoration: InputDecoration(
-                hintText: 'search trackers or packs',
+                hintText: 'Search trackers or packs',
                 hintStyle: Type.body(size: 14, color: Tokens.graphite2),
                 border: InputBorder.none,
                 isDense: true,
@@ -592,8 +595,8 @@ List<TrackerDefinition> _fixtureDefinitions() => [
 List<TrackerPack> _fixturePacks() => [
   TrackerPack(
     code: 'base_symptoms',
-    displayName: 'base symptoms',
-    description: 'core period, symptom, mood, and vital trackers.',
+    displayName: 'Base symptoms',
+    description: 'Core period, symptom, mood, and vital trackers.',
     trackerCodes: const [
       'period_bleeding',
       'cramps',

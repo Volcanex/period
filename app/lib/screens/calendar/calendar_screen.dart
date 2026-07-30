@@ -7,6 +7,7 @@ import '../../data/clock.dart';
 import '../../data/models.dart';
 import '../../state/local_period_store.dart';
 import '../../theme/curves.dart';
+import '../../theme/layout.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 import '../shared/top_bar.dart';
@@ -132,7 +133,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Column(
       children: [
         TopBar(
-          title: 'calendar',
+          title: 'Calendar',
           trailing: [
             _MonthBadge(
               month: monthName,
@@ -144,24 +145,42 @@ class _CalendarScreenState extends State<CalendarScreen> {
         Expanded(
           child: Container(
             color: Tokens.base,
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
-              children: [
-                const _CycleOverview(),
-                const SizedBox(height: 18),
-                const WeekdayHeader(),
-                const SizedBox(height: 6),
-                _MonthGrid(
-                  monthAnchor: _visibleMonth,
-                  logFor: widget.logFor,
-                  onTapDay: _openDay,
-                ),
-                const SizedBox(height: 18),
-                const _Legend(),
-                const SizedBox(height: 12),
-                const _FooterHint(),
-                const SizedBox(height: 80),
-              ],
+            child: ContentPane(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+                children: [
+                  const _CycleOverview(),
+                  const SizedBox(height: 18),
+                  // Header and grid share one cap so the columns stay aligned
+                  // and the cells stop growing on a desktop window.
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        maxWidth: Layout.monthGridMax,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          const WeekdayHeader(),
+                          const SizedBox(height: 6),
+                          _MonthGrid(
+                            monthAnchor: _visibleMonth,
+                            logFor: widget.logFor,
+                            onTapDay: _openDay,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 18),
+                  const _Legend(),
+                  const SizedBox(height: 12),
+                  const _FooterHint(),
+                  SizedBox(
+                    height: Layout.of(context) == Breakpoint.compact ? 80 : 24,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -172,36 +191,36 @@ class _CalendarScreenState extends State<CalendarScreen> {
   static String _monthName(int m, int y) {
     const names = [
       '',
-      'jan',
-      'feb',
-      'mar',
-      'apr',
-      'may',
-      'jun',
-      'jul',
-      'aug',
-      'sep',
-      'oct',
-      'nov',
-      'dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${names[m]} $y';
   }
 
   static String _phaseLabel(_Phase? p) => switch (p) {
     null => '',
-    _Phase.menstrual => 'menstrual',
-    _Phase.follicular => 'follicular',
-    _Phase.ovulation => 'ovulation',
-    _Phase.luteal => 'luteal',
+    _Phase.menstrual => 'Menstrual',
+    _Phase.follicular => 'Follicular',
+    _Phase.ovulation => 'Ovulation',
+    _Phase.luteal => 'Luteal',
   };
 
   static String _kindLabel(_Kind k) => switch (k) {
     _Kind.none => '',
-    _Kind.today => 'today',
-    _Kind.ovulationPeak => 'ovulation peak (estimated)',
-    _Kind.flowPast => 'logged flow',
-    _Kind.flowPredicted => 'predicted flow',
+    _Kind.today => 'Today',
+    _Kind.ovulationPeak => 'Ovulation peak (estimated)',
+    _Kind.flowPast => 'Logged flow',
+    _Kind.flowPredicted => 'Predicted flow',
   };
 
   static bool _sameDay(DateTime a, DateTime b) =>
@@ -290,18 +309,18 @@ class _ChevronButton extends StatelessWidget {
 String _ovulationWindowText() {
   const names = [
     '',
-    'jan',
-    'feb',
-    'mar',
-    'apr',
-    'may',
-    'jun',
-    'jul',
-    'aug',
-    'sep',
-    'oct',
-    'nov',
-    'dec',
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
   final start = CalendarScreen.cycleAnchor.add(
     Duration(days: CalendarScreen.ovStart - 1),
@@ -358,7 +377,7 @@ class _CycleOverview extends StatelessWidget {
                   TextSpan(
                     children: [
                       TextSpan(
-                        text: 'day $cd \u00b7 ovulation est. ',
+                        text: 'Day $cd \u00b7 ovulation est. ',
                         style: Type.mono(
                           size: 11,
                           color: Tokens.graphite2,
@@ -402,7 +421,7 @@ class _CycleOverviewUnknown extends StatelessWidget {
           Text('THIS CYCLE', style: Type.eyebrow()),
           const SizedBox(height: 4),
           Text(
-            'no cycle data yet',
+            'No cycle data yet',
             style: Type.display(
               size: 18,
               weight: Tokens.fwMedium,
@@ -412,7 +431,7 @@ class _CycleOverviewUnknown extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            'tap a day you bled to start the model.',
+            'Tap a day you bled to start the model.',
             style: Type.body(size: 13, color: Tokens.graphite2, height: 1.4),
           ),
         ],
@@ -880,7 +899,6 @@ class _TodayMotion {
       shadowAlphaDark: 0.30 - 0.14 * p,
     );
   }
-
 }
 
 Color _todayGlowFor(_Cell c) {
@@ -914,25 +932,25 @@ class _Legend extends StatelessWidget {
 
     final entries = <_LegendEntry>[
       const _LegendEntry(
-        'menstrual',
+        'Menstrual',
         Tokens.phaseMenstrual,
         Tokens.phaseMenstrual,
         false,
       ),
       _LegendEntry(
-        'follicular',
+        'Follicular',
         Tokens.phaseCalFollicular,
         Tokens.phaseFollicularEdge,
         false,
       ),
       _LegendEntry(
-        'ovulation',
+        'Ovulation',
         Tokens.phaseCalOvulation,
         Tokens.phaseOvulationDeep,
         true,
       ),
       _LegendEntry(
-        'luteal',
+        'Luteal',
         Tokens.phaseCalLuteal,
         Tokens.phaseLutealDeep,
         false,
@@ -941,7 +959,7 @@ class _Legend extends StatelessWidget {
       // would point at something that isn't there.
       if (CalendarScreen.hasCycleAnchor)
         const _LegendEntry(
-          'predicted',
+          'Predicted',
           Colors.transparent,
           Tokens.phaseMenstrual,
           true,

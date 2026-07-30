@@ -47,10 +47,10 @@ class _NoPattern extends StatelessWidget {
     // population rather than from you".
     final message = switch (state) {
       _ when state.cycleDay == null =>
-        'no cycle data yet. log a period start and patterns appear here.',
+        'No cycle data yet. Log a period start and patterns appear here.',
       _ when state.cycleCount <= 1 =>
-        'using the population prior until you log at least 2 period starts.',
-      _ => 'not enough data yet. log a few cycles before any averages appear.',
+        'Using the population prior until you log at least 2 period starts.',
+      _ => 'Not enough data yet. Log a few cycles before any averages appear.',
     };
     return Text(
       message,
@@ -76,11 +76,11 @@ class _PatternLine extends StatelessWidget {
     return Text.rich(
       TextSpan(
         children: [
-          TextSpan(text: 'your last ', style: body),
+          TextSpan(text: 'Your last ', style: body),
           TextSpan(text: '${state.cycleCount} cycles', style: em),
           TextSpan(text: ' averaged ', style: body),
           TextSpan(text: state.avg!, style: em),
-          TextSpan(text: '.\nflow length averaged ', style: body),
+          TextSpan(text: '.\nFlow length averaged ', style: body),
           TextSpan(text: state.avgFlow!, style: em),
           TextSpan(text: '.', style: body),
         ],

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../../../api/contracts/tracker_definition.dart';
 import '../../../data/models.dart';
+import '../../../theme/text_case.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
 
@@ -39,7 +40,10 @@ class TodayTrackerGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         const gap = 8.0;
-        final tileWidth = (constraints.maxWidth - gap) / 2;
+        // Two up on a phone; wider columns add tiles rather than stretching
+        // them, so a tile keeps roughly its phone size everywhere.
+        final cols = (constraints.maxWidth / 200).floor().clamp(2, 4);
+        final tileWidth = (constraints.maxWidth - gap * (cols - 1)) / cols;
         return Wrap(
           spacing: gap,
           runSpacing: gap,
@@ -96,7 +100,7 @@ class TodayTrackerGrid extends StatelessWidget {
       id: catalog.code,
       name: catalog.displayName.toLowerCase(),
       unit: catalog.unit ?? '',
-      placeholder: 'tap to log',
+      placeholder: 'Tap to log',
     );
   }
 }
@@ -196,7 +200,7 @@ class _Tile extends StatelessWidget {
                 )
               else if (labelValue != null)
                 Text(
-                  labelValue!,
+                  displayCase(labelValue!),
                   style: Type.display(
                     size: 20,
                     weight: Tokens.fwMedium,

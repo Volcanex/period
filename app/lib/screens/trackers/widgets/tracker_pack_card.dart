@@ -82,7 +82,7 @@ class TrackerPackCard extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                highlighted ? '$desc\n\nopened from insights' : desc,
+                highlighted ? '$desc\n\nOpened from insights' : desc,
                 style: Type.body(
                   size: 12,
                   color: subdued
@@ -98,7 +98,7 @@ class TrackerPackCard extends StatelessWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   _MiniStat(label: 'trackers', value: '$enabledCount'),
-                  _MiniStat(label: 'today', value: on ? 'on' : 'off'),
+                  _MiniStat(label: 'today', value: on ? 'On' : 'Off'),
                   _SmallAction(label: 'details', onTap: onOpen),
                 ],
               ),

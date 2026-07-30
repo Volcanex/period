@@ -813,18 +813,18 @@ String? _unitForNumeric(String trackerId) => switch (trackerId) {
 String _formatShort(DateTime d) {
   const months = [
     '',
-    'jan',
-    'feb',
-    'mar',
-    'apr',
-    'may',
-    'jun',
-    'jul',
-    'aug',
-    'sep',
-    'oct',
-    'nov',
-    'dec',
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
   return '${months[d.month]} ${d.day}';
 }

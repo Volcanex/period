@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Design tokens for Period — direct port of `colors_and_type.css`, with a
+/// Design tokens for Sequence — direct port of `colors_and_type.css`, with a
 /// small app-level dark theme layered on top for the live demo.
 class Tokens {
   Tokens._();

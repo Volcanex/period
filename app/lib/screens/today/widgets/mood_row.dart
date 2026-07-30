@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../theme/text_case.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
 
@@ -64,7 +65,7 @@ class _MoodTile extends StatelessWidget {
           ),
           child: Center(
             child: Text(
-              label,
+              displayCase(label),
               textAlign: TextAlign.center,
               style: Type.mono(
                 size: 10,

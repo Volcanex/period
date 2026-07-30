@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../api/contracts/tracker_definition.dart';
 import '../../data/clock.dart';
 import '../../data/models.dart';
+import '../../theme/layout.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 import '../shared/top_bar.dart';
@@ -126,15 +127,15 @@ class TodayScreen extends StatelessWidget {
       return;
     }
     if (trackerId == 'period_bleeding') {
-      _showTrackerHint(context, 'use the bleeding card above');
+      _showTrackerHint(context, 'Use the bleeding card above');
       return;
     }
     if (trackerId == 'mood') {
-      _showTrackerHint(context, 'use the mood row below');
+      _showTrackerHint(context, 'Use the mood row below');
       return;
     }
     if (trackerId == 'note') {
-      _showTrackerHint(context, 'use the note box below');
+      _showTrackerHint(context, 'Use the note box below');
       return;
     }
     if (catalogDef != null &&
@@ -145,7 +146,7 @@ class TodayScreen extends StatelessWidget {
       _openGeneric(context, catalogDef);
       return;
     }
-    _showTrackerHint(context, 'this tracker is on Today; logging UI is next');
+    _showTrackerHint(context, 'This tracker is on Today; logging UI is next');
   }
 
   void _openGeneric(BuildContext context, TrackerDefinition def) {
@@ -181,12 +182,13 @@ class TodayScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasCycleData = cycleState.cycleDay != null;
-    final gap = compact ? 14.0 : 22.0;
+    // Only the compact layout carries a bottom tab bar to clear.
+    final bottomGap = Layout.of(context) == Breakpoint.compact ? 96.0 : 24.0;
     return Column(
       children: [
         TopBar(
-          title: 'today',
+          title: 'Today',
+          contentMaxWidth: Layout.wideMax,
           trailing: [
             _TopIconButton(
               icon: Icons.dark_mode_outlined,
@@ -201,139 +203,196 @@ class TodayScreen extends StatelessWidget {
         Expanded(
           child: Container(
             color: Tokens.base,
-            child: ListView(
-              padding: EdgeInsets.fromLTRB(16, 18, 16, 16),
-              children: [
-                TodayHeader(
-                  state: cycleState,
-                  today: Clock.today,
-                  showMiniRing: showMiniRing,
-                ),
-                SizedBox(
-                  height: gap - 18 + 4,
-                ), // tighten — header eats some space
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: [ConfidenceChip(confidence: cycleState.confidence)],
-                ),
-                SizedBox(height: gap),
-                BleedingCard(value: bleeding, onChanged: onBleedingChanged),
-                if (todayTrackers.isNotEmpty) ...[
-                  SizedBox(height: gap),
-                  SectionBox(
-                    eyebrow: 'trackers',
-                    bare: true,
-                    trailing: SectionAction(
-                      label: 'edit',
-                      onTap: onOpenTrackers,
-                    ),
-                    child: TodayTrackerGrid(
-                      trackerIds: todayTrackers,
-                      values: numericValues,
-                      symptoms: symptoms,
-                      mood: mood,
-                      bleeding: bleeding,
-                      enumValues: enumValues,
-                      booleanValues: booleanValues,
-                      textValues: textValues,
-                      catalogDefinitions: catalogDefinitions,
-                      onTap: (id) => _openPinnedTracker(context, id),
-                    ),
-                  ),
-                ],
-                SizedBox(height: gap),
-                SectionBox(
-                  eyebrow: 'mood',
-                  trailing: mood != null
-                      ? SectionAction(
-                          label: 'clear',
-                          onTap: () => onMoodChanged(null),
-                        )
-                      : null,
-                  child: MoodRow(
-                    moods: moods,
-                    selected: mood,
-                    onChanged: onMoodChanged,
-                  ),
-                ),
-                SizedBox(height: gap),
-                SectionBox(
-                  eyebrow: 'symptoms',
-                  trailing: SectionAction(
-                    label: 'tap to set severity',
-                    muted: true,
-                  ),
-                  child: SymptomsRow(
-                    symptoms: symptomLabels,
-                    values: symptoms,
-                    onTapSymptom: (s) => _openSymptom(context, s),
-                    onTapMore: () {
-                      showModalBottomSheet<void>(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        barrierColor: Tokens.ink.withValues(alpha: 0.6),
-                        builder: (_) => const _MoreSymptomsSheet(),
-                      );
-                    },
-                  ),
-                ),
-                SizedBox(height: gap),
-                SectionBox(
-                  eyebrow: 'note',
-                  trailing: note.isNotEmpty
-                      ? Text(
-                          'AUTOSAVED · JUST NOW',
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final twoColumn = constraints.maxWidth >= Layout.twoColumnMin;
+                return ContentPane(
+                  maxWidth: twoColumn ? Layout.wideMax : Layout.readableMax,
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(16, 18, 16, 16),
+                    children: [
+                      ...twoColumn
+                          ? _twoColumnBody(context)
+                          : _singleColumnBody(context),
+                      const SizedBox(height: 12),
+                      Center(
+                        child: Text(
+                          '[ ON-DEVICE · NO ACCOUNT · NO CLOUD ]',
                           style: Type.mono(
                             size: 10,
                             color: Tokens.graphite2,
                             letterSpacingEm: 0.08,
                             height: 1.0,
                           ),
-                        )
-                      : null,
-                  child: NotesSection(value: note, onChanged: onNoteChanged),
-                ),
-                if (hasCycleData) ...[
-                  SizedBox(height: gap),
-                  SectionBox(
-                    eyebrow: 'upcoming',
-                    bare: true,
-                    trailing: Text(
-                      'EST. WINDOW',
-                      style: Type.mono(
-                        size: 10,
-                        color: Tokens.graphite2,
-                        letterSpacingEm: 0.08,
-                        height: 1.0,
+                        ),
                       ),
-                    ),
-                    child: UpcomingCard(state: cycleState),
+                      SizedBox(height: bottomGap),
+                    ],
                   ),
-                ],
-                SizedBox(height: gap),
-                RecentPattern(state: cycleState),
-                const SizedBox(height: 12),
-                Center(
-                  child: Text(
-                    '[ ON-DEVICE · NO ACCOUNT · NO CLOUD ]',
-                    style: Type.mono(
-                      size: 10,
-                      color: Tokens.graphite2,
-                      letterSpacingEm: 0.08,
-                      height: 1.0,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 96), // breathing room above tab bar
-              ],
+                );
+              },
             ),
           ),
         ),
       ],
     );
   }
+
+  double get _gap => compact ? 14.0 : 22.0;
+
+  bool get _hasCycleData => cycleState.cycleDay != null;
+
+  List<Widget> _singleColumnBody(BuildContext context) => [
+    ..._masthead(),
+    SizedBox(height: _gap),
+    _bleeding(),
+    if (todayTrackers.isNotEmpty) ...[
+      SizedBox(height: _gap),
+      _trackers(context),
+    ],
+    SizedBox(height: _gap),
+    _mood(),
+    SizedBox(height: _gap),
+    _symptoms(context),
+    SizedBox(height: _gap),
+    _note(),
+    if (_hasCycleData) ...[SizedBox(height: _gap), _upcoming()],
+    SizedBox(height: _gap),
+    RecentPattern(state: cycleState),
+  ];
+
+  /// Desktop: logging on the left, what the model makes of it on the right.
+  List<Widget> _twoColumnBody(BuildContext context) => [
+    ..._masthead(),
+    SizedBox(height: _gap),
+    Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _bleeding(),
+              if (todayTrackers.isNotEmpty) ...[
+                SizedBox(height: _gap),
+                _trackers(context),
+              ],
+              SizedBox(height: _gap),
+              _mood(),
+              SizedBox(height: _gap),
+              _symptoms(context),
+            ],
+          ),
+        ),
+        SizedBox(width: _gap),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _note(),
+              if (_hasCycleData) ...[SizedBox(height: _gap), _upcoming()],
+              SizedBox(height: _gap),
+              RecentPattern(state: cycleState),
+            ],
+          ),
+        ),
+      ],
+    ),
+  ];
+
+  List<Widget> _masthead() => [
+    TodayHeader(
+      state: cycleState,
+      today: Clock.today,
+      showMiniRing: showMiniRing,
+    ),
+    // tighten — header eats some space
+    SizedBox(height: _gap - 18 + 4),
+    Wrap(
+      spacing: 6,
+      runSpacing: 6,
+      children: [ConfidenceChip(confidence: cycleState.confidence)],
+    ),
+  ];
+
+  Widget _bleeding() =>
+      BleedingCard(value: bleeding, onChanged: onBleedingChanged);
+
+  Widget _trackers(BuildContext context) => SectionBox(
+    eyebrow: 'trackers',
+    bare: true,
+    trailing: SectionAction(label: 'edit', onTap: onOpenTrackers),
+    child: TodayTrackerGrid(
+      trackerIds: todayTrackers,
+      values: numericValues,
+      symptoms: symptoms,
+      mood: mood,
+      bleeding: bleeding,
+      enumValues: enumValues,
+      booleanValues: booleanValues,
+      textValues: textValues,
+      catalogDefinitions: catalogDefinitions,
+      onTap: (id) => _openPinnedTracker(context, id),
+    ),
+  );
+
+  Widget _mood() => SectionBox(
+    eyebrow: 'mood',
+    trailing: mood != null
+        ? SectionAction(label: 'clear', onTap: () => onMoodChanged(null))
+        : null,
+    child: MoodRow(moods: moods, selected: mood, onChanged: onMoodChanged),
+  );
+
+  Widget _symptoms(BuildContext context) => SectionBox(
+    eyebrow: 'symptoms',
+    trailing: SectionAction(label: 'tap to set severity', muted: true),
+    child: SymptomsRow(
+      symptoms: symptomLabels,
+      values: symptoms,
+      onTapSymptom: (s) => _openSymptom(context, s),
+      onTapMore: () {
+        showModalBottomSheet<void>(
+          context: context,
+          isScrollControlled: true,
+          backgroundColor: Colors.transparent,
+          barrierColor: Tokens.ink.withValues(alpha: 0.6),
+          builder: (_) => const _MoreSymptomsSheet(),
+        );
+      },
+    ),
+  );
+
+  Widget _note() => SectionBox(
+    eyebrow: 'note',
+    trailing: note.isNotEmpty
+        ? Text(
+            'AUTOSAVED · JUST NOW',
+            style: Type.mono(
+              size: 10,
+              color: Tokens.graphite2,
+              letterSpacingEm: 0.08,
+              height: 1.0,
+            ),
+          )
+        : null,
+    child: NotesSection(value: note, onChanged: onNoteChanged),
+  );
+
+  Widget _upcoming() => SectionBox(
+    eyebrow: 'upcoming',
+    bare: true,
+    trailing: Text(
+      'EST. WINDOW',
+      style: Type.mono(
+        size: 10,
+        color: Tokens.graphite2,
+        letterSpacingEm: 0.08,
+        height: 1.0,
+      ),
+    ),
+    child: UpcomingCard(state: cycleState),
+  );
 }
 
 const _numericTrackerIds = {
@@ -430,7 +489,7 @@ class _MoreSymptomsSheet extends StatelessWidget {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  'more symptoms',
+                  'More symptoms',
                   style: Type.display(
                     size: 18,
                     weight: Tokens.fwMedium,
@@ -457,7 +516,7 @@ class _MoreSymptomsSheet extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             Text(
-              'enable additional trackers from the trackers tab. tracker packs add to this list — they do not change the model.',
+              'Enable additional trackers from the Trackers tab. Tracker packs add to this list — they do not change the model.',
               style: Type.body(size: 14, height: 1.55),
             ),
             const SizedBox(height: 14),
@@ -478,7 +537,7 @@ class _MoreSymptomsSheet extends StatelessWidget {
                   ),
                 ),
                 child: Text(
-                  'got it',
+                  'Got it',
                   style: Type.body(
                     size: 14,
                     weight: Tokens.fwMedium,

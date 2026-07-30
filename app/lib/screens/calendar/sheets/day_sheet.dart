@@ -111,7 +111,7 @@ class _DaySheetState extends State<DaySheet> {
                     children: [
                       Text(
                         widget.phaseLabel.isEmpty
-                            ? 'day log'
+                            ? 'Day log'
                             : '${widget.phaseLabel} phase',
                         style: Type.display(
                           size: 16,
@@ -122,7 +122,7 @@ class _DaySheetState extends State<DaySheet> {
                       if (widget.cycleDay != null) ...[
                         const SizedBox(height: 4),
                         Text(
-                          'cycle day ${widget.cycleDay}',
+                          'Cycle day ${widget.cycleDay}',
                           style: Type.mono(
                             size: 11,
                             color: Tokens.graphite2,
@@ -182,7 +182,7 @@ class _DaySheetState extends State<DaySheet> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               alignment: Alignment.center,
               child: Text(
-                "[ can't log a day that hasn't happened yet ]",
+                "[ Can't log a day that hasn't happened yet ]",
                 style: Type.mono(
                   size: 10,
                   color: Tokens.graphite2,
@@ -243,7 +243,7 @@ class _DaySheetState extends State<DaySheet> {
             ),
             const SizedBox(height: 14),
             SheetPrimaryButton(
-              label: 'done',
+              label: 'Done',
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
@@ -363,33 +363,33 @@ class _DaySheetState extends State<DaySheet> {
 
   String _bodyText() {
     if (widget.isFuture) {
-      return 'this is a projection from the cycle model. nothing has been logged.';
+      return 'This is a projection from the cycle model. Nothing has been logged.';
     }
     if (widget.isToday) {
-      return "today's main log also lives on the today tab.";
+      return "Today's main log also lives on the Today tab.";
     }
     if (widget.log.hasAnyLog) {
-      return 'saved locally on this device. edits here update the model immediately.';
+      return 'Saved locally on this device. Edits here update the model immediately.';
     }
-    return 'nothing logged yet. add bleeding here to backfill cycle history.';
+    return 'Nothing logged yet. Add bleeding here to backfill cycle history.';
   }
 
   static String _formatDate(DateTime d) {
-    const wk = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+    const wk = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     const months = [
       '',
-      'jan',
-      'feb',
-      'mar',
-      'apr',
-      'may',
-      'jun',
-      'jul',
-      'aug',
-      'sep',
-      'oct',
-      'nov',
-      'dec',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ];
     return '${wk[d.weekday - 1]}, ${months[d.month]} ${d.day}';
   }
@@ -435,7 +435,7 @@ class _TrackerLogRow extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: Text(
-                  definition.displayName.toLowerCase(),
+                  definition.displayName,
                   style: Type.body(size: 14, color: Tokens.ink, height: 1.1),
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -1,5 +1,5 @@
 name: period_app
-description: "Period — local-first cycle tracker. Flutter client."
+description: "Sequence — local-first cycle tracker. Flutter client."
 publish_to: 'none'
 
 version: 0.1.0+1

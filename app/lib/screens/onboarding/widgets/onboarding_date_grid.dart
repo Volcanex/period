@@ -2,35 +2,36 @@ import 'package:flutter/material.dart';
 
 import '../../../theme/curves.dart';
 import '../../../theme/icons.dart';
+import '../../../theme/layout.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
 import '../../shared/weekday_header.dart';
 
 const _monthNames = [
   '',
-  'jan',
-  'feb',
-  'mar',
-  'apr',
-  'may',
-  'jun',
-  'jul',
-  'aug',
-  'sep',
-  'oct',
-  'nov',
-  'dec',
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
 ];
 
 const _weekdayNames = [
   '',
-  'monday',
-  'tuesday',
-  'wednesday',
-  'thursday',
-  'friday',
-  'saturday',
-  'sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+  'Sunday',
 ];
 
 /// Month grid for picking a past date.
@@ -60,11 +61,8 @@ class OnboardingDateGrid extends StatefulWidget {
 class _OnboardingDateGridState extends State<OnboardingDateGrid> {
   late DateTime _month = DateTime(widget.today.year, widget.today.month);
 
-  DateTime get _earliest => DateTime(
-    widget.today.year,
-    widget.today.month - widget.monthsBack,
-    1,
-  );
+  DateTime get _earliest =>
+      DateTime(widget.today.year, widget.today.month - widget.monthsBack, 1);
 
   bool get _canGoBack => _month.isAfter(_earliest);
   bool get _canGoForward =>
@@ -75,23 +73,31 @@ class _OnboardingDateGridState extends State<OnboardingDateGrid> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _MonthNav(
-          label: '${_monthNames[_month.month]} ${_month.year}'.toUpperCase(),
-          onBack: _canGoBack ? () => _shift(-1) : null,
-          onForward: _canGoForward ? () => _shift(1) : null,
+    // Same cell cap as the calendar tab — a wider column gets wider margins,
+    // not bigger days.
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: Layout.monthGridMax),
+        child: Column(
+          children: [
+            _MonthNav(
+              label: '${_monthNames[_month.month]} ${_month.year}'
+                  .toUpperCase(),
+              onBack: _canGoBack ? () => _shift(-1) : null,
+              onForward: _canGoForward ? () => _shift(1) : null,
+            ),
+            const SizedBox(height: 10),
+            const WeekdayHeader(),
+            const SizedBox(height: 6),
+            _Grid(
+              month: _month,
+              today: widget.today,
+              selected: widget.selected,
+              onSelected: widget.onSelected,
+            ),
+          ],
         ),
-        const SizedBox(height: 10),
-        const WeekdayHeader(),
-        const SizedBox(height: 6),
-        _Grid(
-          month: _month,
-          today: widget.today,
-          selected: widget.selected,
-          onSelected: widget.onSelected,
-        ),
-      ],
+      ),
     );
   }
 }
@@ -108,7 +114,11 @@ class _MonthNav extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _NavButton(icon: Ph.caretLeft, onTap: onBack, semantic: 'previous month'),
+        _NavButton(
+          icon: Ph.caretLeft,
+          onTap: onBack,
+          semantic: 'Previous month',
+        ),
         Text(
           label,
           style: Type.mono(
@@ -118,7 +128,11 @@ class _MonthNav extends StatelessWidget {
             height: 1.0,
           ),
         ),
-        _NavButton(icon: Ph.caretRight, onTap: onForward, semantic: 'next month'),
+        _NavButton(
+          icon: Ph.caretRight,
+          onTap: onForward,
+          semantic: 'Next month',
+        ),
       ],
     );
   }
@@ -291,7 +305,9 @@ class _DateCellState extends State<_DateCell>
                 lift = -4.0 * p;
                 scale = 1 + 0.06 * p;
               } else {
-                final p = AppCurves.easeOutCubic((t - _liftEnd) / (1 - _liftEnd));
+                final p = AppCurves.easeOutCubic(
+                  (t - _liftEnd) / (1 - _liftEnd),
+                );
                 lift = -4.0 + 4.0 * p;
                 scale = 1.06 - 0.06 * p;
               }

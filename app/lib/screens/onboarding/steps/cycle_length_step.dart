@@ -24,14 +24,14 @@ class CycleLengthStep extends StatelessWidget {
   Widget build(BuildContext context) {
     return OnboardingScaffold(
       eyebrow: 'step 3 / 4',
-      title: 'how long is your usual cycle?',
+      title: 'How long is your usual cycle?',
       body:
-          'count from the first day of one period to the day before the next. '
-          'most cycles are 25 to 32 days.',
+          'Count from the first day of one period to the day before the next. '
+          'Most cycles are 25 to 32 days.',
       actions: Column(
         children: [
-          OnboardingPrimaryButton(label: 'continue', onPressed: onNext),
-          OnboardingTextLink(label: "i'm not sure", onTap: onSkip),
+          OnboardingPrimaryButton(label: 'Continue', onPressed: onNext),
+          OnboardingTextLink(label: "I'm not sure", onTap: onSkip),
         ],
       ),
       child: Column(
@@ -57,7 +57,7 @@ class CycleLengthStep extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            "we'll start at 28 and adjust as you log.",
+            "We'll start at 28 and adjust as you log.",
             textAlign: TextAlign.center,
             style: Type.body(size: 13, color: Tokens.graphite2, height: 1.45),
           ),

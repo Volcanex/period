@@ -56,7 +56,7 @@ class PackSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'day 1',
+                'Day 1',
                 style: Type.mono(
                   size: 9,
                   color: Tokens.graphite2,
@@ -64,7 +64,7 @@ class PackSection extends StatelessWidget {
                 ),
               ),
               Text(
-                'day 14',
+                'Day 14',
                 style: Type.mono(
                   size: 9,
                   color: Tokens.graphite2,
@@ -72,7 +72,7 @@ class PackSection extends StatelessWidget {
                 ),
               ),
               Text(
-                'day 28',
+                'Day 28',
                 style: Type.mono(
                   size: 9,
                   color: Tokens.graphite2,
@@ -134,7 +134,7 @@ class _PainMapHeader extends StatelessWidget {
       textBaseline: TextBaseline.alphabetic,
       children: [
         Text(
-          'pelvic pain · cycle day map',
+          'Pelvic pain · cycle day map',
           style: Type.display(size: 13, weight: Tokens.fwMedium, height: 1.2),
         ),
         Text('0–4 SEVERITY', style: Type.eyebrow(size: 9)),
@@ -216,7 +216,7 @@ class _TurnOnButton extends StatelessWidget {
               border: Border.all(color: Tokens.ink, width: 1),
             ),
             child: Text(
-              'turn on $label →',
+              'Turn on $label →',
               style: Type.mono(
                 size: 11,
                 color: Tokens.ink,

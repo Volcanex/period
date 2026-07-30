@@ -15,12 +15,12 @@ class PrivacyStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OnboardingScaffold(
-      eyebrow: 'period',
-      title: 'your data stays here.',
-      body: 'period runs entirely on this device.',
+      eyebrow: 'Sequence',
+      title: 'Your data stays here.',
+      body: 'Sequence runs entirely on this device.',
       actions: Column(
         children: [
-          OnboardingPrimaryButton(label: 'start', onPressed: onNext),
+          OnboardingPrimaryButton(label: 'Start', onPressed: onNext),
           const SizedBox(height: 10),
           Text(
             'TAKES ABOUT A MINUTE · CHANGE ANYTHING LATER IN SETTINGS',
@@ -39,19 +39,19 @@ class PrivacyStep extends StatelessWidget {
         children: [
           const PointRow(
             icon: Ph.lockSimple,
-            text: 'nothing is uploaded. there is no server.',
+            text: 'Nothing is uploaded. There is no server.',
           ),
           const PointRow(
             icon: Ph.deviceMobile,
-            text: 'your logs live on this phone.',
+            text: 'Your logs live on this phone.',
           ),
           const PointRow(
             icon: Ph.userCircle,
-            text: 'no account. no email. no password.',
+            text: 'No account. No email. No password.',
           ),
           const PointRow(
             icon: Ph.code,
-            text: 'the code is open source. you can read it.',
+            text: 'The code is open source. You can read it.',
           ),
           const SizedBox(height: 24),
           Text(

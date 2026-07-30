@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../api/contracts/tracker_definition.dart';
+import '../../../theme/text_case.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
 import 'sheet_scaffold.dart';
@@ -64,7 +65,7 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
   Widget build(BuildContext context) {
     final def = widget.definition;
     return SheetScaffold(
-      title: def.displayName.toLowerCase(),
+      title: def.displayName,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -75,7 +76,7 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
           if (def.isText) _textEditor(def),
           const SizedBox(height: 14),
           SheetPrimaryButton(
-            label: 'save',
+            label: 'Save',
             onPressed: () {
               if (def.isNumeric && !_saveNumeric(def)) return;
               if (def.isEnum) widget.onEnumSet(enumValue);
@@ -122,7 +123,7 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
                   ),
                   decoration: InputDecoration(
                     border: InputBorder.none,
-                    hintText: 'not logged',
+                    hintText: 'Not logged',
                     hintStyle: Type.display(
                       size: 20,
                       color: Tokens.graphite2,
@@ -158,7 +159,7 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
         Align(
           alignment: Alignment.centerLeft,
           child: _ChoiceChip(
-            label: 'not logged',
+            label: 'Not logged',
             active: numericController.text.trim().isEmpty,
             onTap: () => setState(() {
               numericController.clear();
@@ -182,7 +183,7 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
           runSpacing: 6,
           children: [
             _ChoiceChip(
-              label: 'not logged',
+              label: 'Not logged',
               active: enumValue == null,
               onTap: () => setState(() => enumValue = null),
             ),
@@ -208,7 +209,7 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
           children: [
             Expanded(
               child: _ChoiceChip(
-                label: 'not logged',
+                label: 'Not logged',
                 active: booleanValue == null,
                 onTap: () => setState(() => booleanValue = null),
               ),
@@ -216,7 +217,7 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
             const SizedBox(width: 6),
             Expanded(
               child: _ChoiceChip(
-                label: 'yes',
+                label: 'Yes',
                 active: booleanValue == true,
                 onTap: () => setState(() => booleanValue = true),
               ),
@@ -224,7 +225,7 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
             const SizedBox(width: 6),
             Expanded(
               child: _ChoiceChip(
-                label: 'no',
+                label: 'No',
                 active: booleanValue == false,
                 onTap: () => setState(() => booleanValue = false),
               ),
@@ -265,7 +266,7 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
               ),
               contentPadding: EdgeInsets.zero,
               border: InputBorder.none,
-              hintText: 'add value...',
+              hintText: 'Add value...',
               hintStyle: Type.body(
                 size: 14,
                 color: Tokens.graphite2,
@@ -286,17 +287,17 @@ class _GenericTrackerSheetState extends State<GenericTrackerSheet> {
     }
     final parsed = double.tryParse(raw);
     if (parsed == null) {
-      setState(() => numericError = 'enter a number');
+      setState(() => numericError = 'Enter a number');
       return false;
     }
     final min = _numberConstraint(def, 'minimum');
     final max = _numberConstraint(def, 'maximum');
     if (min != null && parsed < min) {
-      setState(() => numericError = 'minimum ${_formatNumber(min)}');
+      setState(() => numericError = 'Minimum ${_formatNumber(min)}');
       return false;
     }
     if (max != null && parsed > max) {
-      setState(() => numericError = 'maximum ${_formatNumber(max)}');
+      setState(() => numericError = 'Maximum ${_formatNumber(max)}');
       return false;
     }
     widget.onNumericSet(parsed);
@@ -359,10 +360,10 @@ double? _numberConstraint(TrackerDefinition def, String key) {
 
 String _rangeLabel(double? min, double? max) {
   if (min != null && max != null) {
-    return 'range ${_formatNumber(min)}–${_formatNumber(max)}';
+    return 'Range ${_formatNumber(min)}–${_formatNumber(max)}';
   }
-  if (min != null) return 'minimum ${_formatNumber(min)}';
-  if (max != null) return 'maximum ${_formatNumber(max)}';
+  if (min != null) return 'Minimum ${_formatNumber(min)}';
+  if (max != null) return 'Maximum ${_formatNumber(max)}';
   return '';
 }
 
@@ -374,4 +375,4 @@ String _formatNumber(double value) {
       .replaceFirst(RegExp(r'\.$'), '');
 }
 
-String _humanize(String value) => value.replaceAll('_', ' ');
+String _humanize(String value) => displayCase(value.replaceAll('_', ' '));

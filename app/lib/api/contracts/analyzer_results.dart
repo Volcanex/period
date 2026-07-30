@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 
+import '../../theme/text_case.dart';
+
 /// Minimal Dart mirror of the backend analyzer response shapes.
 /// Only the fields the UI renders are decoded; the full JSON is not stored.
 
@@ -93,18 +95,18 @@ AnalyzerEval parsePcos(Map<String, dynamic> j) {
         ((j['recommended_actions'] as List?) ?? []).cast<String>(),
     stats: [
       (
-        label: 'cycle pattern',
-        value: cycleClassification.replaceAll('_', ' '),
+        label: 'Cycle pattern',
+        value: displayCase(cycleClassification.replaceAll('_', ' ')),
         sub: '$cycleCnt cycles observed',
       ),
       (
-        label: 'hyperandrogenism',
-        value: haFeatures.isEmpty ? 'none logged' : haFeatures.first,
+        label: 'Hyperandrogenism',
+        value: haFeatures.isEmpty ? 'None logged' : displayCase(haFeatures.first),
         sub: haFeatures.length > 1 ? '+${haFeatures.length - 1} more' : '',
       ),
       (
-        label: 'confidence',
-        value: j['confidence'] as String? ?? 'none',
+        label: 'Confidence',
+        value: displayCase(j['confidence'] as String? ?? 'none'),
         sub: j['diagnostic_framework'] as String? ?? '',
       ),
     ],
@@ -124,18 +126,18 @@ AnalyzerEval parsePmdd(Map<String, dynamic> j) {
         ((j['recommended_actions'] as List?) ?? []).cast<String>(),
     stats: [
       (
-        label: 'positive cycles',
+        label: 'Positive cycles',
         value: '$posCycles / $evalCycles',
-        sub: 'of evaluable cycles',
+        sub: 'Of evaluable cycles',
       ),
       (
-        label: 'activation score',
+        label: 'Activation score',
         value: score,
-        sub: 'range-of-scale method',
+        sub: 'Range-of-scale method',
       ),
       (
-        label: 'confidence',
-        value: j['confidence'] as String? ?? 'none',
+        label: 'Confidence',
+        value: displayCase(j['confidence'] as String? ?? 'none'),
         sub: j['diagnostic_framework'] as String? ?? '',
       ),
     ],
@@ -157,17 +159,17 @@ AnalyzerEval parsePerimenopause(Map<String, dynamic> j) {
     stats: [
       (
         label: 'STRAW+10 stage',
-        value: stage,
+        value: displayCase(stage),
         sub: 'Harlow et al. 2012',
       ),
       (
-        label: 'last bleed',
+        label: 'Last bleed',
         value: monthsStr,
         sub: '',
       ),
       (
-        label: 'confidence',
-        value: j['confidence'] as String? ?? 'none',
+        label: 'Confidence',
+        value: displayCase(j['confidence'] as String? ?? 'none'),
         sub: j['diagnostic_framework'] as String? ?? '',
       ),
     ],

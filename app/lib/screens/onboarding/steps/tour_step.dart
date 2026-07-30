@@ -19,25 +19,25 @@ class _Card {
 const _cards = [
   _Card(
     Ph.circle,
-    'today',
-    "log what's happening today — bleeding, mood, symptoms, a note. "
-        'tap anything to change it.',
+    'Today',
+    "Log what's happening today — bleeding, mood, symptoms, a note. "
+        'Tap anything to change it.',
   ),
   _Card(
     Ph.calendarBlank,
-    'calendar',
-    'your months at a glance. solid days are what you logged. '
-        'dashed days are estimates.',
+    'Calendar',
+    'Your months at a glance. Solid days are what you logged. '
+        'Dashed days are estimates.',
   ),
   _Card(
     Ph.chartLine,
-    'insights',
-    'patterns drawn from your own logs. these are patterns, not diagnoses.',
+    'Insights',
+    'Patterns drawn from your own logs. These are patterns, not diagnoses.',
   ),
   _Card(
     Ph.listChecks,
-    'trackers',
-    'turn on only what you want to track. you can change this any time.',
+    'Trackers',
+    'Turn on only what you want to track. You can change this any time.',
   ),
 ];
 
@@ -77,14 +77,14 @@ class _TourStepState extends State<TourStep> {
     final last = _page == _cards.length - 1;
     return OnboardingScaffold(
       eyebrow: 'step 4 / 4',
-      title: 'four tabs.',
+      title: 'Four tabs.',
       trailing: OnboardingTextLink(
         label: 'skip',
         mono: true,
         onTap: widget.onDone,
       ),
       actions: OnboardingPrimaryButton(
-        label: last ? 'done' : 'next',
+        label: last ? 'Done' : 'Next',
         onPressed: _next,
       ),
       child: Column(

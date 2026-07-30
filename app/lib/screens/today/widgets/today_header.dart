@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../data/models.dart';
+import '../../../theme/text_case.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
 import 'mini_ring.dart';
@@ -47,7 +48,7 @@ class TodayHeader extends StatelessWidget {
                 ] else ...[
                   const SizedBox(height: 6),
                   Text(
-                    'no cycle data yet',
+                    'No cycle data yet',
                     style: Type.mono(
                       size: 12,
                       color: Tokens.graphite2,
@@ -107,7 +108,7 @@ class _PhaseLine extends StatelessWidget {
             TextSpan(
               children: [
                 TextSpan(
-                  text: phase.name,
+                  text: displayCase(phase.name),
                   style: Type.display(
                     size: 22,
                     weight: Tokens.fwMedium,
@@ -144,7 +145,7 @@ class _CycleLine extends StatelessWidget {
       TextSpan(
         children: [
           TextSpan(
-            text: 'cycle ',
+            text: 'Cycle ',
             style: Type.mono(
               size: 12,
               color: Tokens.graphite2,
@@ -175,20 +176,20 @@ class _CycleLine extends StatelessWidget {
 }
 
 String _formatDate(DateTime d) {
-  const days = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   const months = [
-    'jan',
-    'feb',
-    'mar',
-    'apr',
-    'may',
-    'jun',
-    'jul',
-    'aug',
-    'sep',
-    'oct',
-    'nov',
-    'dec',
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
   return '${days[d.weekday - 1]}, ${months[d.month - 1]} ${d.day}';
 }

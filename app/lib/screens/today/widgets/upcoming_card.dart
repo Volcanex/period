@@ -29,7 +29,7 @@ class UpcomingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'next period',
+                'Next period',
                 style: Type.display(
                   size: 15,
                   weight: Tokens.fwMedium,
@@ -119,9 +119,9 @@ class _UpcomingLine extends StatelessWidget {
     return Text.rich(
       TextSpan(
         children: [
-          TextSpan(text: 'likely around ', style: body),
+          TextSpan(text: 'Likely around ', style: body),
           TextSpan(text: state.nextMode ?? '—', style: em),
-          TextSpan(text: '\nwindow ', style: body),
+          TextSpan(text: '\nWindow ', style: body),
           TextSpan(
             text: '${state.nextStart ?? '—'} – ${state.nextEnd ?? '—'}',
             style: em,

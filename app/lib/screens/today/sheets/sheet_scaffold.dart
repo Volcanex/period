@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../theme/text_case.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
 
@@ -54,7 +55,7 @@ class SheetScaffold extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Text(
-                      title,
+                      displayCase(title),
                       style: Type.display(
                         size: 18,
                         weight: Tokens.fwMedium,

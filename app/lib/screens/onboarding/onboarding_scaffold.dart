@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../theme/layout.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 
@@ -25,55 +26,64 @@ class OnboardingScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(eyebrow.toUpperCase(), style: Type.eyebrow()),
-              ?trailing,
-            ],
-          ),
-          const SizedBox(height: 14),
-          Text(
-            title,
-            style: Type.display(
-              size: 28,
-              weight: Tokens.fwMedium,
-              height: 1.15,
-              letterSpacingEm: -0.02,
+    // Setup is one statement at a time — it keeps a narrow column at every
+    // size rather than stretching the copy across a desktop window.
+    return ContentPane(
+      maxWidth: Layout.onboardingMax,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(eyebrow.toUpperCase(), style: Type.eyebrow()),
+                ?trailing,
+              ],
             ),
-          ),
-          if (body != null) ...[
-            const SizedBox(height: 10),
+            const SizedBox(height: 14),
             Text(
-              body!,
-              style: Type.body(size: 15, color: Tokens.graphite2, height: 1.5),
+              title,
+              style: Type.display(
+                size: 28,
+                weight: Tokens.fwMedium,
+                height: 1.15,
+                letterSpacingEm: -0.02,
+              ),
             ),
-          ],
-          const SizedBox(height: 22),
-          // Centred when the content is shorter than the space, scrolling when
-          // it isn't — otherwise short steps leave a large gap above the
-          // buttons on a tall phone.
-          Expanded(
-            child: LayoutBuilder(
-              builder: (context, constraints) => SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight,
+            if (body != null) ...[
+              const SizedBox(height: 10),
+              Text(
+                body!,
+                style: Type.body(
+                  size: 15,
+                  color: Tokens.graphite2,
+                  height: 1.5,
+                ),
+              ),
+            ],
+            const SizedBox(height: 22),
+            // Centred when the content is shorter than the space, scrolling when
+            // it isn't — otherwise short steps leave a large gap above the
+            // buttons on a tall phone.
+            Expanded(
+              child: LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: Center(child: child),
                   ),
-                  child: Center(child: child),
                 ),
               ),
             ),
-          ),
-          const SizedBox(height: 16),
-          actions,
-        ],
+            const SizedBox(height: 16),
+            actions,
+          ],
+        ),
       ),
     );
   }
