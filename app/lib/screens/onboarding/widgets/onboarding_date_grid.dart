@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../../theme/curves.dart';
-import '../../../theme/icons.dart';
 import '../../../theme/layout.dart';
 import '../../../theme/tokens.dart';
 import '../../../theme/typography.dart';
+import '../../shared/month_nav.dart';
 import '../../shared/weekday_header.dart';
 
 const _monthNames = [
@@ -80,13 +80,12 @@ class _OnboardingDateGridState extends State<OnboardingDateGrid> {
         constraints: const BoxConstraints(maxWidth: Layout.monthGridMax),
         child: Column(
           children: [
-            _MonthNav(
-              label: '${_monthNames[_month.month]} ${_month.year}'
-                  .toUpperCase(),
+            MonthNav(
+              month: _month,
               onBack: _canGoBack ? () => _shift(-1) : null,
               onForward: _canGoForward ? () => _shift(1) : null,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 14),
             const WeekdayHeader(),
             const SizedBox(height: 6),
             _Grid(
@@ -96,75 +95,6 @@ class _OnboardingDateGridState extends State<OnboardingDateGrid> {
               onSelected: widget.onSelected,
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _MonthNav extends StatelessWidget {
-  final String label;
-  final VoidCallback? onBack;
-  final VoidCallback? onForward;
-
-  const _MonthNav({required this.label, this.onBack, this.onForward});
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _NavButton(
-          icon: Ph.caretLeft,
-          onTap: onBack,
-          semantic: 'Previous month',
-        ),
-        Text(
-          label,
-          style: Type.mono(
-            size: 12,
-            color: Tokens.ink,
-            letterSpacingEm: 0.04,
-            height: 1.0,
-          ),
-        ),
-        _NavButton(
-          icon: Ph.caretRight,
-          onTap: onForward,
-          semantic: 'Next month',
-        ),
-      ],
-    );
-  }
-}
-
-class _NavButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback? onTap;
-  final String semantic;
-
-  const _NavButton({required this.icon, this.onTap, required this.semantic});
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: true,
-      enabled: onTap != null,
-      label: semantic,
-      child: MouseRegion(
-        cursor: onTap == null ? MouseCursor.defer : SystemMouseCursors.click,
-        child: GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: onTap,
-          child: SizedBox(
-            width: 32,
-            height: 32,
-            child: Icon(
-              icon,
-              size: 18,
-              color: onTap == null ? Tokens.graphite2 : Tokens.ink,
-            ),
-          ),
         ),
       ),
     );

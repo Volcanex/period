@@ -11,6 +11,7 @@ import '../../theme/layout.dart';
 import '../../theme/tokens.dart';
 import '../../theme/typography.dart';
 import '../shared/top_bar.dart';
+import '../shared/month_nav.dart';
 import '../shared/weekday_header.dart';
 import '../today/widgets/mini_ring.dart';
 import 'sheets/day_sheet.dart';
@@ -128,20 +129,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final monthName = _monthName(_visibleMonth.month, _visibleMonth.year);
-
     return Column(
       children: [
-        TopBar(
-          title: 'Calendar',
-          trailing: [
-            _MonthBadge(
-              month: monthName,
-              onPrev: () => _stepMonth(-1),
-              onNext: () => _stepMonth(1),
-            ),
-          ],
-        ),
+        const TopBar(title: 'Calendar'),
         Expanded(
           child: Container(
             color: Tokens.base,
@@ -161,6 +151,12 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
+                          MonthNav(
+                            month: _visibleMonth,
+                            onBack: () => _stepMonth(-1),
+                            onForward: () => _stepMonth(1),
+                          ),
+                          const SizedBox(height: 14),
                           const WeekdayHeader(),
                           const SizedBox(height: 6),
                           _MonthGrid(
@@ -186,25 +182,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
         ),
       ],
     );
-  }
-
-  static String _monthName(int m, int y) {
-    const names = [
-      '',
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    return '${names[m]} $y';
   }
 
   static String _phaseLabel(_Phase? p) => switch (p) {
@@ -246,62 +223,6 @@ _Phase? _phaseFor(int? cycleDay) {
   }
   if (cycleDay < CalendarScreen.ovStart) return _Phase.follicular;
   return _Phase.luteal; // post-ovulation through to the next flow
-}
-
-// ---- top bar widgets ----
-
-class _MonthBadge extends StatelessWidget {
-  final String month;
-  final VoidCallback onPrev;
-  final VoidCallback onNext;
-  const _MonthBadge({
-    required this.month,
-    required this.onPrev,
-    required this.onNext,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        _ChevronButton(icon: Icons.chevron_left, onTap: onPrev),
-        const SizedBox(width: 4),
-        Text(
-          month.toUpperCase(),
-          style: Type.mono(
-            size: 12,
-            color: Tokens.ink,
-            letterSpacingEm: 0.04,
-            height: 1.0,
-          ),
-        ),
-        const SizedBox(width: 4),
-        _ChevronButton(icon: Icons.chevron_right, onTap: onNext),
-      ],
-    );
-  }
-}
-
-class _ChevronButton extends StatelessWidget {
-  final IconData icon;
-  final VoidCallback onTap;
-  const _ChevronButton({required this.icon, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: onTap,
-        behavior: HitTestBehavior.opaque,
-        child: Padding(
-          padding: const EdgeInsets.all(4),
-          child: Icon(icon, size: 18, color: Tokens.ink),
-        ),
-      ),
-    );
-  }
 }
 
 // ---- cycle overview ----
