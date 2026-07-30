@@ -14,6 +14,7 @@ const _storeKey = 'period.local_store.v1';
 class DayLog {
   final BleedLevel? bleeding;
   final Map<String, Severity> symptoms;
+  final Map<String, String> symptomNotes;
   final String? mood;
   final Map<String, double> numericValues;
   final Map<String, String> enumValues;
@@ -24,6 +25,7 @@ class DayLog {
   const DayLog({
     this.bleeding,
     this.symptoms = const {},
+    this.symptomNotes = const {},
     this.mood,
     this.numericValues = const {},
     this.enumValues = const {},
@@ -48,6 +50,7 @@ class DayLog {
     BleedLevel? bleeding,
     bool clearBleeding = false,
     Map<String, Severity>? symptoms,
+    Map<String, String>? symptomNotes,
     String? mood,
     bool clearMood = false,
     Map<String, double>? numericValues,
@@ -59,6 +62,7 @@ class DayLog {
     return DayLog(
       bleeding: clearBleeding ? null : bleeding ?? this.bleeding,
       symptoms: symptoms ?? this.symptoms,
+      symptomNotes: symptomNotes ?? this.symptomNotes,
       mood: clearMood ? null : mood ?? this.mood,
       numericValues: numericValues ?? this.numericValues,
       enumValues: enumValues ?? this.enumValues,
@@ -72,6 +76,7 @@ class DayLog {
     if (bleeding != null) 'bleeding': bleeding!.name,
     if (symptoms.isNotEmpty)
       'symptoms': symptoms.map((key, value) => MapEntry(key, value.name)),
+    if (symptomNotes.isNotEmpty) 'symptomNotes': symptomNotes,
     if (mood != null) 'mood': mood,
     if (numericValues.isNotEmpty) 'numericValues': numericValues,
     if (enumValues.isNotEmpty) 'enumValues': enumValues,
@@ -83,6 +88,8 @@ class DayLog {
   static DayLog fromJson(Map<String, dynamic> json) {
     final symptomRaw =
         (json['symptoms'] as Map?)?.cast<String, dynamic>() ?? {};
+    final symptomNoteRaw =
+        (json['symptomNotes'] as Map?)?.cast<String, dynamic>() ?? {};
     final numericRaw =
         (json['numericValues'] as Map?)?.cast<String, dynamic>() ?? {};
     final enumRaw = (json['enumValues'] as Map?)?.cast<String, dynamic>() ?? {};
@@ -95,6 +102,11 @@ class DayLog {
         for (final entry in symptomRaw.entries)
           if (_enumByName(Severity.values, entry.value as String?) != null)
             entry.key: _enumByName(Severity.values, entry.value as String?)!,
+      },
+      symptomNotes: {
+        for (final entry in symptomNoteRaw.entries)
+          if (entry.value is String && (entry.value as String).isNotEmpty)
+            entry.key: entry.value as String,
       },
       mood: json['mood'] as String?,
       numericValues: {
@@ -146,7 +158,18 @@ class LocalPeriodStore extends ChangeNotifier {
   Future<void> load() async {
     _cycleAnchor = Clock.cycleAnchor;
     final prefs = await SharedPreferences.getInstance();
-    final raw = prefs.getString(_storeKey);
+    String? raw;
+    try {
+      raw = prefs.getString(_storeKey);
+    } catch (e) {
+      // The value under our key isn't a string — corrupt, or written by some
+      // other writer (devtools, a future import path, a plugin format change).
+      // getString() throws on a type mismatch, and that throw is what bricks
+      // the boot. Drop the bad value so the app loads clean and self-heals.
+      debugPrint('LocalPeriodStore: unreadable stored value, clearing: $e');
+      await prefs.remove(_storeKey);
+      raw = null;
+    }
     if (raw != null) {
       try {
         final json = (jsonDecode(raw) as Map).cast<String, dynamic>();
@@ -259,16 +282,32 @@ class LocalPeriodStore extends ChangeNotifier {
     _setLog(key, next);
   }
 
-  void setSymptom(DateTime date, String symptom, Severity? severity) {
+  void setSymptom(
+    DateTime date,
+    String symptom,
+    Severity? severity, [
+    String note = '',
+  ]) {
     final key = _dateKey(date);
     final symptoms = {...logFor(date).symptoms};
+    final notes = {...logFor(date).symptomNotes};
     if (severity == null) {
       symptoms.remove(symptom);
+      notes.remove(symptom);
     } else {
       symptoms[symptom] = severity;
+      final trimmed = note.trim();
+      if (trimmed.isEmpty) {
+        notes.remove(symptom);
+      } else {
+        notes[symptom] = trimmed;
+      }
       _ensureObservationId(key, _trackerCodeForSymptom(symptom));
     }
-    _setLog(key, logFor(date).copyWith(symptoms: symptoms));
+    _setLog(
+      key,
+      logFor(date).copyWith(symptoms: symptoms, symptomNotes: notes),
+    );
   }
 
   void setNumeric(DateTime date, String trackerId, double? value) {
@@ -574,7 +613,11 @@ class LocalPeriodStore extends ChangeNotifier {
       final bleeding = log.bleeding;
       if (bleeding != null) add('period_bleeding', bleeding.value);
       for (final symptom in log.symptoms.entries) {
-        add(_trackerCodeForSymptom(symptom.key), symptom.value.name);
+        add(
+          _trackerCodeForSymptom(symptom.key),
+          symptom.value.name,
+          note: log.symptomNotes[symptom.key],
+        );
       }
       final mood = log.mood;
       if (mood != null) add('mood', mood);

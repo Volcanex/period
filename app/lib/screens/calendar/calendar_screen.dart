@@ -25,7 +25,12 @@ class CalendarScreen extends StatefulWidget {
   final DayLog Function(DateTime date) logFor;
   final List<TrackerDefinition> activeDefinitions;
   final void Function(DateTime date, BleedLevel level) onBleedingChanged;
-  final void Function(DateTime date, String symptom, Severity? severity)
+  final void Function(
+    DateTime date,
+    String symptom,
+    Severity? severity,
+    String note,
+  )
   onSymptomChanged;
   final void Function(DateTime date, String? mood) onMoodChanged;
   final void Function(DateTime date, String trackerId, double? value)
@@ -52,16 +57,17 @@ class CalendarScreen extends StatefulWidget {
     required this.onNoteChanged,
   });
 
-  // Cycle days that anchor ovulation. Peak is the centre.
-  static const ovStart = 13;
-  static const ovEnd = 15;
-  // The rest of the cycle math now flows through `Clock` so the calendar
-  // tracks the device date.
+  // Cycle math flows through `Clock` so the calendar tracks the device date
+  // and, crucially, the user's configured cycle length. The ovulation window
+  // brackets the peak day (which `Clock`/the store scale with cycle length)
+  // rather than being pinned to a 28-day reference.
   static DateTime get today => Clock.today;
   static DateTime get cycleAnchor => Clock.cycleAnchor;
   static int get cycleLen => Clock.cycleLen;
   static int get flowLen => Clock.flowLen;
   static int get ovPeak => Clock.ovPeak;
+  static int get ovStart => (ovPeak - 1).clamp(1, cycleLen);
+  static int get ovEnd => (ovPeak + 1).clamp(1, cycleLen);
 
   @override
   State<CalendarScreen> createState() => _CalendarScreenState();
@@ -102,8 +108,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
         isToday: _sameDay(date, CalendarScreen.today),
         isFuture: isFuture,
         onBleedingChanged: (level) => widget.onBleedingChanged(date, level),
-        onSymptomChanged: (symptom, severity) =>
-            widget.onSymptomChanged(date, symptom, severity),
+        onSymptomChanged: (symptom, severity, note) =>
+            widget.onSymptomChanged(date, symptom, severity, note),
         onMoodChanged: (mood) => widget.onMoodChanged(date, mood),
         onNumericChanged: (id, value) =>
             widget.onNumericChanged(date, id, value),
@@ -212,9 +218,8 @@ _Phase _phaseFor(int cycleDay) {
   if (cycleDay >= CalendarScreen.ovStart && cycleDay <= CalendarScreen.ovEnd) {
     return _Phase.ovulation;
   }
-  if (cycleDay <= 12) return _Phase.follicular;
-  if (cycleDay <= 25) return _Phase.luteal;
-  return _Phase.menstrual; // late luteal-into-flow window
+  if (cycleDay < CalendarScreen.ovStart) return _Phase.follicular;
+  return _Phase.luteal; // post-ovulation through to the next flow
 }
 
 // ---- top bar widgets ----

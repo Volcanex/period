@@ -31,8 +31,10 @@ class TodayScreen extends StatelessWidget {
   final BleedLevel? bleeding;
   final ValueChanged<BleedLevel> onBleedingChanged;
   final Map<String, Severity> symptoms;
+  final Map<String, String> symptomNotes;
   final List<String> symptomLabels;
-  final void Function(String symptom, Severity? sev) onSymptomChanged;
+  final void Function(String symptom, Severity? sev, String note)
+  onSymptomChanged;
   final String? mood;
   final ValueChanged<String?> onMoodChanged;
   final Map<String, double> numericValues;
@@ -60,6 +62,7 @@ class TodayScreen extends StatelessWidget {
     required this.bleeding,
     required this.onBleedingChanged,
     required this.symptoms,
+    this.symptomNotes = const {},
     required this.symptomLabels,
     required this.onSymptomChanged,
     required this.mood,
@@ -90,7 +93,8 @@ class TodayScreen extends StatelessWidget {
       builder: (_) => SymptomSheet(
         symptom: symptom,
         current: symptoms[symptom],
-        onSet: (sev) => onSymptomChanged(symptom, sev),
+        currentNote: symptomNotes[symptom] ?? '',
+        onSet: (sev, note) => onSymptomChanged(symptom, sev, note),
       ),
     );
   }

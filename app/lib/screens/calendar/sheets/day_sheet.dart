@@ -27,7 +27,8 @@ class DaySheet extends StatefulWidget {
   final bool isToday;
   final bool isFuture;
   final ValueChanged<BleedLevel> onBleedingChanged;
-  final void Function(String symptom, Severity? severity) onSymptomChanged;
+  final void Function(String symptom, Severity? severity, String note)
+  onSymptomChanged;
   final ValueChanged<String?> onMoodChanged;
   final void Function(String trackerId, double? value) onNumericChanged;
   final void Function(String trackerCode, String? value) onEnumChanged;
@@ -262,7 +263,8 @@ class _DaySheetState extends State<DaySheet> {
         builder: (_) => SymptomSheet(
           symptom: symptom,
           current: symptoms[symptom],
-          onSet: (severity) {
+          currentNote: widget.log.symptomNotes[symptom] ?? '',
+          onSet: (severity, note) {
             setState(() {
               if (severity == null) {
                 symptoms.remove(symptom);
@@ -270,7 +272,7 @@ class _DaySheetState extends State<DaySheet> {
                 symptoms[symptom] = severity;
               }
             });
-            widget.onSymptomChanged(symptom, severity);
+            widget.onSymptomChanged(symptom, severity, note);
           },
         ),
       );

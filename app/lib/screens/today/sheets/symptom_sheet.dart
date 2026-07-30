@@ -9,12 +9,14 @@ import 'sheet_scaffold.dart';
 class SymptomSheet extends StatefulWidget {
   final String symptom;
   final Severity? current;
-  final ValueChanged<Severity?> onSet;
+  final String currentNote;
+  final void Function(Severity? severity, String note) onSet;
 
   const SymptomSheet({
     super.key,
     required this.symptom,
     required this.current,
+    this.currentNote = '',
     required this.onSet,
   });
 
@@ -31,7 +33,8 @@ class _SymptomSheetState extends State<SymptomSheet> {
   void initState() {
     super.initState();
     sev = widget.current;
-    _noteCtrl = TextEditingController();
+    note = widget.currentNote;
+    _noteCtrl = TextEditingController(text: widget.currentNote);
   }
 
   @override
@@ -86,7 +89,7 @@ class _SymptomSheetState extends State<SymptomSheet> {
           SheetPrimaryButton(
             label: 'save',
             onPressed: () {
-              widget.onSet(sev);
+              widget.onSet(sev, note);
               Navigator.of(context).pop();
             },
           ),
