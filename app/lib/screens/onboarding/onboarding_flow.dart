@@ -92,10 +92,7 @@ class _OnboardingFlowState extends State<OnboardingFlow>
                     child: child,
                   ),
                 ),
-                child: KeyedSubtree(
-                  key: ValueKey(_step),
-                  child: _stepWidget(),
-                ),
+                child: KeyedSubtree(key: ValueKey(_step), child: _stepWidget()),
               ),
             ),
           ],

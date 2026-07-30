@@ -41,6 +41,13 @@ class Layout {
   /// size rather than stretching.
   static const double onboardingMax = 520;
 
+  /// Above [compact], setup becomes a centred card. The height is fixed rather
+  /// than fitted so the card does not resize between steps — the date grid is
+  /// much taller than the privacy copy, and a card that jumps on every Continue
+  /// looks broken.
+  static const double onboardingCardMax = 560;
+  static const double onboardingCardHeight = 620;
+
   static const double railWidth = 96;
   static const double sidebarWidth = 216;
 }

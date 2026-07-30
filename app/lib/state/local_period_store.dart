@@ -465,9 +465,7 @@ class LocalPeriodStore extends ChangeNotifier {
     int? cycleLength,
   }) async {
     if (cycleLength != null) _applyCycleLength(cycleLength);
-    _cycleAnchor = lastPeriodStart == null
-        ? null
-        : _dateOnly(lastPeriodStart);
+    _cycleAnchor = lastPeriodStart == null ? null : _dateOnly(lastPeriodStart);
     _setupComplete = true;
     // Real logged starts outrank a self-reported date. Must run after the
     // anchor assignment or it would be clobbered.

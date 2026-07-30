@@ -56,43 +56,44 @@ class AnalyzerResults {
   });
 
   const AnalyzerResults.idle()
-      : pcos = null,
-        pmdd = null,
-        perimenopause = null,
-        state = AnalyzerLoadState.idle,
-        error = null;
+    : pcos = null,
+      pmdd = null,
+      perimenopause = null,
+      state = AnalyzerLoadState.idle,
+      error = null;
 
   const AnalyzerResults.loading()
-      : pcos = null,
-        pmdd = null,
-        perimenopause = null,
-        state = AnalyzerLoadState.loading,
-        error = null;
+    : pcos = null,
+      pmdd = null,
+      perimenopause = null,
+      state = AnalyzerLoadState.loading,
+      error = null;
 
   const AnalyzerResults.unported()
-      : pcos = null,
-        pmdd = null,
-        perimenopause = null,
-        state = AnalyzerLoadState.unported,
-        error = null;
+    : pcos = null,
+      pmdd = null,
+      perimenopause = null,
+      state = AnalyzerLoadState.unported,
+      error = null;
 }
 
 // ---- parsers ----
 
 AnalyzerEval parsePcos(Map<String, dynamic> j) {
-  final cycleSignal = (j['cycle_irregularity'] as Map?)?.cast<String, dynamic>();
+  final cycleSignal = (j['cycle_irregularity'] as Map?)
+      ?.cast<String, dynamic>();
   final haSignal = (j['hyperandrogenism'] as Map?)?.cast<String, dynamic>();
   final cycleClassification = cycleSignal?['classification'] as String? ?? '—';
   final cycleCnt = cycleSignal?['observed_cycle_count'] as int? ?? 0;
-  final haFeatures =
-      ((haSignal?['qualifying_features'] as List?) ?? []).cast<String>();
+  final haFeatures = ((haSignal?['qualifying_features'] as List?) ?? [])
+      .cast<String>();
   return AnalyzerEval(
     status: j['status'] as String? ?? 'insufficient_data',
     confidence: j['confidence'] as String? ?? 'none',
     summary: j['summary'] as String? ?? '',
     suppressors: ((j['suppressors'] as List?) ?? []).cast<String>(),
-    recommendedActions:
-        ((j['recommended_actions'] as List?) ?? []).cast<String>(),
+    recommendedActions: ((j['recommended_actions'] as List?) ?? [])
+        .cast<String>(),
     stats: [
       (
         label: 'Cycle pattern',
@@ -101,7 +102,9 @@ AnalyzerEval parsePcos(Map<String, dynamic> j) {
       ),
       (
         label: 'Hyperandrogenism',
-        value: haFeatures.isEmpty ? 'None logged' : displayCase(haFeatures.first),
+        value: haFeatures.isEmpty
+            ? 'None logged'
+            : displayCase(haFeatures.first),
         sub: haFeatures.length > 1 ? '+${haFeatures.length - 1} more' : '',
       ),
       (
@@ -122,19 +125,15 @@ AnalyzerEval parsePmdd(Map<String, dynamic> j) {
     confidence: j['confidence'] as String? ?? 'none',
     summary: j['summary'] as String? ?? '',
     suppressors: ((j['suppressors'] as List?) ?? []).cast<String>(),
-    recommendedActions:
-        ((j['recommended_actions'] as List?) ?? []).cast<String>(),
+    recommendedActions: ((j['recommended_actions'] as List?) ?? [])
+        .cast<String>(),
     stats: [
       (
         label: 'Positive cycles',
         value: '$posCycles / $evalCycles',
         sub: 'Of evaluable cycles',
       ),
-      (
-        label: 'Activation score',
-        value: score,
-        sub: 'Range-of-scale method',
-      ),
+      (label: 'Activation score', value: score, sub: 'Range-of-scale method'),
       (
         label: 'Confidence',
         value: displayCase(j['confidence'] as String? ?? 'none'),
@@ -145,28 +144,28 @@ AnalyzerEval parsePmdd(Map<String, dynamic> j) {
 }
 
 AnalyzerEval parsePerimenopause(Map<String, dynamic> j) {
-  final stage = (j['straw_stage'] as String? ?? 'indeterminate')
-      .replaceAll('_', ' ');
+  final stage = (j['straw_stage'] as String? ?? 'indeterminate').replaceAll(
+    '_',
+    ' ',
+  );
   final months = j['months_since_last_bleed'] as num?;
-  final monthsStr = months != null ? '${months.toStringAsFixed(1)} mo ago' : '—';
+  final monthsStr = months != null
+      ? '${months.toStringAsFixed(1)} mo ago'
+      : '—';
   return AnalyzerEval(
     status: j['status'] as String? ?? 'insufficient_data',
     confidence: j['confidence'] as String? ?? 'none',
     summary: j['summary'] as String? ?? '',
     suppressors: ((j['suppressors'] as List?) ?? []).cast<String>(),
-    recommendedActions:
-        ((j['recommended_actions'] as List?) ?? []).cast<String>(),
+    recommendedActions: ((j['recommended_actions'] as List?) ?? [])
+        .cast<String>(),
     stats: [
       (
         label: 'STRAW+10 stage',
         value: displayCase(stage),
         sub: 'Harlow et al. 2012',
       ),
-      (
-        label: 'Last bleed',
-        value: monthsStr,
-        sub: '',
-      ),
+      (label: 'Last bleed', value: monthsStr, sub: ''),
       (
         label: 'Confidence',
         value: displayCase(j['confidence'] as String? ?? 'none'),

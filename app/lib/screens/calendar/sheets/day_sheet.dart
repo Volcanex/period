@@ -21,6 +21,7 @@ class DaySheet extends StatefulWidget {
   final DateTime date;
   final String phaseLabel;
   final String kindLabel;
+
   /// Null when no period start is known — the cycle-day line is hidden.
   final int? cycleDay;
   final DayLog log;
