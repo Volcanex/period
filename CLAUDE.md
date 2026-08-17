@@ -1,5 +1,15 @@
 # Period - Backend Modeling Platform + Flutter Client
 
+> **FOSSIL (2026-08-17).** Do not develop here. Period is folded into
+> **state** (`/home/gabriel/state`, state.gabrielpenman.com): the cycle
+> model (`app/lib/model/cycle_model.dart`, `core/model/`) and the PMDD
+> analyzer move there as a submodel feeding state's filter; this repo
+> stays frozen as the Python reference implementation and fixture source
+> (`tests/fixtures/`) that pins the ported model's behaviour. The service
+> stays live at period.gabrielpenman.com per the fossil convention.
+> Architecture decisions for the fold-in live in the brain note
+> `designs/state-product-model` and `state/CLAUDE.md`.
+
 Period is a backend-first FastAPI platform plus a Flutter client (`app/`) sharing one repository. The backend owns stable schemas, OpenAPI, fixtures, validation boundaries, tracker catalogs, derived signals, analyzers, and server-side reproductive-health models. The Flutter client owns UX, local storage, and on-device rendering. Keep the two separated by directory: nothing in `app/` is imported from Python, and nothing in `core/`/`server.py` is coupled to Flutter.
 
 ## Repository Layout
@@ -68,7 +78,7 @@ FHIR means Fast Healthcare Interoperability Resources in this project: a future 
 | `core/tracking/AGENTS.md` | Atlas Tracking Bridge |
 | `tests/AGENTS.md` | Tests |
 
-_Auto-compiled 2026-07-30 09:50 UTC - 9 doc(s) found._
+_Auto-compiled 2026-08-17 21:05 UTC - 9 doc(s) found._
 <!-- DOCS:END -->
 
 ## Before Every Commit
